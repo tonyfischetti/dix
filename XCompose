@@ -1,0 +1,33 @@
+
+include "%L"
+
+### also check /usr/share/X11/locale/en_US.UTF-8/Compose
+
+## Cheatsheet
+ #    • period, equal
+ #    ¿ question, question
+ #    ¡ bang, bang
+ #    Ø O slash
+ #    … period, period
+ #    « less, less
+ #    » more, more
+ #    — minus, minus, minus
+ #    ‽ bang, question
+ #    → dash, more
+ #    ← less, dash
+ #    ° o, o
+ #    ♥ less, 3
+
+
+<Multi_key> <n> <n> : "ñ"
+<Multi_key> <l> <l> : "λ"
+<Multi_key> <N> <N> : "Ñ"
+
+# emojis
+<Multi_key> <e> <r> : "🐇"
+<Multi_key> <e> <h> : "💕"
+<Multi_key> <e> <b> : "🍌"
+<Multi_key> <e> <o> : "💯"
+<Multi_key> <e> <m> : "🐁"
+<Multi_key> <e> <c> : "😭"
+<Multi_key> <e> <l> : "🦞"
