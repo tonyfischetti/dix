@@ -1,0 +1,46 @@
+diff -Naur linux-5.4.11/block/elevator.c another/block/elevator.c
+--- linux-5.4.11/block/elevator.c	2020-01-12 06:21:53.000000000 -0500
++++ another/block/elevator.c	2020-01-14 12:46:39.863356688 -0500
+@@ -623,15 +623,15 @@
+ }
+ 
+ /*
+- * For single queue devices, default to using mq-deadline. If we have multiple
+- * queues or mq-deadline is not available, default to "none".
++ * For single queue devices, default to using bfq, If we have multiple
++ * queues or bfq is not available, default to "none".
+  */
+ static struct elevator_type *elevator_get_default(struct request_queue *q)
+ {
+ 	if (q->nr_hw_queues != 1)
+ 		return NULL;
+ 
+-	return elevator_get(q, "mq-deadline", false);
++	return elevator_get(q, "bfq", false);
+ }
+ 
+ /*
+diff -Naur linux-5.4.11/kernel/sched/core.c another/kernel/sched/core.c
+--- linux-5.4.11/kernel/sched/core.c	2020-01-12 06:21:53.000000000 -0500
++++ another/kernel/sched/core.c	2020-01-14 12:47:18.308939187 -0500
+@@ -56,7 +56,7 @@
+  * Number of tasks to iterate in a single balance run.
+  * Limited because this is done with IRQs disabled.
+  */
+-const_debug unsigned int sysctl_sched_nr_migrate = 32;
++const_debug unsigned int sysctl_sched_nr_migrate = 128;
+ 
+ /*
+  * period over which we measure -rt task CPU usage in us.
+@@ -68,9 +68,9 @@
+ 
+ /*
+  * part of the period that we allow rt tasks to run in us.
+- * default: 0.95s
++ * default: 0.98s
+  */
+-int sysctl_sched_rt_runtime = 950000;
++int sysctl_sched_rt_runtime = 980000;
+ 
+ /*
+  * __task_rq_lock - lock the rq @p resides on.
