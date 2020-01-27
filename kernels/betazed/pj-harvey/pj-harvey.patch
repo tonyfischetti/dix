@@ -1,6 +1,6 @@
-diff -Naur linux-5.4.11/block/elevator.c another/block/elevator.c
---- linux-5.4.11/block/elevator.c	2020-01-12 06:21:53.000000000 -0500
-+++ another/block/elevator.c	2020-01-14 12:46:39.863356688 -0500
+diff -Naur -x .git -x objtool alice-glass/block/elevator.c linux-5.5/block/elevator.c
+--- alice-glass/block/elevator.c	2020-01-21 11:20:57.167077451 -0500
++++ linux-5.5/block/elevator.c	2020-01-27 11:27:08.944408731 -0500
 @@ -623,15 +623,15 @@
  }
  
@@ -20,10 +20,10 @@ diff -Naur linux-5.4.11/block/elevator.c another/block/elevator.c
  }
  
  /*
-diff -Naur linux-5.4.11/kernel/sched/core.c another/kernel/sched/core.c
---- linux-5.4.11/kernel/sched/core.c	2020-01-12 06:21:53.000000000 -0500
-+++ another/kernel/sched/core.c	2020-01-14 12:47:18.308939187 -0500
-@@ -56,7 +56,7 @@
+diff -Naur -x .git -x objtool alice-glass/kernel/sched/core.c linux-5.5/kernel/sched/core.c
+--- alice-glass/kernel/sched/core.c	2020-01-21 11:20:57.170077475 -0500
++++ linux-5.5/kernel/sched/core.c	2020-01-27 11:27:08.945408747 -0500
+@@ -57,7 +57,7 @@
   * Number of tasks to iterate in a single balance run.
   * Limited because this is done with IRQs disabled.
   */
@@ -32,7 +32,7 @@ diff -Naur linux-5.4.11/kernel/sched/core.c another/kernel/sched/core.c
  
  /*
   * period over which we measure -rt task CPU usage in us.
-@@ -68,9 +68,9 @@
+@@ -69,9 +69,9 @@
  
  /*
   * part of the period that we allow rt tasks to run in us.
@@ -44,8 +44,9 @@ diff -Naur linux-5.4.11/kernel/sched/core.c another/kernel/sched/core.c
  
  /*
   * __task_rq_lock - lock the rq @p resides on.
---- linux-5.4.12/include/uapi/linux/input-event-codes.h	2020-01-14 12:45:48.599579506 -0500
-+++ another/include/uapi/linux/input-event-codes.h 	2020-01-16 17:25:08.416920331 -0500
+diff -Naur -x .git -x objtool alice-glass/include/uapi/linux/input-event-codes.h linux-5.5/include/uapi/linux/input-event-codes.h
+--- alice-glass/include/uapi/linux/input-event-codes.h	2020-01-21 11:20:57.171077483 -0500
++++ linux-5.5/include/uapi/linux/input-event-codes.h	2020-01-27 11:27:08.945408747 -0500
 @@ -139,7 +139,8 @@
  #define KEY_F6			64
  #define KEY_F7			65
