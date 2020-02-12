@@ -1,7 +1,9 @@
 
 pj harvey
 ---------
-up to date with the latest stable kernel on kernel.org
+up to date with the latest stable kernel on kernel.org and
+    https://github.com/gregkh/linux and
+    https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/
 only what the machine requires
 some tiny changes of default values
 takes in good changes from other experiments
