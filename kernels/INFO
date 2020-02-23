@@ -1,0 +1,24 @@
+
+pj harvey
+---------
+up to date with the latest stable kernel on kernel.org and
+    https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/
+some minor code modifications and tiny changes of default values
+takes in good changes from other experiments
+only what the machine(s) require
+the base is always relative to betazed, there are patches with
+the config changes necessary for other machines
+
+
+kim deal
+--------
+Follows rcs. Same kernel modifications as pj-harvey
+
+
+alice glass
+-----------
+Development kernel with full debugging, etc...
+based on pj harvey's patches
+experimental changes
+unstable
+
