@@ -1,14 +1,14 @@
-From e886e09ee90d003800a4d7e782d2e8ac29a5038a Mon Sep 17 00:00:00 2001
+From dae5ff1817997ba146cc0c8ef6e8688d4749b0c8 Mon Sep 17 00:00:00 2001
 From: Tony Fischetti <tony.fischetti@gmail.com>
-Date: Wed, 12 Feb 2020 10:29:51 -0500
+Date: Mon, 24 Feb 2020 13:02:27 -0500
 Subject: [PATCH] base pj-harvey changes
 
 ---
  block/elevator.c                       |  6 +++---
  include/uapi/linux/input-event-codes.h |  6 ++++--
  kernel/sched/core.c                    |  6 +++---
- kernel/sched/fair.c                    | 18 +++++++++---------
- 4 files changed, 19 insertions(+), 17 deletions(-)
+ kernel/sched/fair.c                    | 22 +++++++++++-----------
+ 4 files changed, 21 insertions(+), 19 deletions(-)
 
 diff --git a/block/elevator.c b/block/elevator.c
 index 4eab3d70e880..1d7b89bbb47c 100644
@@ -58,7 +58,7 @@ index 0f1db1cccc3f..0255c6c4e8c8 100644
  #define KEY_LINEFEED		101
  #define KEY_HOME		102
 diff --git a/kernel/sched/core.c b/kernel/sched/core.c
-index 90e4b00ace89..80de5173f276 100644
+index b2564d62a0f7..b380400a7a78 100644
 --- a/kernel/sched/core.c
 +++ b/kernel/sched/core.c
 @@ -57,7 +57,7 @@ const_debug unsigned int sysctl_sched_features =
@@ -83,7 +83,7 @@ index 90e4b00ace89..80de5173f276 100644
  /*
   * __task_rq_lock - lock the rq @p resides on.
 diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
-index ba749f579714..18771dbf9a43 100644
+index ba749f579714..b98b81ac39b2 100644
 --- a/kernel/sched/fair.c
 +++ b/kernel/sched/fair.c
 @@ -35,10 +35,10 @@
@@ -105,16 +105,16 @@ index ba749f579714..18771dbf9a43 100644
   * Minimal preemption granularity for CPU-bound tasks:
   *
 - * (default: 0.75 msec * (1 + ilog(ncpus)), units: nanoseconds)
-+ * (default: 0.5 msec * (1 + ilog(ncpus)), units: nanoseconds)
++ * (default: 0.4 msec * (1 + ilog(ncpus)), units: nanoseconds)
   */
 -unsigned int sysctl_sched_min_granularity			= 750000ULL;
 -static unsigned int normalized_sysctl_sched_min_granularity	= 750000ULL;
-+unsigned int sysctl_sched_min_granularity			= 500000ULL;
-+static unsigned int normalized_sysctl_sched_min_granularity	= 500000ULL;
++unsigned int sysctl_sched_min_granularity			= 400000ULL;
++static unsigned int normalized_sysctl_sched_min_granularity	= 400000ULL;
  
  /*
   * This value is kept at sysctl_sched_latency/sysctl_sched_min_granularity
-@@ -79,10 +79,10 @@ unsigned int sysctl_sched_child_runs_first __read_mostly;
+@@ -79,12 +79,12 @@ unsigned int sysctl_sched_child_runs_first __read_mostly;
   * and reduces their over-scheduling. Synchronous workloads will still
   * have immediate wakeup/sleep latencies.
   *
@@ -126,8 +126,20 @@ index ba749f579714..18771dbf9a43 100644
 +unsigned int sysctl_sched_wakeup_granularity			= 500000UL;
 +static unsigned int normalized_sysctl_sched_wakeup_granularity	= 500000UL;
  
- const_debug unsigned int sysctl_sched_migration_cost	= 500000UL;
+-const_debug unsigned int sysctl_sched_migration_cost	= 500000UL;
++const_debug unsigned int sysctl_sched_migration_cost	= 250000UL;
  
+ #ifdef CONFIG_SMP
+ /*
+@@ -115,7 +115,7 @@ int __weak arch_asym_cpu_priority(int cpu)
+  *
+  * (default: 5 msec, units: microseconds)
+  */
+-unsigned int sysctl_sched_cfs_bandwidth_slice		= 5000UL;
++unsigned int sysctl_sched_cfs_bandwidth_slice		= 3000UL;
+ #endif
+ 
+ static inline void update_load_add(struct load_weight *lw, unsigned long inc)
 -- 
 2.20.1
 
