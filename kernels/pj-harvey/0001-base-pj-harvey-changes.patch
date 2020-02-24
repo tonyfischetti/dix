@@ -1,20 +1,121 @@
-From dae5ff1817997ba146cc0c8ef6e8688d4749b0c8 Mon Sep 17 00:00:00 2001
+From 59b64976fb73c3effd7b0b18c042612d22ccba5b Mon Sep 17 00:00:00 2001
 From: Tony Fischetti <tony.fischetti@gmail.com>
-Date: Mon, 24 Feb 2020 13:02:27 -0500
+Date: Mon, 24 Feb 2020 15:35:27 -0500
 Subject: [PATCH] base pj-harvey changes
 
 ---
- block/elevator.c                       |  6 +++---
+ arch/x86/Kconfig.cpu                   | 27 +++++++++++++++++++-------
+ arch/x86/Makefile                      |  1 +
+ arch/x86/include/asm/module.h          |  2 ++
+ block/elevator.c                       |  9 +++------
  include/uapi/linux/input-event-codes.h |  6 ++++--
  kernel/sched/core.c                    |  6 +++---
- kernel/sched/fair.c                    | 22 +++++++++++-----------
- 4 files changed, 21 insertions(+), 19 deletions(-)
+ kernel/sched/fair.c                    | 24 +++++++++++------------
+ 7 files changed, 45 insertions(+), 30 deletions(-)
 
+diff --git a/arch/x86/Kconfig.cpu b/arch/x86/Kconfig.cpu
+index af9c967782f6..f7b1fd200c53 100644
+--- a/arch/x86/Kconfig.cpu
++++ b/arch/x86/Kconfig.cpu
+@@ -294,6 +294,19 @@ config GENERIC_CPU
+ 	  Generic x86-64 CPU.
+ 	  Run equally well on all x86-64 CPUs.
+ 
++config MNATIVE
++	bool "Native optimizations autodetected by GCC"
++	---help---
++
++	  GCC 4.2 and above support -march=native, which automatically detects
++	  the optimum settings to use based on your processor. -march=native
++	  also detects and applies additional settings beyond -march specific
++	  to your CPU, (eg. -msse4). Unless you have a specific reason not to
++	  (e.g. distcc cross-compiling), you should probably be using
++	  -march=native rather than anything listed below.
++
++	  Enables -march=native
++
+ endchoice
+ 
+ config X86_GENERIC
+@@ -318,7 +331,7 @@ config X86_INTERNODE_CACHE_SHIFT
+ config X86_L1_CACHE_SHIFT
+ 	int
+ 	default "7" if MPENTIUM4 || MPSC
+-	default "6" if MK7 || MK8 || MPENTIUMM || MCORE2 || MATOM || MVIAC7 || X86_GENERIC || GENERIC_CPU
++	default "6" if MK7 || MK8 || MPENTIUMM || MCORE2 || MATOM || MVIAC7 || X86_GENERIC || GENERIC_CPU || MNATIVE
+ 	default "4" if MELAN || M486SX || M486 || MGEODEGX1
+ 	default "5" if MWINCHIP3D || MWINCHIPC6 || MCRUSOE || MEFFICEON || MCYRIXIII || MK6 || MPENTIUMIII || MPENTIUMII || M686 || M586MMX || M586TSC || M586 || MVIAC3_2 || MGEODE_LX
+ 
+@@ -336,11 +349,11 @@ config X86_ALIGNMENT_16
+ 
+ config X86_INTEL_USERCOPY
+ 	def_bool y
+-	depends on MPENTIUM4 || MPENTIUMM || MPENTIUMIII || MPENTIUMII || M586MMX || X86_GENERIC || MK8 || MK7 || MEFFICEON || MCORE2
++	depends on MPENTIUM4 || MPENTIUMM || MPENTIUMIII || MPENTIUMII || M586MMX || X86_GENERIC || MK8 || MK7 || MEFFICEON || MCORE2 || MNATIVE
+ 
+ config X86_USE_PPRO_CHECKSUM
+ 	def_bool y
+-	depends on MWINCHIP3D || MWINCHIPC6 || MCYRIXIII || MK7 || MK6 || MPENTIUM4 || MPENTIUMM || MPENTIUMIII || MPENTIUMII || M686 || MK8 || MVIAC3_2 || MVIAC7 || MEFFICEON || MGEODE_LX || MCORE2 || MATOM
++	depends on MWINCHIP3D || MWINCHIPC6 || MCYRIXIII || MK7 || MK6 || MPENTIUM4 || MPENTIUMM || MPENTIUMIII || MPENTIUMII || M686 || MK8 || MVIAC3_2 || MVIAC7 || MEFFICEON || MGEODE_LX || MCORE2 || MATOM || MNATIVE
+ 
+ config X86_USE_3DNOW
+ 	def_bool y
+@@ -360,21 +373,21 @@ config X86_USE_3DNOW
+ config X86_P6_NOP
+ 	def_bool y
+ 	depends on X86_64
+-	depends on (MCORE2 || MPENTIUM4 || MPSC)
++	depends on (MCORE2 || MPENTIUM4 || MPSC || MNATIVE)
+ 
+ config X86_TSC
+ 	def_bool y
+-	depends on (MWINCHIP3D || MCRUSOE || MEFFICEON || MCYRIXIII || MK7 || MK6 || MPENTIUM4 || MPENTIUMM || MPENTIUMIII || MPENTIUMII || M686 || M586MMX || M586TSC || MK8 || MVIAC3_2 || MVIAC7 || MGEODEGX1 || MGEODE_LX || MCORE2 || MATOM) || X86_64
++	depends on (MWINCHIP3D || MCRUSOE || MEFFICEON || MCYRIXIII || MK7 || MK6 || MPENTIUM4 || MPENTIUMM || MPENTIUMIII || MPENTIUMII || M686 || M586MMX || M586TSC || MK8 || MVIAC3_2 || MVIAC7 || MGEODEGX1 || MGEODE_LX || MCORE2 || MATOM || MNATIVE) || X86_64
+ 
+ config X86_CMPXCHG64
+ 	def_bool y
+-	depends on X86_PAE || X86_64 || MCORE2 || MPENTIUM4 || MPENTIUMM || MPENTIUMIII || MPENTIUMII || M686 || M586TSC || M586MMX || MATOM || MGEODE_LX || MGEODEGX1 || MK6 || MK7 || MK8
++	depends on X86_PAE || X86_64 || MCORE2 || MPENTIUM4 || MPENTIUMM || MPENTIUMIII || MPENTIUMII || M686 || M586TSC || M586MMX || MATOM || MGEODE_LX || MGEODEGX1 || MK6 || MK7 || MK8 || MNATIVE
+ 
+ # this should be set for all -march=.. options where the compiler
+ # generates cmov.
+ config X86_CMOV
+ 	def_bool y
+-	depends on (MK8 || MK7 || MCORE2 || MPENTIUM4 || MPENTIUMM || MPENTIUMIII || MPENTIUMII || M686 || MVIAC3_2 || MVIAC7 || MCRUSOE || MEFFICEON || X86_64 || MATOM || MGEODE_LX)
++	depends on (MK8 || MK7 || MCORE2 || MPENTIUM4 || MPENTIUMM || MPENTIUMIII || MPENTIUMII || M686 || MVIAC3_2 || MVIAC7 || MCRUSOE || MEFFICEON || X86_64 || MATOM || MGEODE_LX || MNATIVE)
+ 
+ config X86_MINIMUM_CPU_FAMILY
+ 	int
+diff --git a/arch/x86/Makefile b/arch/x86/Makefile
+index 94df0868804b..ddda616e6cd8 100644
+--- a/arch/x86/Makefile
++++ b/arch/x86/Makefile
+@@ -119,6 +119,7 @@ else
+ 	KBUILD_CFLAGS += $(call cc-option,-mskip-rax-setup)
+ 
+         # FIXME - should be integrated in Makefile.cpu (Makefile_32.cpu)
++        cflags-$(CONFIG_MNATIVE) += $(call cc-option,-march=native)
+         cflags-$(CONFIG_MK8) += $(call cc-option,-march=k8)
+         cflags-$(CONFIG_MPSC) += $(call cc-option,-march=nocona)
+ 
+diff --git a/arch/x86/include/asm/module.h b/arch/x86/include/asm/module.h
+index c215d2762488..90bd8f3c93f6 100644
+--- a/arch/x86/include/asm/module.h
++++ b/arch/x86/include/asm/module.h
+@@ -27,6 +27,8 @@ struct mod_arch_specific {
+ #define MODULE_PROC_FAMILY "586MMX "
+ #elif defined CONFIG_MCORE2
+ #define MODULE_PROC_FAMILY "CORE2 "
++#elif defined CONFIG_MNATIVE
++#define MODULE_PROC_FAMILY "NATIVE "
+ #elif defined CONFIG_MATOM
+ #define MODULE_PROC_FAMILY "ATOM "
+ #elif defined CONFIG_M686
 diff --git a/block/elevator.c b/block/elevator.c
-index 4eab3d70e880..1d7b89bbb47c 100644
+index 4eab3d70e880..524534cc5306 100644
 --- a/block/elevator.c
 +++ b/block/elevator.c
-@@ -623,15 +623,15 @@ static inline bool elv_support_iosched(struct request_queue *q)
+@@ -623,15 +623,12 @@ static inline bool elv_support_iosched(struct request_queue *q)
  }
  
  /*
@@ -25,9 +126,9 @@ index 4eab3d70e880..1d7b89bbb47c 100644
   */
  static struct elevator_type *elevator_get_default(struct request_queue *q)
  {
- 	if (q->nr_hw_queues != 1)
- 		return NULL;
- 
+-	if (q->nr_hw_queues != 1)
+-		return NULL;
+-
 -	return elevator_get(q, "mq-deadline", false);
 +	return elevator_get(q, "bfq", false);
  }
@@ -83,7 +184,7 @@ index b2564d62a0f7..b380400a7a78 100644
  /*
   * __task_rq_lock - lock the rq @p resides on.
 diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
-index ba749f579714..b98b81ac39b2 100644
+index ba749f579714..d8e8340ee372 100644
 --- a/kernel/sched/fair.c
 +++ b/kernel/sched/fair.c
 @@ -35,10 +35,10 @@
@@ -100,7 +201,7 @@ index ba749f579714..b98b81ac39b2 100644
  
  /*
   * The initial- and re-scaling of tunables is configurable
-@@ -56,10 +56,10 @@ enum sched_tunable_scaling sysctl_sched_tunable_scaling = SCHED_TUNABLESCALING_L
+@@ -56,15 +56,15 @@ enum sched_tunable_scaling sysctl_sched_tunable_scaling = SCHED_TUNABLESCALING_L
  /*
   * Minimal preemption granularity for CPU-bound tasks:
   *
@@ -114,6 +215,12 @@ index ba749f579714..b98b81ac39b2 100644
  
  /*
   * This value is kept at sysctl_sched_latency/sysctl_sched_min_granularity
+  */
+-static unsigned int sched_nr_latency = 8;
++static unsigned int sched_nr_latency = 10;
+ 
+ /*
+  * After fork, child runs first. If set to 0 (default) then
 @@ -79,12 +79,12 @@ unsigned int sysctl_sched_child_runs_first __read_mostly;
   * and reduces their over-scheduling. Synchronous workloads will still
   * have immediate wakeup/sleep latencies.
