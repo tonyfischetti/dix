@@ -486,6 +486,7 @@ iotop						install
 iproute2					install
 iptables					install
 iputils-ping					install
+irqbalance					install
 irssi						install
 isc-dhcp-client					install
 isc-dhcp-common					install
@@ -2036,13 +2037,15 @@ linux-image-5.4.6-pj-harvey			deinstall
 linux-image-5.4.7-pj-harvey			deinstall
 linux-image-5.4.8-pj-harvey			deinstall
 linux-image-5.4.8-wifi-p			deinstall
+linux-image-5.5.0-5.2-liquorix-amd64		install
 linux-image-5.5.0-kim-deal+			deinstall
 linux-image-5.5.0-pj-harvey			deinstall
 linux-image-5.5.0-pj-harvey+			deinstall
 linux-image-5.5.0-rc4-alice-glass		deinstall
 linux-image-5.5.0-rc7-alice-glass+		deinstall
 linux-image-5.5.3-pj-harvey+			deinstall
-linux-image-5.5.5-pj-harvey+			install
+linux-image-5.5.5-pj-harvey+			deinstall
+linux-image-5.5.6-pj-harvey			install
 linux-image-amd64				install
 linux-kbuild-4.19				install
 linux-libc-dev:amd64				install
@@ -2367,6 +2370,7 @@ ruby-test-unit					install
 ruby-xmlrpc					install
 ruby2.5						install
 rubygems-integration				install
+runit-helper					install
 samba-libs:amd64				install
 sane-utils					install
 sbcl						install
