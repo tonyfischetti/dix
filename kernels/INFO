@@ -6,8 +6,8 @@ up to date with the latest stable kernel on kernel.org and
 some minor code modifications and tiny changes of default values
 takes in good changes from other experiments
 only what the machine(s) require
-the base is always relative to betazed, there are patches with
-the config changes necessary for other machines
+there are patches with the config changes necessary for other machines
+pretty much all debugging turned off
 
 
 kim deal
