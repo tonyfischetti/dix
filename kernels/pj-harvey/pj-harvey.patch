@@ -1,20 +1,143 @@
-From 59b64976fb73c3effd7b0b18c042612d22ccba5b Mon Sep 17 00:00:00 2001
+From a02630da2c6b3cc807c66d630436f565c75c8e2a Mon Sep 17 00:00:00 2001
 From: Tony Fischetti <tony.fischetti@gmail.com>
-Date: Mon, 24 Feb 2020 15:35:27 -0500
-Subject: [PATCH] base pj-harvey changes
+Date: Tue, 25 Feb 2020 13:21:45 -0500
+Subject: [PATCH 1/3] default to BFQ, change defaults of CFS
 
 ---
- arch/x86/Kconfig.cpu                   | 27 +++++++++++++++++++-------
- arch/x86/Makefile                      |  1 +
- arch/x86/include/asm/module.h          |  2 ++
- block/elevator.c                       |  9 +++------
- include/uapi/linux/input-event-codes.h |  6 ++++--
- kernel/sched/core.c                    |  6 +++---
- kernel/sched/fair.c                    | 24 +++++++++++------------
- 7 files changed, 45 insertions(+), 30 deletions(-)
+ block/elevator.c    |  9 +++------
+ kernel/sched/core.c |  6 +++---
+ kernel/sched/fair.c | 24 ++++++++++++------------
+ 3 files changed, 18 insertions(+), 21 deletions(-)
+
+diff --git a/block/elevator.c b/block/elevator.c
+index 4eab3d70e880..524534cc5306 100644
+--- a/block/elevator.c
++++ b/block/elevator.c
+@@ -623,15 +623,12 @@ static inline bool elv_support_iosched(struct request_queue *q)
+ }
+ 
+ /*
+- * For single queue devices, default to using mq-deadline. If we have multiple
+- * queues or mq-deadline is not available, default to "none".
++ * For single queue devices, default to using bfq, If we have multiple
++ * queues or bfq is not available, default to "none".
+  */
+ static struct elevator_type *elevator_get_default(struct request_queue *q)
+ {
+-	if (q->nr_hw_queues != 1)
+-		return NULL;
+-
+-	return elevator_get(q, "mq-deadline", false);
++	return elevator_get(q, "bfq", false);
+ }
+ 
+ /*
+diff --git a/kernel/sched/core.c b/kernel/sched/core.c
+index b2564d62a0f7..b380400a7a78 100644
+--- a/kernel/sched/core.c
++++ b/kernel/sched/core.c
+@@ -57,7 +57,7 @@ const_debug unsigned int sysctl_sched_features =
+  * Number of tasks to iterate in a single balance run.
+  * Limited because this is done with IRQs disabled.
+  */
+-const_debug unsigned int sysctl_sched_nr_migrate = 32;
++const_debug unsigned int sysctl_sched_nr_migrate = 128;
+ 
+ /*
+  * period over which we measure -rt task CPU usage in us.
+@@ -69,9 +69,9 @@ __read_mostly int scheduler_running;
+ 
+ /*
+  * part of the period that we allow rt tasks to run in us.
+- * default: 0.95s
++ * default: 0.98s
+  */
+-int sysctl_sched_rt_runtime = 950000;
++int sysctl_sched_rt_runtime = 980000;
+ 
+ /*
+  * __task_rq_lock - lock the rq @p resides on.
+diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
+index ba749f579714..d8e8340ee372 100644
+--- a/kernel/sched/fair.c
++++ b/kernel/sched/fair.c
+@@ -35,10 +35,10 @@
+  * (to see the precise effective timeslice length of your workload,
+  *  run vmstat and monitor the context-switches (cs) field)
+  *
+- * (default: 6ms * (1 + ilog(ncpus)), units: nanoseconds)
++ * (default: 2.7 msec * (1 + ilog(ncpus)), units: nanoseconds)
+  */
+-unsigned int sysctl_sched_latency			= 6000000ULL;
+-static unsigned int normalized_sysctl_sched_latency	= 6000000ULL;
++unsigned int sysctl_sched_latency			= 2700000ULL;
++static unsigned int normalized_sysctl_sched_latency	= 2700000ULL;
+ 
+ /*
+  * The initial- and re-scaling of tunables is configurable
+@@ -56,15 +56,15 @@ enum sched_tunable_scaling sysctl_sched_tunable_scaling = SCHED_TUNABLESCALING_L
+ /*
+  * Minimal preemption granularity for CPU-bound tasks:
+  *
+- * (default: 0.75 msec * (1 + ilog(ncpus)), units: nanoseconds)
++ * (default: 0.4 msec * (1 + ilog(ncpus)), units: nanoseconds)
+  */
+-unsigned int sysctl_sched_min_granularity			= 750000ULL;
+-static unsigned int normalized_sysctl_sched_min_granularity	= 750000ULL;
++unsigned int sysctl_sched_min_granularity			= 400000ULL;
++static unsigned int normalized_sysctl_sched_min_granularity	= 400000ULL;
+ 
+ /*
+  * This value is kept at sysctl_sched_latency/sysctl_sched_min_granularity
+  */
+-static unsigned int sched_nr_latency = 8;
++static unsigned int sched_nr_latency = 10;
+ 
+ /*
+  * After fork, child runs first. If set to 0 (default) then
+@@ -79,12 +79,12 @@ unsigned int sysctl_sched_child_runs_first __read_mostly;
+  * and reduces their over-scheduling. Synchronous workloads will still
+  * have immediate wakeup/sleep latencies.
+  *
+- * (default: 1 msec * (1 + ilog(ncpus)), units: nanoseconds)
++ * (default: 0.5 msec * (1 + ilog(ncpus)), units: nanoseconds)
+  */
+-unsigned int sysctl_sched_wakeup_granularity			= 1000000UL;
+-static unsigned int normalized_sysctl_sched_wakeup_granularity	= 1000000UL;
++unsigned int sysctl_sched_wakeup_granularity			= 500000UL;
++static unsigned int normalized_sysctl_sched_wakeup_granularity	= 500000UL;
+ 
+-const_debug unsigned int sysctl_sched_migration_cost	= 500000UL;
++const_debug unsigned int sysctl_sched_migration_cost	= 250000UL;
+ 
+ #ifdef CONFIG_SMP
+ /*
+@@ -115,7 +115,7 @@ int __weak arch_asym_cpu_priority(int cpu)
+  *
+  * (default: 5 msec, units: microseconds)
+  */
+-unsigned int sysctl_sched_cfs_bandwidth_slice		= 5000UL;
++unsigned int sysctl_sched_cfs_bandwidth_slice		= 3000UL;
+ #endif
+ 
+ static inline void update_load_add(struct load_weight *lw, unsigned long inc)
+-- 
+2.20.1
+
+
+From 1472f1bfcb04ab70e1726768abe2eb53a7bb2105 Mon Sep 17 00:00:00 2001
+From: Tony Fischetti <tony.fischetti@gmail.com>
+Date: Tue, 25 Feb 2020 13:23:22 -0500
+Subject: [PATCH 2/3] added MNATIVE config options that uses mtune=native
+
+---
+ arch/x86/Kconfig.cpu          | 27 ++++++++++++++++++++-------
+ arch/x86/Makefile             |  1 +
+ arch/x86/include/asm/module.h |  2 ++
+ 3 files changed, 23 insertions(+), 7 deletions(-)
 
 diff --git a/arch/x86/Kconfig.cpu b/arch/x86/Kconfig.cpu
-index af9c967782f6..f7b1fd200c53 100644
+index af9c967782f6..83f2c0bdfb3f 100644
 --- a/arch/x86/Kconfig.cpu
 +++ b/arch/x86/Kconfig.cpu
 @@ -294,6 +294,19 @@ config GENERIC_CPU
@@ -111,29 +234,19 @@ index c215d2762488..90bd8f3c93f6 100644
  #elif defined CONFIG_MATOM
  #define MODULE_PROC_FAMILY "ATOM "
  #elif defined CONFIG_M686
-diff --git a/block/elevator.c b/block/elevator.c
-index 4eab3d70e880..524534cc5306 100644
---- a/block/elevator.c
-+++ b/block/elevator.c
-@@ -623,15 +623,12 @@ static inline bool elv_support_iosched(struct request_queue *q)
- }
- 
- /*
-- * For single queue devices, default to using mq-deadline. If we have multiple
-- * queues or mq-deadline is not available, default to "none".
-+ * For single queue devices, default to using bfq, If we have multiple
-+ * queues or bfq is not available, default to "none".
-  */
- static struct elevator_type *elevator_get_default(struct request_queue *q)
- {
--	if (q->nr_hw_queues != 1)
--		return NULL;
--
--	return elevator_get(q, "mq-deadline", false);
-+	return elevator_get(q, "bfq", false);
- }
- 
- /*
+-- 
+2.20.1
+
+
+From 460507f4ddf1ddac4ff6b7f13656dbff65a98504 Mon Sep 17 00:00:00 2001
+From: Tony Fischetti <tony.fischetti@gmail.com>
+Date: Tue, 25 Feb 2020 13:24:07 -0500
+Subject: [PATCH 3/3] fix Magic SysRq for work keyboard
+
+---
+ include/uapi/linux/input-event-codes.h | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
+
 diff --git a/include/uapi/linux/input-event-codes.h b/include/uapi/linux/input-event-codes.h
 index 0f1db1cccc3f..0255c6c4e8c8 100644
 --- a/include/uapi/linux/input-event-codes.h
@@ -158,95 +271,6 @@ index 0f1db1cccc3f..0255c6c4e8c8 100644
  #define KEY_RIGHTALT		100
  #define KEY_LINEFEED		101
  #define KEY_HOME		102
-diff --git a/kernel/sched/core.c b/kernel/sched/core.c
-index b2564d62a0f7..b380400a7a78 100644
---- a/kernel/sched/core.c
-+++ b/kernel/sched/core.c
-@@ -57,7 +57,7 @@ const_debug unsigned int sysctl_sched_features =
-  * Number of tasks to iterate in a single balance run.
-  * Limited because this is done with IRQs disabled.
-  */
--const_debug unsigned int sysctl_sched_nr_migrate = 32;
-+const_debug unsigned int sysctl_sched_nr_migrate = 128;
- 
- /*
-  * period over which we measure -rt task CPU usage in us.
-@@ -69,9 +69,9 @@ __read_mostly int scheduler_running;
- 
- /*
-  * part of the period that we allow rt tasks to run in us.
-- * default: 0.95s
-+ * default: 0.98s
-  */
--int sysctl_sched_rt_runtime = 950000;
-+int sysctl_sched_rt_runtime = 980000;
- 
- /*
-  * __task_rq_lock - lock the rq @p resides on.
-diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
-index ba749f579714..d8e8340ee372 100644
---- a/kernel/sched/fair.c
-+++ b/kernel/sched/fair.c
-@@ -35,10 +35,10 @@
-  * (to see the precise effective timeslice length of your workload,
-  *  run vmstat and monitor the context-switches (cs) field)
-  *
-- * (default: 6ms * (1 + ilog(ncpus)), units: nanoseconds)
-+ * (default: 2.7 msec * (1 + ilog(ncpus)), units: nanoseconds)
-  */
--unsigned int sysctl_sched_latency			= 6000000ULL;
--static unsigned int normalized_sysctl_sched_latency	= 6000000ULL;
-+unsigned int sysctl_sched_latency			= 2700000ULL;
-+static unsigned int normalized_sysctl_sched_latency	= 2700000ULL;
- 
- /*
-  * The initial- and re-scaling of tunables is configurable
-@@ -56,15 +56,15 @@ enum sched_tunable_scaling sysctl_sched_tunable_scaling = SCHED_TUNABLESCALING_L
- /*
-  * Minimal preemption granularity for CPU-bound tasks:
-  *
-- * (default: 0.75 msec * (1 + ilog(ncpus)), units: nanoseconds)
-+ * (default: 0.4 msec * (1 + ilog(ncpus)), units: nanoseconds)
-  */
--unsigned int sysctl_sched_min_granularity			= 750000ULL;
--static unsigned int normalized_sysctl_sched_min_granularity	= 750000ULL;
-+unsigned int sysctl_sched_min_granularity			= 400000ULL;
-+static unsigned int normalized_sysctl_sched_min_granularity	= 400000ULL;
- 
- /*
-  * This value is kept at sysctl_sched_latency/sysctl_sched_min_granularity
-  */
--static unsigned int sched_nr_latency = 8;
-+static unsigned int sched_nr_latency = 10;
- 
- /*
-  * After fork, child runs first. If set to 0 (default) then
-@@ -79,12 +79,12 @@ unsigned int sysctl_sched_child_runs_first __read_mostly;
-  * and reduces their over-scheduling. Synchronous workloads will still
-  * have immediate wakeup/sleep latencies.
-  *
-- * (default: 1 msec * (1 + ilog(ncpus)), units: nanoseconds)
-+ * (default: 0.5 msec * (1 + ilog(ncpus)), units: nanoseconds)
-  */
--unsigned int sysctl_sched_wakeup_granularity			= 1000000UL;
--static unsigned int normalized_sysctl_sched_wakeup_granularity	= 1000000UL;
-+unsigned int sysctl_sched_wakeup_granularity			= 500000UL;
-+static unsigned int normalized_sysctl_sched_wakeup_granularity	= 500000UL;
- 
--const_debug unsigned int sysctl_sched_migration_cost	= 500000UL;
-+const_debug unsigned int sysctl_sched_migration_cost	= 250000UL;
- 
- #ifdef CONFIG_SMP
- /*
-@@ -115,7 +115,7 @@ int __weak arch_asym_cpu_priority(int cpu)
-  *
-  * (default: 5 msec, units: microseconds)
-  */
--unsigned int sysctl_sched_cfs_bandwidth_slice		= 5000UL;
-+unsigned int sysctl_sched_cfs_bandwidth_slice		= 3000UL;
- #endif
- 
- static inline void update_load_add(struct load_weight *lw, unsigned long inc)
 -- 
 2.20.1
 
