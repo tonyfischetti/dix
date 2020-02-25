@@ -106,6 +106,7 @@ coreutils					install
 cpio						install
 cpp						install
 cpp-8						install
+cpuinfo						install
 cracklib-runtime				install
 crda						install
 cron						install
@@ -749,6 +750,7 @@ libcontextual-return-perl			install
 libconvert-binhex-perl				install
 libcoverart1:amd64				install
 libcoverartcc1v5:amd64				install
+libcpuinfo0:amd64				install
 libcpupower1					install
 libcrack2:amd64					install
 libcroco3:amd64					install
@@ -2045,7 +2047,8 @@ linux-image-5.5.0-rc4-alice-glass		deinstall
 linux-image-5.5.0-rc7-alice-glass+		deinstall
 linux-image-5.5.3-pj-harvey+			deinstall
 linux-image-5.5.5-pj-harvey+			deinstall
-linux-image-5.5.6-pj-harvey			install
+linux-image-5.5.6-pj-harvey			deinstall
+linux-image-5.5.6-pj-harvey+			install
 linux-image-amd64				install
 linux-kbuild-4.19				install
 linux-libc-dev:amd64				install
