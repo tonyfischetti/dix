@@ -1,13 +1,91 @@
-From a02630da2c6b3cc807c66d630436f565c75c8e2a Mon Sep 17 00:00:00 2001
+From 3d2ced3d371b43bf1c449354680d5083a9fd643f Mon Sep 17 00:00:00 2001
 From: Tony Fischetti <tony.fischetti@gmail.com>
-Date: Tue, 25 Feb 2020 13:21:45 -0500
-Subject: [PATCH 1/3] default to BFQ, change defaults of CFS
+Date: Wed, 4 Mar 2020 10:42:32 -0500
+Subject: [PATCH 1/5] add ALWAYS_POLL quirk to lenovo pixart mouse
+
+A lenovo pixart mouse (17ef:608d) is afflicted common the the malfunction
+where it disconnects and reconnects every minute--each time incrementing
+the device number. This patch adds the device id of the device and
+specifies that it needs the HID_QUIRK_ALWAYS_POLL quirk in order to
+work properly.
+---
+ drivers/hid/hid-ids.h    | 1 +
+ drivers/hid/hid-quirks.c | 1 +
+ 2 files changed, 2 insertions(+)
+
+diff --git a/drivers/hid/hid-ids.h b/drivers/hid/hid-ids.h
+index 3a400ce603c4..9e1dfc714ea8 100644
+--- a/drivers/hid/hid-ids.h
++++ b/drivers/hid/hid-ids.h
+@@ -726,6 +726,7 @@
+ #define USB_DEVICE_ID_LENOVO_X1_COVER	0x6085
+ #define USB_DEVICE_ID_LENOVO_X1_TAB	0x60a3
+ #define USB_DEVICE_ID_LENOVO_X1_TAB3	0x60b5
++#define USB_DEVICE_ID_LENOVO_PIXART_USB_OPTICAL_MOUSE	0x608d
+ 
+ #define USB_VENDOR_ID_LG		0x1fd2
+ #define USB_DEVICE_ID_LG_MULTITOUCH	0x0064
+diff --git a/drivers/hid/hid-quirks.c b/drivers/hid/hid-quirks.c
+index 0e7b2d998395..247747d6d8cf 100644
+--- a/drivers/hid/hid-quirks.c
++++ b/drivers/hid/hid-quirks.c
+@@ -103,6 +103,7 @@ static const struct hid_device_id hid_quirks[] = {
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_KYE, USB_DEVICE_ID_KYE_PENSKETCH_M912), HID_QUIRK_MULTI_INPUT },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_KYE, USB_DEVICE_ID_KYE_EASYPEN_M406XE), HID_QUIRK_MULTI_INPUT },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_KYE, USB_DEVICE_ID_PIXART_USB_OPTICAL_MOUSE_ID2), HID_QUIRK_ALWAYS_POLL },
++	{ HID_USB_DEVICE(USB_VENDOR_ID_LENOVO, USB_DEVICE_ID_LENOVO_PIXART_USB_OPTICAL_MOUSE), HID_QUIRK_ALWAYS_POLL },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_LOGITECH, USB_DEVICE_ID_LOGITECH_C007), HID_QUIRK_ALWAYS_POLL },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_LOGITECH, USB_DEVICE_ID_LOGITECH_C077), HID_QUIRK_ALWAYS_POLL },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_LOGITECH, USB_DEVICE_ID_LOGITECH_KEYBOARD_G710_PLUS), HID_QUIRK_NOGET },
+-- 
+2.20.1
+
+
+From 11c92dadc5c07e1a8633df0ef188c10867605bbb Mon Sep 17 00:00:00 2001
+From: Tony Fischetti <tony.fischetti@gmail.com>
+Date: Wed, 4 Mar 2020 10:51:34 -0500
+Subject: [PATCH 2/5] fix Magic SysRq for Matias mini keyboard
 
 ---
- block/elevator.c    |  9 +++------
- kernel/sched/core.c |  6 +++---
- kernel/sched/fair.c | 24 ++++++++++++------------
- 3 files changed, 18 insertions(+), 21 deletions(-)
+ include/uapi/linux/input-event-codes.h | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
+
+diff --git a/include/uapi/linux/input-event-codes.h b/include/uapi/linux/input-event-codes.h
+index 0f1db1cccc3f..0255c6c4e8c8 100644
+--- a/include/uapi/linux/input-event-codes.h
++++ b/include/uapi/linux/input-event-codes.h
+@@ -139,7 +139,8 @@
+ #define KEY_F6			64
+ #define KEY_F7			65
+ #define KEY_F8			66
+-#define KEY_F9			67
++// F9 is the new sysreq
++#define KEY_F9			99
+ #define KEY_F10			68
+ #define KEY_NUMLOCK		69
+ #define KEY_SCROLLLOCK		70
+@@ -171,7 +172,8 @@
+ #define KEY_KPENTER		96
+ #define KEY_RIGHTCTRL		97
+ #define KEY_KPSLASH		98
+-#define KEY_SYSRQ		99
++// sysrq is the new F9
++#define KEY_SYSRQ		67
+ #define KEY_RIGHTALT		100
+ #define KEY_LINEFEED		101
+ #define KEY_HOME		102
+-- 
+2.20.1
+
+
+From fea3c111fb2e1615e91db2ce3df13bd84448b040 Mon Sep 17 00:00:00 2001
+From: Tony Fischetti <tony.fischetti@gmail.com>
+Date: Wed, 4 Mar 2020 10:54:55 -0500
+Subject: [PATCH 3/5] make IO scheduler default to BFQ
+
+---
+ block/elevator.c | 9 +++------
+ 1 file changed, 3 insertions(+), 6 deletions(-)
 
 diff --git a/block/elevator.c b/block/elevator.c
 index 4eab3d70e880..524534cc5306 100644
@@ -32,6 +110,20 @@ index 4eab3d70e880..524534cc5306 100644
  }
  
  /*
+-- 
+2.20.1
+
+
+From a5a467f9f7528208270f8d71faf960c6ef470394 Mon Sep 17 00:00:00 2001
+From: Tony Fischetti <tony.fischetti@gmail.com>
+Date: Wed, 4 Mar 2020 11:03:26 -0500
+Subject: [PATCH 4/5] Make latency-improving changes to CFS defaults
+
+---
+ kernel/sched/core.c |  6 +++---
+ kernel/sched/fair.c | 27 ++++++++++++++-------------
+ 2 files changed, 17 insertions(+), 16 deletions(-)
+
 diff --git a/kernel/sched/core.c b/kernel/sched/core.c
 index b2564d62a0f7..b380400a7a78 100644
 --- a/kernel/sched/core.c
@@ -58,10 +150,10 @@ index b2564d62a0f7..b380400a7a78 100644
  /*
   * __task_rq_lock - lock the rq @p resides on.
 diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
-index ba749f579714..d8e8340ee372 100644
+index ba749f579714..9b1f0bce5fdd 100644
 --- a/kernel/sched/fair.c
 +++ b/kernel/sched/fair.c
-@@ -35,10 +35,10 @@
+@@ -35,10 +35,11 @@
   * (to see the precise effective timeslice length of your workload,
   *  run vmstat and monitor the context-switches (cs) field)
   *
@@ -72,10 +164,11 @@ index ba749f579714..d8e8340ee372 100644
 -static unsigned int normalized_sysctl_sched_latency	= 6000000ULL;
 +unsigned int sysctl_sched_latency			= 2700000ULL;
 +static unsigned int normalized_sysctl_sched_latency	= 2700000ULL;
++
  
  /*
   * The initial- and re-scaling of tunables is configurable
-@@ -56,15 +56,15 @@ enum sched_tunable_scaling sysctl_sched_tunable_scaling = SCHED_TUNABLESCALING_L
+@@ -56,15 +57,15 @@ enum sched_tunable_scaling sysctl_sched_tunable_scaling = SCHED_TUNABLESCALING_L
  /*
   * Minimal preemption granularity for CPU-bound tasks:
   *
@@ -95,7 +188,7 @@ index ba749f579714..d8e8340ee372 100644
  
  /*
   * After fork, child runs first. If set to 0 (default) then
-@@ -79,12 +79,12 @@ unsigned int sysctl_sched_child_runs_first __read_mostly;
+@@ -79,12 +80,12 @@ unsigned int sysctl_sched_child_runs_first __read_mostly;
   * and reduces their over-scheduling. Synchronous workloads will still
   * have immediate wakeup/sleep latencies.
   *
@@ -108,13 +201,16 @@ index ba749f579714..d8e8340ee372 100644
 +static unsigned int normalized_sysctl_sched_wakeup_granularity	= 500000UL;
  
 -const_debug unsigned int sysctl_sched_migration_cost	= 500000UL;
-+const_debug unsigned int sysctl_sched_migration_cost	= 250000UL;
++const_debug unsigned int sysctl_sched_migration_cost	= 350000UL;
  
  #ifdef CONFIG_SMP
  /*
-@@ -115,7 +115,7 @@ int __weak arch_asym_cpu_priority(int cpu)
+@@ -113,9 +114,9 @@ int __weak arch_asym_cpu_priority(int cpu)
+  * to consumption or the quota being specified to be smaller than the slice)
+  * we will always only issue the remaining available time.
   *
-  * (default: 5 msec, units: microseconds)
+- * (default: 5 msec, units: microseconds)
++ * (default: 3 msec, units: microseconds)
   */
 -unsigned int sysctl_sched_cfs_bandwidth_slice		= 5000UL;
 +unsigned int sysctl_sched_cfs_bandwidth_slice		= 3000UL;
@@ -125,10 +221,10 @@ index ba749f579714..d8e8340ee372 100644
 2.20.1
 
 
-From 1472f1bfcb04ab70e1726768abe2eb53a7bb2105 Mon Sep 17 00:00:00 2001
+From 5ee4c1052c8dcd004dcc744fac8fda1af8a84620 Mon Sep 17 00:00:00 2001
 From: Tony Fischetti <tony.fischetti@gmail.com>
-Date: Tue, 25 Feb 2020 13:23:22 -0500
-Subject: [PATCH 2/3] added MNATIVE config options that uses mtune=native
+Date: Wed, 4 Mar 2020 11:05:37 -0500
+Subject: [PATCH 5/5] add MNATIVE conf option using mtune=native on x86
 
 ---
  arch/x86/Kconfig.cpu          | 27 ++++++++++++++++++++-------
@@ -234,43 +330,6 @@ index c215d2762488..90bd8f3c93f6 100644
  #elif defined CONFIG_MATOM
  #define MODULE_PROC_FAMILY "ATOM "
  #elif defined CONFIG_M686
--- 
-2.20.1
-
-
-From 460507f4ddf1ddac4ff6b7f13656dbff65a98504 Mon Sep 17 00:00:00 2001
-From: Tony Fischetti <tony.fischetti@gmail.com>
-Date: Tue, 25 Feb 2020 13:24:07 -0500
-Subject: [PATCH 3/3] fix Magic SysRq for work keyboard
-
----
- include/uapi/linux/input-event-codes.h | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
-
-diff --git a/include/uapi/linux/input-event-codes.h b/include/uapi/linux/input-event-codes.h
-index 0f1db1cccc3f..0255c6c4e8c8 100644
---- a/include/uapi/linux/input-event-codes.h
-+++ b/include/uapi/linux/input-event-codes.h
-@@ -139,7 +139,8 @@
- #define KEY_F6			64
- #define KEY_F7			65
- #define KEY_F8			66
--#define KEY_F9			67
-+// F9 is the new sysreq
-+#define KEY_F9			99
- #define KEY_F10			68
- #define KEY_NUMLOCK		69
- #define KEY_SCROLLLOCK		70
-@@ -171,7 +172,8 @@
- #define KEY_KPENTER		96
- #define KEY_RIGHTCTRL		97
- #define KEY_KPSLASH		98
--#define KEY_SYSRQ		99
-+// sysrq is the new F9
-+#define KEY_SYSRQ		67
- #define KEY_RIGHTALT		100
- #define KEY_LINEFEED		101
- #define KEY_HOME		102
 -- 
 2.20.1
 

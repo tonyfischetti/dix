@@ -1,0 +1,42 @@
+From 3d2ced3d371b43bf1c449354680d5083a9fd643f Mon Sep 17 00:00:00 2001
+From: Tony Fischetti <tony.fischetti@gmail.com>
+Date: Wed, 4 Mar 2020 10:42:32 -0500
+Subject: [PATCH 1/5] add ALWAYS_POLL quirk to lenovo pixart mouse
+
+A lenovo pixart mouse (17ef:608d) is afflicted common the the malfunction
+where it disconnects and reconnects every minute--each time incrementing
+the device number. This patch adds the device id of the device and
+specifies that it needs the HID_QUIRK_ALWAYS_POLL quirk in order to
+work properly.
+---
+ drivers/hid/hid-ids.h    | 1 +
+ drivers/hid/hid-quirks.c | 1 +
+ 2 files changed, 2 insertions(+)
+
+diff --git a/drivers/hid/hid-ids.h b/drivers/hid/hid-ids.h
+index 3a400ce603c4..9e1dfc714ea8 100644
+--- a/drivers/hid/hid-ids.h
++++ b/drivers/hid/hid-ids.h
+@@ -726,6 +726,7 @@
+ #define USB_DEVICE_ID_LENOVO_X1_COVER	0x6085
+ #define USB_DEVICE_ID_LENOVO_X1_TAB	0x60a3
+ #define USB_DEVICE_ID_LENOVO_X1_TAB3	0x60b5
++#define USB_DEVICE_ID_LENOVO_PIXART_USB_OPTICAL_MOUSE	0x608d
+ 
+ #define USB_VENDOR_ID_LG		0x1fd2
+ #define USB_DEVICE_ID_LG_MULTITOUCH	0x0064
+diff --git a/drivers/hid/hid-quirks.c b/drivers/hid/hid-quirks.c
+index 0e7b2d998395..247747d6d8cf 100644
+--- a/drivers/hid/hid-quirks.c
++++ b/drivers/hid/hid-quirks.c
+@@ -103,6 +103,7 @@ static const struct hid_device_id hid_quirks[] = {
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_KYE, USB_DEVICE_ID_KYE_PENSKETCH_M912), HID_QUIRK_MULTI_INPUT },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_KYE, USB_DEVICE_ID_KYE_EASYPEN_M406XE), HID_QUIRK_MULTI_INPUT },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_KYE, USB_DEVICE_ID_PIXART_USB_OPTICAL_MOUSE_ID2), HID_QUIRK_ALWAYS_POLL },
++	{ HID_USB_DEVICE(USB_VENDOR_ID_LENOVO, USB_DEVICE_ID_LENOVO_PIXART_USB_OPTICAL_MOUSE), HID_QUIRK_ALWAYS_POLL },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_LOGITECH, USB_DEVICE_ID_LOGITECH_C007), HID_QUIRK_ALWAYS_POLL },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_LOGITECH, USB_DEVICE_ID_LOGITECH_C077), HID_QUIRK_ALWAYS_POLL },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_LOGITECH, USB_DEVICE_ID_LOGITECH_KEYBOARD_G710_PLUS), HID_QUIRK_NOGET },
+-- 
+2.20.1
+
