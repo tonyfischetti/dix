@@ -183,8 +183,6 @@ dvidvi						install
 dvipng						install
 dwz						install
 e2fsprogs					install
-easytag						install
-easytag-nautilus				install
 ed						install
 eject						install
 emacsen-common					install
@@ -357,11 +355,6 @@ gimp-data					install
 gir1.2-appindicator3-0.1:amd64			install
 gir1.2-atk-1.0:amd64				install
 gir1.2-atspi-2.0:amd64				install
-gir1.2-clutter-1.0:amd64			install
-gir1.2-clutter-gst-3.0:amd64			install
-gir1.2-cogl-1.0:amd64				install
-gir1.2-coglpango-1.0:amd64			install
-gir1.2-evince-3.0:amd64				install
 gir1.2-freedesktop:amd64			install
 gir1.2-gdkpixbuf-2.0:amd64			install
 gir1.2-glib-2.0:amd64				install
@@ -369,11 +362,9 @@ gir1.2-gst-plugins-base-1.0:amd64		install
 gir1.2-gstreamer-1.0:amd64			install
 gir1.2-gtk-2.0:amd64				install
 gir1.2-gtk-3.0:amd64				install
-gir1.2-gtkclutter-1.0:amd64			install
 gir1.2-gtksource-3.0:amd64			install
 gir1.2-harfbuzz-0.0:amd64			install
 gir1.2-javascriptcoregtk-4.0:amd64		install
-gir1.2-json-1.0:amd64				install
 gir1.2-keybinder-3.0				install
 gir1.2-notify-0.7:amd64				install
 gir1.2-packagekitglib-1.0			install
@@ -399,7 +390,6 @@ gnome-disk-utility				install
 gnome-icon-theme				install
 gnome-keyring					install
 gnome-keyring-pkcs11:amd64			install
-gnome-sushi					install
 gnome-themes-extra:amd64			install
 gnome-themes-extra-data				install
 gnome-video-effects				install
@@ -989,7 +979,6 @@ libgimp2.0					install
 libgirepository-1.0-1:amd64			install
 libgit-wrapper-perl				install
 libgitlab-api-v4-perl				install
-libgjs0g					install
 libgl1:amd64					install
 libgl1-mesa-dev:amd64				install
 libgl1-mesa-dri:amd64				install
@@ -1018,7 +1007,6 @@ libgme0:amd64					install
 libgmp-dev:amd64				install
 libgmp10:amd64					install
 libgmpxx4ldbl:amd64				install
-libgnome-autoar-0-0:amd64			install
 libgnome-desktop-3-17:amd64			install
 libgnutls-dane0:amd64				install
 libgnutls30:amd64				install
@@ -1119,7 +1107,6 @@ libice6:amd64					install
 libicu-dev:amd64				install
 libicu4j-java					install
 libicu63:amd64					install
-libid3-3.8.3v5:amd64				install
 libid3tag0:amd64				install
 libidn11:amd64					install
 libidn2-0:amd64					install
@@ -1154,7 +1141,6 @@ libipc-run3-perl				install
 libipc-shareable-perl				install
 libipc-system-simple-perl			install
 libiptc0:amd64					install
-libiptcdata0					install
 libirs161:amd64					install
 libisc-export1100:amd64				install
 libisc1100:amd64				install
@@ -1318,7 +1304,6 @@ libmodule-runtime-perl				install
 libmoo-perl					install
 libmount-dev:amd64				install
 libmount1:amd64					install
-libmozjs-60-0:amd64				install
 libmp3lame0:amd64				install
 libmpc3:amd64					install
 libmpcdec-dev:amd64				install
@@ -1419,7 +1404,6 @@ libopusfile-dev					install
 libopusfile0					install
 liborc-0.4-0:amd64				install
 liborcus-0.14-0:amd64				install
-libosinfo-1.0-0:amd64				install
 libosmesa6:amd64				install
 libosp5						install
 libossp-uuid-perl				install
@@ -1742,6 +1726,7 @@ libswresample3:amd64				install
 libswscale5:amd64				install
 libsynctex2:amd64				install
 libsys-hostname-long-perl			install
+libsystemd-dev:amd64				install
 libsystemd0:amd64				install
 libsz2:amd64					install
 libtag1v5:amd64					install
@@ -1790,8 +1775,6 @@ libtool-bin					install
 libtotem-plparser-common			install
 libtotem-plparser18:amd64			install
 libtotem0:amd64					install
-libtracker-control-2.0-0:amd64			install
-libtracker-miner-2.0-0:amd64			install
 libtracker-sparql-2.0-0:amd64			install
 libtry-tiny-perl				install
 libtsan0:amd64					install
@@ -2098,11 +2081,12 @@ linux-image-5.5.5-pj-harvey+			deinstall
 linux-image-5.5.6-pj-harvey			deinstall
 linux-image-5.5.6-pj-harvey+			deinstall
 linux-image-5.5.7-alice-glass+			install
-linux-image-5.5.7-pj-harvey+			install
+linux-image-5.5.7-pj-harvey+			deinstall
 linux-image-5.5.7-pj-harvey-last-try+		deinstall
 linux-image-5.5.7-pj-harvey-mouse-fix+		deinstall
 linux-image-5.5.7-pj-harvey-mouse-fix-2+	deinstall
 linux-image-5.5.7-pj-harvey-mouse-try-3+	deinstall
+linux-image-5.5.8-pj-harvey+			install
 linux-image-5.6.0-rc4-kim-deal+			deinstall
 linux-image-amd64				install
 linux-kbuild-4.19				install
@@ -2161,8 +2145,6 @@ mscompress					install
 mysql-common					install
 mythes-en-us					install
 nano						install
-nautilus					install
-nautilus-data					install
 nautilus-dropbox				install
 ncdu						install
 ncurses-base					install
@@ -2190,7 +2172,6 @@ openssh-client					install
 openssl						install
 orca						install
 os-prober					install
-osinfo-db					install
 p11-kit						install
 p11-kit-modules:amd64				install
 p7zip						install
@@ -2565,9 +2546,6 @@ totem						install
 totem-common					install
 totem-plugins					install
 traceroute					install
-tracker						install
-tracker-extract					install
-tracker-miner-fs				install
 tree						install
 ttf-bitstream-vera				install
 tumbler						install
