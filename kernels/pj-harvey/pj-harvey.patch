@@ -1,39 +1,41 @@
-From 3d2ced3d371b43bf1c449354680d5083a9fd643f Mon Sep 17 00:00:00 2001
+From 5c477908c13330a514f18bed994ec1f693355af0 Mon Sep 17 00:00:00 2001
 From: Tony Fischetti <tony.fischetti@gmail.com>
 Date: Wed, 4 Mar 2020 10:42:32 -0500
-Subject: [PATCH 1/5] add ALWAYS_POLL quirk to lenovo pixart mouse
+Subject: [PATCH 1/5] HID: add ALWAYS_POLL quirk to lenovo pixart mouse
 
 A lenovo pixart mouse (17ef:608d) is afflicted common the the malfunction
 where it disconnects and reconnects every minute--each time incrementing
 the device number. This patch adds the device id of the device and
 specifies that it needs the HID_QUIRK_ALWAYS_POLL quirk in order to
 work properly.
+
+Signed-off-by: Tony Fischetti <tony.fischetti@gmail.com>
 ---
  drivers/hid/hid-ids.h    | 1 +
  drivers/hid/hid-quirks.c | 1 +
  2 files changed, 2 insertions(+)
 
 diff --git a/drivers/hid/hid-ids.h b/drivers/hid/hid-ids.h
-index 3a400ce603c4..9e1dfc714ea8 100644
+index 3a400ce603c4..327eaed9de4e 100644
 --- a/drivers/hid/hid-ids.h
 +++ b/drivers/hid/hid-ids.h
 @@ -726,6 +726,7 @@
  #define USB_DEVICE_ID_LENOVO_X1_COVER	0x6085
  #define USB_DEVICE_ID_LENOVO_X1_TAB	0x60a3
  #define USB_DEVICE_ID_LENOVO_X1_TAB3	0x60b5
-+#define USB_DEVICE_ID_LENOVO_PIXART_USB_OPTICAL_MOUSE	0x608d
++#define USB_DEVICE_ID_LENOVO_PIXART_USB_MOUSE_608D	0x608d
  
  #define USB_VENDOR_ID_LG		0x1fd2
  #define USB_DEVICE_ID_LG_MULTITOUCH	0x0064
 diff --git a/drivers/hid/hid-quirks.c b/drivers/hid/hid-quirks.c
-index 0e7b2d998395..247747d6d8cf 100644
+index 0e7b2d998395..3735546bb524 100644
 --- a/drivers/hid/hid-quirks.c
 +++ b/drivers/hid/hid-quirks.c
 @@ -103,6 +103,7 @@ static const struct hid_device_id hid_quirks[] = {
  	{ HID_USB_DEVICE(USB_VENDOR_ID_KYE, USB_DEVICE_ID_KYE_PENSKETCH_M912), HID_QUIRK_MULTI_INPUT },
  	{ HID_USB_DEVICE(USB_VENDOR_ID_KYE, USB_DEVICE_ID_KYE_EASYPEN_M406XE), HID_QUIRK_MULTI_INPUT },
  	{ HID_USB_DEVICE(USB_VENDOR_ID_KYE, USB_DEVICE_ID_PIXART_USB_OPTICAL_MOUSE_ID2), HID_QUIRK_ALWAYS_POLL },
-+	{ HID_USB_DEVICE(USB_VENDOR_ID_LENOVO, USB_DEVICE_ID_LENOVO_PIXART_USB_OPTICAL_MOUSE), HID_QUIRK_ALWAYS_POLL },
++	{ HID_USB_DEVICE(USB_VENDOR_ID_LENOVO, USB_DEVICE_ID_LENOVO_PIXART_USB_MOUSE_608D), HID_QUIRK_ALWAYS_POLL },
  	{ HID_USB_DEVICE(USB_VENDOR_ID_LOGITECH, USB_DEVICE_ID_LOGITECH_C007), HID_QUIRK_ALWAYS_POLL },
  	{ HID_USB_DEVICE(USB_VENDOR_ID_LOGITECH, USB_DEVICE_ID_LOGITECH_C077), HID_QUIRK_ALWAYS_POLL },
  	{ HID_USB_DEVICE(USB_VENDOR_ID_LOGITECH, USB_DEVICE_ID_LOGITECH_KEYBOARD_G710_PLUS), HID_QUIRK_NOGET },
@@ -41,7 +43,7 @@ index 0e7b2d998395..247747d6d8cf 100644
 2.20.1
 
 
-From 11c92dadc5c07e1a8633df0ef188c10867605bbb Mon Sep 17 00:00:00 2001
+From 7f44e992264980cb724d8d11e79e84fd2a736ba1 Mon Sep 17 00:00:00 2001
 From: Tony Fischetti <tony.fischetti@gmail.com>
 Date: Wed, 4 Mar 2020 10:51:34 -0500
 Subject: [PATCH 2/5] fix Magic SysRq for Matias mini keyboard
@@ -78,7 +80,7 @@ index 0f1db1cccc3f..0255c6c4e8c8 100644
 2.20.1
 
 
-From fea3c111fb2e1615e91db2ce3df13bd84448b040 Mon Sep 17 00:00:00 2001
+From 921e6ce840c5081208d5ae2b45f999094960438a Mon Sep 17 00:00:00 2001
 From: Tony Fischetti <tony.fischetti@gmail.com>
 Date: Wed, 4 Mar 2020 10:54:55 -0500
 Subject: [PATCH 3/5] make IO scheduler default to BFQ
@@ -114,7 +116,7 @@ index 4eab3d70e880..524534cc5306 100644
 2.20.1
 
 
-From a5a467f9f7528208270f8d71faf960c6ef470394 Mon Sep 17 00:00:00 2001
+From 4c4e3f19d9e92d321593ab20c549fc7b0f37809a Mon Sep 17 00:00:00 2001
 From: Tony Fischetti <tony.fischetti@gmail.com>
 Date: Wed, 4 Mar 2020 11:03:26 -0500
 Subject: [PATCH 4/5] Make latency-improving changes to CFS defaults
@@ -125,7 +127,7 @@ Subject: [PATCH 4/5] Make latency-improving changes to CFS defaults
  2 files changed, 17 insertions(+), 16 deletions(-)
 
 diff --git a/kernel/sched/core.c b/kernel/sched/core.c
-index b2564d62a0f7..b380400a7a78 100644
+index 9e7768dbd92d..f24d86fbb393 100644
 --- a/kernel/sched/core.c
 +++ b/kernel/sched/core.c
 @@ -57,7 +57,7 @@ const_debug unsigned int sysctl_sched_features =
@@ -150,7 +152,7 @@ index b2564d62a0f7..b380400a7a78 100644
  /*
   * __task_rq_lock - lock the rq @p resides on.
 diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
-index ba749f579714..9b1f0bce5fdd 100644
+index 0ff2f43ac9cd..1aa7f73f3b5a 100644
 --- a/kernel/sched/fair.c
 +++ b/kernel/sched/fair.c
 @@ -35,10 +35,11 @@
@@ -221,7 +223,7 @@ index ba749f579714..9b1f0bce5fdd 100644
 2.20.1
 
 
-From 5ee4c1052c8dcd004dcc744fac8fda1af8a84620 Mon Sep 17 00:00:00 2001
+From 384e1abf15c54a05b7d0f0f0e57cc158005963f5 Mon Sep 17 00:00:00 2001
 From: Tony Fischetti <tony.fischetti@gmail.com>
 Date: Wed, 4 Mar 2020 11:05:37 -0500
 Subject: [PATCH 5/5] add MNATIVE conf option using mtune=native on x86

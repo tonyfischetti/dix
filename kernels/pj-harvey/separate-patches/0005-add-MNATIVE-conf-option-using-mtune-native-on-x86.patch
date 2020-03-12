@@ -1,4 +1,4 @@
-From 5ee4c1052c8dcd004dcc744fac8fda1af8a84620 Mon Sep 17 00:00:00 2001
+From 384e1abf15c54a05b7d0f0f0e57cc158005963f5 Mon Sep 17 00:00:00 2001
 From: Tony Fischetti <tony.fischetti@gmail.com>
 Date: Wed, 4 Mar 2020 11:05:37 -0500
 Subject: [PATCH 5/5] add MNATIVE conf option using mtune=native on x86
