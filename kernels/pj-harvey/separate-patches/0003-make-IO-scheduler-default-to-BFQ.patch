@@ -1,7 +1,7 @@
-From 921e6ce840c5081208d5ae2b45f999094960438a Mon Sep 17 00:00:00 2001
+From 6adfd430a56f7aa834cbb3f77fba3b314ae6559b Mon Sep 17 00:00:00 2001
 From: Tony Fischetti <tony.fischetti@gmail.com>
 Date: Wed, 4 Mar 2020 10:54:55 -0500
-Subject: [PATCH 3/5] make IO scheduler default to BFQ
+Subject: [PATCH 3/7] make IO scheduler default to BFQ
 
 ---
  block/elevator.c | 9 +++------

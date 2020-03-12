@@ -1,7 +1,7 @@
-From 5c477908c13330a514f18bed994ec1f693355af0 Mon Sep 17 00:00:00 2001
+From 079a99ad0e0de549eeb013407192a66829f213dc Mon Sep 17 00:00:00 2001
 From: Tony Fischetti <tony.fischetti@gmail.com>
 Date: Wed, 4 Mar 2020 10:42:32 -0500
-Subject: [PATCH 1/5] HID: add ALWAYS_POLL quirk to lenovo pixart mouse
+Subject: [PATCH 1/7] HID: add ALWAYS_POLL quirk to lenovo pixart mouse
 
 A lenovo pixart mouse (17ef:608d) is afflicted common the the malfunction
 where it disconnects and reconnects every minute--each time incrementing
@@ -43,10 +43,10 @@ index 0e7b2d998395..3735546bb524 100644
 2.20.1
 
 
-From 7f44e992264980cb724d8d11e79e84fd2a736ba1 Mon Sep 17 00:00:00 2001
+From 74be2025cee30c96f829cb125e040f3366bc1ded Mon Sep 17 00:00:00 2001
 From: Tony Fischetti <tony.fischetti@gmail.com>
 Date: Wed, 4 Mar 2020 10:51:34 -0500
-Subject: [PATCH 2/5] fix Magic SysRq for Matias mini keyboard
+Subject: [PATCH 2/7] fix Magic SysRq for Matias mini keyboard
 
 ---
  include/uapi/linux/input-event-codes.h | 6 ++++--
@@ -80,10 +80,10 @@ index 0f1db1cccc3f..0255c6c4e8c8 100644
 2.20.1
 
 
-From 921e6ce840c5081208d5ae2b45f999094960438a Mon Sep 17 00:00:00 2001
+From 6adfd430a56f7aa834cbb3f77fba3b314ae6559b Mon Sep 17 00:00:00 2001
 From: Tony Fischetti <tony.fischetti@gmail.com>
 Date: Wed, 4 Mar 2020 10:54:55 -0500
-Subject: [PATCH 3/5] make IO scheduler default to BFQ
+Subject: [PATCH 3/7] make IO scheduler default to BFQ
 
 ---
  block/elevator.c | 9 +++------
@@ -116,10 +116,10 @@ index 4eab3d70e880..524534cc5306 100644
 2.20.1
 
 
-From 4c4e3f19d9e92d321593ab20c549fc7b0f37809a Mon Sep 17 00:00:00 2001
+From 2b61cd8acae4e419774034b53a0a4e6898232a14 Mon Sep 17 00:00:00 2001
 From: Tony Fischetti <tony.fischetti@gmail.com>
 Date: Wed, 4 Mar 2020 11:03:26 -0500
-Subject: [PATCH 4/5] Make latency-improving changes to CFS defaults
+Subject: [PATCH 4/7] Make latency-improving changes to CFS defaults
 
 ---
  kernel/sched/core.c |  6 +++---
@@ -223,10 +223,10 @@ index 0ff2f43ac9cd..1aa7f73f3b5a 100644
 2.20.1
 
 
-From 384e1abf15c54a05b7d0f0f0e57cc158005963f5 Mon Sep 17 00:00:00 2001
+From b1415c7f1b0517b2707df9cbd7e9557a74f2934a Mon Sep 17 00:00:00 2001
 From: Tony Fischetti <tony.fischetti@gmail.com>
 Date: Wed, 4 Mar 2020 11:05:37 -0500
-Subject: [PATCH 5/5] add MNATIVE conf option using mtune=native on x86
+Subject: [PATCH 5/7] add MNATIVE conf option using mtune=native on x86
 
 ---
  arch/x86/Kconfig.cpu          | 27 ++++++++++++++++++++-------
@@ -332,6 +332,58 @@ index c215d2762488..90bd8f3c93f6 100644
  #elif defined CONFIG_MATOM
  #define MODULE_PROC_FAMILY "ATOM "
  #elif defined CONFIG_M686
+-- 
+2.20.1
+
+
+From 3d1f8e89d4d2bf6db04d74c4ab6ee21b3e0c869b Mon Sep 17 00:00:00 2001
+From: Tony Fischetti <tony.fischetti@gmail.com>
+Date: Thu, 12 Mar 2020 15:39:35 -0400
+Subject: [PATCH 6/7] change swappiness default from 60 to 15
+
+---
+ mm/vmscan.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/mm/vmscan.c b/mm/vmscan.c
+index af4b2b3d4e0d..576d22956be5 100644
+--- a/mm/vmscan.c
++++ b/mm/vmscan.c
+@@ -177,7 +177,7 @@ struct scan_control {
+ /*
+  * From 0 .. 100.  Higher means more swappy.
+  */
+-int vm_swappiness = 60;
++int vm_swappiness = 15;
+ /*
+  * The total number of pages which are beyond the high watermark within all
+  * zones.
+-- 
+2.20.1
+
+
+From 65456af64b6bf870645b2c113eb465f34232c7f4 Mon Sep 17 00:00:00 2001
+From: Tony Fischetti <tony.fischetti@gmail.com>
+Date: Thu, 12 Mar 2020 15:40:07 -0400
+Subject: [PATCH 7/7] max_user_watches (inotify) from 8192 to 100000
+
+---
+ fs/notify/inotify/inotify_user.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/fs/notify/inotify/inotify_user.c b/fs/notify/inotify/inotify_user.c
+index 107537a543fd..2f5a8b70234d 100644
+--- a/fs/notify/inotify/inotify_user.c
++++ b/fs/notify/inotify/inotify_user.c
+@@ -827,7 +827,7 @@ static int __init inotify_user_setup(void)
+ 
+ 	inotify_max_queued_events = 16384;
+ 	init_user_ns.ucount_max[UCOUNT_INOTIFY_INSTANCES] = 128;
+-	init_user_ns.ucount_max[UCOUNT_INOTIFY_WATCHES] = 8192;
++	init_user_ns.ucount_max[UCOUNT_INOTIFY_WATCHES] = 100000;
+ 
+ 	return 0;
+ }
 -- 
 2.20.1
 

@@ -1,7 +1,7 @@
-From 384e1abf15c54a05b7d0f0f0e57cc158005963f5 Mon Sep 17 00:00:00 2001
+From b1415c7f1b0517b2707df9cbd7e9557a74f2934a Mon Sep 17 00:00:00 2001
 From: Tony Fischetti <tony.fischetti@gmail.com>
 Date: Wed, 4 Mar 2020 11:05:37 -0500
-Subject: [PATCH 5/5] add MNATIVE conf option using mtune=native on x86
+Subject: [PATCH 5/7] add MNATIVE conf option using mtune=native on x86
 
 ---
  arch/x86/Kconfig.cpu          | 27 ++++++++++++++++++++-------
