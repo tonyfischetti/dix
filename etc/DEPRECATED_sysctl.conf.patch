@@ -1,0 +1,6 @@
+these are in the kernel now
+---
+68a69,71
+> vm.swappiness=15
+> 
+> fs.inotify.max_user_watches=100000
