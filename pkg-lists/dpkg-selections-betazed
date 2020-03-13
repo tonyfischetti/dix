@@ -143,6 +143,7 @@ debian-archive-keyring				install
 debian-faq					install
 debian-keyring					install
 debianutils					install
+debsums						install
 debugedit					install
 default-jdk					install
 default-jdk-headless				install
@@ -188,6 +189,8 @@ eject						install
 emacsen-common					install
 enchant						install
 equivs						install
+espeak						install
+espeak-data:amd64				install
 espeak-ng-data:amd64				install
 ethtool						install
 evemu-tools					install
@@ -610,6 +613,7 @@ libayatana-ido3-0.4-0:amd64			install
 libayatana-indicator3-7:amd64			install
 libb-hooks-endofscope-perl			install
 libb-hooks-op-check-perl			install
+libbabeltrace1:amd64				install
 libbabl-0.1-0:amd64				install
 libbase-java					install
 libbasicusageenvironment1:amd64			install
@@ -861,6 +865,7 @@ libept1.5.0:amd64				install
 libepubgen-0.1-1:amd64				install
 liberror-perl					install
 libespeak-ng1:amd64				install
+libespeak1:amd64				install
 libestr0:amd64					install
 libetonyek-0.1-1:amd64				install
 libeval-closure-perl				install
@@ -906,6 +911,7 @@ libfile-chdir-perl				install
 libfile-desktopentry-perl			install
 libfile-fcntllock-perl				install
 libfile-find-rule-perl				install
+libfile-fnmatch-perl				install
 libfile-homedir-perl				install
 libfile-listing-perl				install
 libfile-mimeinfo-perl				install
@@ -1391,6 +1397,7 @@ libopenal1:amd64				install
 libopenblas-base:amd64				install
 libopencore-amrnb0:amd64			install
 libopencore-amrwb0:amd64			install
+libopencsd0:amd64				install
 libopenexr23:amd64				install
 libopengl0:amd64				install
 libopenjp2-7:amd64				install
@@ -1491,6 +1498,7 @@ libpoppler-glib8:amd64				install
 libpoppler-qt5-1:amd64				install
 libpoppler82:amd64				install
 libpopt0:amd64					install
+libportaudio2:amd64				install
 libpostproc55:amd64				install
 libpotrace0:amd64				install
 libpq5:amd64					install
@@ -2086,11 +2094,14 @@ linux-image-5.5.7-pj-harvey-last-try+		deinstall
 linux-image-5.5.7-pj-harvey-mouse-fix+		deinstall
 linux-image-5.5.7-pj-harvey-mouse-fix-2+	deinstall
 linux-image-5.5.7-pj-harvey-mouse-try-3+	deinstall
-linux-image-5.5.8-pj-harvey+			install
+linux-image-5.5.8-pj-harvey+			deinstall
+linux-image-5.5.9-pj-harvey+			install
 linux-image-5.6.0-rc4-kim-deal+			deinstall
 linux-image-amd64				install
 linux-kbuild-4.19				install
 linux-libc-dev:amd64				install
+linux-perf					install
+linux-perf-4.19					install
 linux-source					install
 linux-source-4.19				install
 linux-support-4.19.0-6				install
@@ -2169,6 +2180,8 @@ openjdk-11-jre-headless:amd64			install
 openprinting-ppds				install
 opensp						install
 openssh-client					install
+openssh-server					install
+openssh-sftp-server				install
 openssl						install
 orca						install
 os-prober					install
