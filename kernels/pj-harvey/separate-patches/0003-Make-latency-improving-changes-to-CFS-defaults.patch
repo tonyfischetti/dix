@@ -1,7 +1,7 @@
-From 2b61cd8acae4e419774034b53a0a4e6898232a14 Mon Sep 17 00:00:00 2001
+From cf710e8bea075afedc3a7ae200ced2778a31f1b6 Mon Sep 17 00:00:00 2001
 From: Tony Fischetti <tony.fischetti@gmail.com>
 Date: Wed, 4 Mar 2020 11:03:26 -0500
-Subject: [PATCH 4/7] Make latency-improving changes to CFS defaults
+Subject: [PATCH] Make latency-improving changes to CFS defaults
 
 ---
  kernel/sched/core.c |  6 +++---
@@ -9,7 +9,7 @@ Subject: [PATCH 4/7] Make latency-improving changes to CFS defaults
  2 files changed, 17 insertions(+), 16 deletions(-)
 
 diff --git a/kernel/sched/core.c b/kernel/sched/core.c
-index 9e7768dbd92d..f24d86fbb393 100644
+index 9e7768dbd92d2..f24d86fbb3930 100644
 --- a/kernel/sched/core.c
 +++ b/kernel/sched/core.c
 @@ -57,7 +57,7 @@ const_debug unsigned int sysctl_sched_features =
@@ -34,7 +34,7 @@ index 9e7768dbd92d..f24d86fbb393 100644
  /*
   * __task_rq_lock - lock the rq @p resides on.
 diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
-index 0ff2f43ac9cd..1aa7f73f3b5a 100644
+index 0ff2f43ac9cd7..1aa7f73f3b5ac 100644
 --- a/kernel/sched/fair.c
 +++ b/kernel/sched/fair.c
 @@ -35,10 +35,11 @@

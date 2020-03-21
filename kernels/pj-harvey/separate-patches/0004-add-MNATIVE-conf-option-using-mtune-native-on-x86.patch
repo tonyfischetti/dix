@@ -1,7 +1,7 @@
-From b1415c7f1b0517b2707df9cbd7e9557a74f2934a Mon Sep 17 00:00:00 2001
+From f8047d272b3d7c367e323b0ab19747377a3694fe Mon Sep 17 00:00:00 2001
 From: Tony Fischetti <tony.fischetti@gmail.com>
 Date: Wed, 4 Mar 2020 11:05:37 -0500
-Subject: [PATCH 5/7] add MNATIVE conf option using mtune=native on x86
+Subject: [PATCH] add MNATIVE conf option using mtune=native on x86
 
 ---
  arch/x86/Kconfig.cpu          | 27 ++++++++++++++++++++-------
@@ -10,7 +10,7 @@ Subject: [PATCH 5/7] add MNATIVE conf option using mtune=native on x86
  3 files changed, 23 insertions(+), 7 deletions(-)
 
 diff --git a/arch/x86/Kconfig.cpu b/arch/x86/Kconfig.cpu
-index af9c967782f6..83f2c0bdfb3f 100644
+index af9c967782f6a..83f2c0bdfb3f6 100644
 --- a/arch/x86/Kconfig.cpu
 +++ b/arch/x86/Kconfig.cpu
 @@ -294,6 +294,19 @@ config GENERIC_CPU
@@ -83,7 +83,7 @@ index af9c967782f6..83f2c0bdfb3f 100644
  config X86_MINIMUM_CPU_FAMILY
  	int
 diff --git a/arch/x86/Makefile b/arch/x86/Makefile
-index 94df0868804b..ddda616e6cd8 100644
+index 94df0868804bc..ddda616e6cd8a 100644
 --- a/arch/x86/Makefile
 +++ b/arch/x86/Makefile
 @@ -119,6 +119,7 @@ else
@@ -95,7 +95,7 @@ index 94df0868804b..ddda616e6cd8 100644
          cflags-$(CONFIG_MPSC) += $(call cc-option,-march=nocona)
  
 diff --git a/arch/x86/include/asm/module.h b/arch/x86/include/asm/module.h
-index c215d2762488..90bd8f3c93f6 100644
+index c215d27624884..90bd8f3c93f64 100644
 --- a/arch/x86/include/asm/module.h
 +++ b/arch/x86/include/asm/module.h
 @@ -27,6 +27,8 @@ struct mod_arch_specific {
