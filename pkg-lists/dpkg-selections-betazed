@@ -2085,6 +2085,7 @@ linux-image-5.5.0-pj-harvey+			deinstall
 linux-image-5.5.0-rc4-alice-glass		deinstall
 linux-image-5.5.0-rc7-alice-glass+		deinstall
 linux-image-5.5.11-pj-harvey+			deinstall
+linux-image-5.5.13-both-changes+		deinstall
 linux-image-5.5.13-pj-harvey+			install
 linux-image-5.5.3-pj-harvey+			deinstall
 linux-image-5.5.5-pj-harvey+			deinstall
@@ -2605,6 +2606,7 @@ vlc-plugin-skins2:amd64				install
 vlc-plugin-video-output:amd64			install
 vlc-plugin-video-splitter:amd64			install
 vlc-plugin-visualization:amd64			install
+vlock						install
 vorbis-tools					install
 vprerex						install
 wamerican					install
