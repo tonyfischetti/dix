@@ -1796,6 +1796,7 @@ libtypes-serialiser-perl			install
 libu2f-udev					install
 libubsan1:amd64					install
 libuchardet0:amd64				install
+libudev-dev:amd64				deinstall
 libudev1:amd64					install
 libudisks2-0:amd64				install
 libumfpack5:amd64				install
@@ -2171,6 +2172,7 @@ netcat-traditional				install
 netpbm						install
 network-manager					install
 network-manager-gnome				install
+ninja-build					deinstall
 node-normalize.css				install
 notification-daemon				install
 ntfs-3g						install
@@ -2405,6 +2407,7 @@ python3.7-minimal				install
 qpdf						install
 qt5-gtk-platformtheme:amd64			install
 qttranslations5-l10n				install
+quilt						install
 quodlibet					install
 racket						install
 racket-common					install
@@ -2585,6 +2588,7 @@ util-linux					install
 util-linux-locales				install
 uuid-dev:amd64					install
 va-driver-all:amd64				install
+valgrind					deinstall
 vbetool						install
 vdpau-driver-all:amd64				install
 veracrypt					install
@@ -2728,6 +2732,7 @@ xserver-xorg-video-vmware			install
 xsltproc					install
 xterm						install
 xtrans-dev					install
+xutils-dev					install
 xvfb						install
 xxd						install
 xxhash						install
