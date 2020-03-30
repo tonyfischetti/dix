@@ -189,9 +189,6 @@ eject						install
 emacsen-common					install
 enchant						install
 equivs						install
-espeak						install
-espeak-data:amd64				install
-espeak-ng-data:amd64				install
 ethtool						install
 evemu-tools					install
 evince						install
@@ -379,7 +376,6 @@ gir1.2-soup-2.4:amd64				install
 gir1.2-totem-1.0:amd64				install
 gir1.2-totemplparser-1.0:amd64			install
 gir1.2-webkit2-4.0:amd64			install
-gir1.2-wnck-3.0:amd64				install
 git						install
 git-email					install
 git-man						install
@@ -571,7 +567,7 @@ libasync-mergepoint-perl			install
 libasyncns0:amd64				install
 libatasmart4:amd64				install
 libatinject-jsr330-api-java			install
-libatk-adaptor:amd64				install
+libatk-adaptor:amd64				deinstall
 libatk-bridge2.0-0:amd64			install
 libatk-bridge2.0-dev:amd64			install
 libatk-wrapper-java				install
@@ -646,7 +642,6 @@ libboost-locale1.67.0:amd64			install
 libboost-system1.67.0:amd64			install
 libboost-thread1.67.0:amd64			install
 libbrasero-media3-1:amd64			install
-libbrlapi0.6:amd64				install
 libbrotli1:amd64				install
 libbs2b0:amd64					install
 libbsd0:amd64					install
@@ -819,7 +814,6 @@ libdmapsharing-3.0-2:amd64			install
 libdns-export1104				install
 libdns1104:amd64				install
 libdom4j-java					install
-libdotconf0:amd64				install
 libdouble-conversion1:amd64			install
 libdpkg-perl					install
 libdrm-amdgpu1:amd64				install
@@ -864,8 +858,6 @@ libepsilon1:amd64				install
 libept1.5.0:amd64				install
 libepubgen-0.1-1:amd64				install
 liberror-perl					install
-libespeak-ng1:amd64				install
-libespeak1:amd64				install
 libestr0:amd64					install
 libetonyek-0.1-1:amd64				install
 libeval-closure-perl				install
@@ -1448,7 +1440,6 @@ libpath-iterator-rule-perl			install
 libpath-tiny-perl				install
 libpathplan4					install
 libpcap0.8:amd64				install
-libpcaudio0:amd64				install
 libpci3:amd64					install
 libpciaccess0:amd64				install
 libpcre16-3:amd64				install
@@ -1685,7 +1676,6 @@ libsnmp30:amd64					install
 libsoap-lite-perl				install
 libsodium23:amd64				install
 libsombok3:amd64				install
-libsonic0:amd64					install
 libsord-0-0:amd64				install
 libsort-key-perl				install
 libsort-versions-perl				install
@@ -1698,7 +1688,6 @@ libspatialaudio0:amd64				install
 libspatialite7:amd64				install
 libspecio-perl					install
 libspectre1:amd64				install
-libspeechd2:amd64				install
 libspeex1:amd64					install
 libspeexdsp1:amd64				install
 libsqlite3-0:amd64				install
@@ -2101,6 +2090,7 @@ linux-image-5.5.7-pj-harvey-mouse-try-3+	deinstall
 linux-image-5.5.8-pj-harvey+			deinstall
 linux-image-5.5.9-alice-glass			deinstall
 linux-image-5.5.9-pj-harvey+			deinstall
+linux-image-5.6.0-pj-harvey+			deinstall
 linux-image-5.6.0-rc4-kim-deal+			deinstall
 linux-image-amd64				install
 linux-kbuild-4.19				install
@@ -2189,7 +2179,7 @@ openssh-client					install
 openssh-server					install
 openssh-sftp-server				install
 openssl						install
-orca						install
+orca						deinstall
 os-prober					install
 p11-kit						install
 p11-kit-modules:amd64				install
@@ -2323,7 +2313,6 @@ python3-alabaster				install
 python3-apt					install
 python3-asn1crypto				install
 python3-babel					install
-python3-brlapi:amd64				install
 python3-cairo:amd64				install
 python3-certifi					install
 python3-cffi-backend				install
@@ -2346,7 +2335,6 @@ python3-feedparser				install
 python3-gi					install
 python3-gi-cairo				install
 python3-gpg					install
-python3-gst-1.0					install
 python3-httplib2				install
 python3-idna					install
 python3-imageio					install
@@ -2355,7 +2343,6 @@ python3-jinja2					install
 python3-keyring					install
 python3-keyrings.alt				install
 python3-lib2to3					install
-python3-louis					install
 python3-magic					install
 python3-markupsafe				install
 python3-minimal					install
@@ -2370,7 +2357,6 @@ python3-pil:amd64				install
 python3-pip					install
 python3-pkg-resources				install
 python3-ptyprocess				install
-python3-pyatspi					install
 python3-pycurl					install
 python3-pygments				install
 python3-pyinotify				install
@@ -2391,7 +2377,6 @@ python3-setuptools				install
 python3-sip					install
 python3-six					install
 python3-smbc					install
-python3-speechd					install
 python3-speg					install
 python3-sphinx					install
 python3-tz					install
@@ -2449,12 +2434,9 @@ sgml-data					install
 sgmlspl						install
 shared-mime-info				install
 smartmontools					install
-sound-icons					install
 sound-theme-freedesktop				install
 spectre-meltdown-checker			install
-speech-dispatcher				install
-speech-dispatcher-audio-plugins:amd64		install
-speech-dispatcher-espeak-ng			install
+speech-dispatcher				deinstall
 sphinx-common					install
 sphinx-rtd-theme-common				install
 spotify-client					install
@@ -2644,7 +2626,7 @@ x11proto-xinerama-dev				install
 xarchiver					install
 xauth						install
 xbitmaps					install
-xbrlapi						install
+xbrlapi						deinstall
 xclip						install
 xdg-dbus-proxy					install
 xdg-user-dirs					install
