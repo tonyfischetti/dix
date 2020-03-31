@@ -61,6 +61,8 @@ cheese						install
 cheese-common					install
 chrpath						install
 cm-super-minimal				install
+cmus						install
+cmus-plugin-ffmpeg				install
 coinor-libcbc3					install
 coinor-libcgl1					install
 coinor-libclp1					install
@@ -604,12 +606,14 @@ libcpupower1					install
 libcroco3:amd64					install
 libcryptsetup12:amd64				install
 libcrystalhd3:amd64				install
+libcue2:amd64					install
 libcups2:amd64					install
 libcupsfilters1:amd64				install
 libcupsimage2:amd64				install
 libcurl3-gnutls:amd64				install
 libcurl4:amd64					install
 libcurl4-gnutls-dev:amd64			install
+libcurses-perl					install
 libcurvesapi-java				install
 libdaemon0:amd64				install
 libdata-dump-perl				install
@@ -637,6 +641,7 @@ libdevmapper1.02.1:amd64			install
 libdigest-bubblebabble-perl			install
 libdigest-hmac-perl				install
 libdirectfb-1.7-7:amd64				install
+libdiscid0:amd64				install
 libdiscover2					install
 libdistro-info-perl				install
 libdjvulibre-text				install
@@ -741,7 +746,6 @@ libfile-next-perl				install
 libfile-stripnondeterminism-perl		install
 libfile-which-perl				install
 libfl2:amd64					install
-libflac++6v5:amd64				install
 libflac8:amd64					install
 libflite1:amd64					install
 libfltk1.1:amd64				install
@@ -1245,6 +1249,7 @@ libpixie-java					install
 libpixman-1-0:amd64				install
 libpixman-1-dev:amd64				install
 libplacebo7:amd64				install
+libplayerctl2:amd64				install
 libplexus-archiver-java				install
 libplexus-cipher-java				install
 libplexus-classworlds-java			install
@@ -1268,7 +1273,6 @@ libpoppler-glib8:amd64				install
 libpoppler82:amd64				install
 libpopt0:amd64					install
 libportaudio2:amd64				install
-libportsmf0:amd64				install
 libposix-strptime-perl				install
 libpostproc55:amd64				install
 libpotrace0:amd64				install
@@ -1468,7 +1472,6 @@ libsub-identify-perl				install
 libsub-install-perl				install
 libsub-name-perl				install
 libsub-quote-perl				install
-libsuil-0-0:amd64				install
 libsuitesparseconfig5:amd64			install
 libswresample3:amd64				install
 libswscale5:amd64				install
@@ -1557,7 +1560,6 @@ libva-drm2:amd64				install
 libva-wayland2:amd64				install
 libva-x11-2:amd64				install
 libva2:amd64					install
-libvamp-hostsdk3v5:amd64			install
 libvariable-magic-perl				install
 libvdpau-va-gl1:amd64				install
 libvdpau1:amd64					install
@@ -1615,7 +1617,6 @@ libwrap0-dev:amd64				install
 libwww-perl					install
 libwww-robotrules-perl				install
 libwxbase3.0-0v5:amd64				install
-libwxgtk3.0-0v5:amd64				install
 libwxgtk3.0-gtk3-0v5:amd64			install
 libx11-6:amd64					install
 libx11-data					install
@@ -1780,7 +1781,7 @@ lightdm-gtk-greeter				install
 lintian						install
 linux-base					install
 linux-cpupower					install
-linux-headers-5.5.10-pj-harvey+			install
+linux-headers-5.5.11-pj-harvey+			install
 linux-image-4.19.0-5-amd64			deinstall
 linux-image-4.19.0-6-amd64			deinstall
 linux-image-4.19.0-8-amd64			install
@@ -1803,7 +1804,9 @@ linux-image-5.5.10-mic-2+			deinstall
 linux-image-5.5.10-mic-3+			deinstall
 linux-image-5.5.10-mic-4+			deinstall
 linux-image-5.5.10-mic-p+			deinstall
-linux-image-5.5.10-pj-harvey+			install
+linux-image-5.5.10-pj-harvey+			deinstall
+linux-image-5.5.11-pj-harvey+			deinstall
+linux-image-5.5.13-pj-harvey+			install
 linux-image-5.5.5-pj-harvey			deinstall
 linux-image-5.5.6-pj-harvey			deinstall
 linux-image-5.5.6-pj-harvey+			deinstall
@@ -1815,6 +1818,7 @@ linux-image-5.5.9-alice-glass			deinstall
 linux-image-5.5.9-alice-glass+			deinstall
 linux-image-5.5.9-pj-fixed-mic-p+		deinstall
 linux-image-5.5.9-pj-harvey+			deinstall
+linux-image-5.6.0-rc7-kim-deal+			install
 linux-image-amd64				install
 linux-libc-dev:amd64				install
 lltag						deinstall
@@ -1903,6 +1907,7 @@ phantomjs					install
 pinentry-curses					install
 pinentry-gnome3					install
 pkg-config					install
+playerctl					install
 plymouth					install
 plymouth-label					install
 po-debconf					install
@@ -2156,6 +2161,7 @@ ucf						install
 udev						install
 udisks2						install
 uno-libs3					install
+unrar						install
 unzip						install
 update-inetd					install
 upower						install
