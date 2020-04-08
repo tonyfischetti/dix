@@ -57,6 +57,7 @@ bzip2						install
 bzip2-doc					install
 ca-certificates					install
 ca-certificates-java				install
+cargo						install
 cheese						install
 cheese-common					install
 chrpath						install
@@ -227,6 +228,7 @@ gcc-multilib					install
 gconf-service					install
 gconf2-common					install
 gcr						install
+gdb						install
 gdbm-l10n					install
 gdisk						install
 geoclue-2.0					install
@@ -522,6 +524,7 @@ libc-bin					install
 libc-dev-bin					install
 libc-l10n					install
 libc6:amd64					install
+libc6-dbg:amd64					install
 libc6-dev:amd64					install
 libc6-dev-i386					install
 libc6-dev-x32					install
@@ -804,6 +807,7 @@ libgif7:amd64					install
 libgimp2.0					install
 libgirepository-1.0-1:amd64			install
 libgit-wrapper-perl				install
+libgit2-27:amd64				install
 libgitlab-api-v4-perl				install
 libgjs0g					install
 libgl1:amd64					install
@@ -915,6 +919,7 @@ libhttp-daemon-perl				install
 libhttp-date-perl				install
 libhttp-message-perl				install
 libhttp-negotiate-perl				install
+libhttp-parser2.8:amd64				install
 libhttp-tiny-multipart-perl			install
 libhttpclient-java				install
 libhttpcore-java				install
@@ -960,6 +965,7 @@ libip4tc0:amd64					install
 libip6tc0:amd64					install
 libipc-run-perl					install
 libipc-system-simple-perl			install
+libipt2						install
 libiptc0:amd64					install
 libirs161:amd64					install
 libisc-export1100:amd64				install
@@ -1081,6 +1087,9 @@ libmaven-resolver-java				install
 libmaven-shared-io-java				install
 libmaven-shared-utils-java			install
 libmaven3-core-java				install
+libmbedcrypto3:amd64				install
+libmbedtls12:amd64				install
+libmbedx509-0:amd64				install
 libmbim-glib4:amd64				install
 libmbim-proxy					install
 libmetis5:amd64					install
@@ -1458,6 +1467,8 @@ libstaroffice-0.0-0:amd64			install
 libstartup-notification0:amd64			install
 libstartup-notification0-dev:amd64		install
 libstax-ex-java					install
+libstd-rust-1.34:amd64				install
+libstd-rust-dev:amd64				install
 libstdc++-8-dev:amd64				install
 libstdc++6:amd64				install
 libstreambuffer-java				install
@@ -1806,7 +1817,7 @@ linux-image-5.5.10-mic-4+			deinstall
 linux-image-5.5.10-mic-p+			deinstall
 linux-image-5.5.10-pj-harvey+			deinstall
 linux-image-5.5.11-pj-harvey+			deinstall
-linux-image-5.5.13-pj-harvey+			install
+linux-image-5.5.13-pj-harvey+			deinstall
 linux-image-5.5.5-pj-harvey			deinstall
 linux-image-5.5.6-pj-harvey			deinstall
 linux-image-5.5.6-pj-harvey+			deinstall
@@ -1818,7 +1829,10 @@ linux-image-5.5.9-alice-glass			deinstall
 linux-image-5.5.9-alice-glass+			deinstall
 linux-image-5.5.9-pj-fixed-mic-p+		deinstall
 linux-image-5.5.9-pj-harvey+			deinstall
-linux-image-5.6.0-rc7-kim-deal+			install
+linux-image-5.6.0-rc7-kim-deal+			deinstall
+linux-image-5.6.1-alice-glass+			deinstall
+linux-image-5.6.2-pj-harvey+			deinstall
+linux-image-5.6.3-pj-harvey+			install
 linux-image-amd64				install
 linux-libc-dev:amd64				install
 lltag						deinstall
@@ -2076,6 +2090,8 @@ ruby-xmlrpc					install
 ruby2.5						install
 rubygems-integration				install
 runit-helper					install
+rust-gdb					install
+rustc						install
 samba-libs:amd64				install
 sane-utils					install
 sbcl						install
