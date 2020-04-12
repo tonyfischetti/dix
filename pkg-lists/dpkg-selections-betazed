@@ -89,6 +89,8 @@ cheese-common					install
 chktex						install
 cm-super					install
 cm-super-minimal				install
+cmake						install
+cmake-data					install
 coinor-libcbc3					install
 coinor-libcgl1					install
 coinor-libclp1					install
@@ -358,11 +360,13 @@ gir1.2-atspi-2.0:amd64				install
 gir1.2-freedesktop:amd64			install
 gir1.2-gdkpixbuf-2.0:amd64			install
 gir1.2-glib-2.0:amd64				install
+gir1.2-gsf-1:amd64				install
 gir1.2-gst-plugins-base-1.0:amd64		install
 gir1.2-gstreamer-1.0:amd64			install
 gir1.2-gtk-2.0:amd64				install
 gir1.2-gtk-3.0:amd64				install
 gir1.2-gtksource-3.0:amd64			install
+gir1.2-gudev-1.0:amd64				install
 gir1.2-harfbuzz-0.0:amd64			install
 gir1.2-javascriptcoregtk-4.0:amd64		install
 gir1.2-keybinder-3.0				install
@@ -371,11 +375,17 @@ gir1.2-packagekitglib-1.0			install
 gir1.2-pango-1.0:amd64				install
 gir1.2-peas-1.0:amd64				install
 gir1.2-polkit-1.0				install
+gir1.2-poppler-0.18:amd64			install
+gir1.2-rsvg-2.0:amd64				install
 gir1.2-secret-1:amd64				install
 gir1.2-soup-2.4:amd64				install
 gir1.2-totem-1.0:amd64				install
 gir1.2-totemplparser-1.0:amd64			install
+gir1.2-upowerglib-1.0:amd64			install
+gir1.2-vte-2.91:amd64				install
 gir1.2-webkit2-4.0:amd64			install
+gir1.2-wnck-3.0:amd64				install
+gir1.2-xkl-1.0:amd64				install
 git						install
 git-email					install
 git-man						install
@@ -476,6 +486,7 @@ install-info					install
 installation-report				install
 intel-media-va-driver:amd64			install
 intel-microcode					install
+intltool					install
 intltool-debian					install
 inxi						install
 iotop						install
@@ -785,6 +796,8 @@ libdb5.3:amd64					install
 libdbus-1-3:amd64				install
 libdbus-1-dev:amd64				install
 libdbus-glib-1-2:amd64				install
+libdbus-glib-1-dev:amd64			install
+libdbus-glib-1-dev-bin				install
 libdbusmenu-glib4:amd64				install
 libdbusmenu-gtk3-4:amd64			install
 libdbusmenu-gtk4:amd64				install
@@ -895,6 +908,7 @@ libfcgi-perl					install
 libfdisk1:amd64					install
 libffi-dev:amd64				install
 libffi6:amd64					install
+libffmpegthumbnailer-dev			install
 libffmpegthumbnailer4v5				install
 libfftw3-double3:amd64				install
 libfftw3-single3:amd64				install
@@ -1007,7 +1021,10 @@ libgmp10:amd64					install
 libgmpxx4ldbl:amd64				install
 libgnome-desktop-3-17:amd64			install
 libgnutls-dane0:amd64				install
+libgnutls-openssl27:amd64			install
+libgnutls28-dev:amd64				install
 libgnutls30:amd64				install
+libgnutlsxx28:amd64				install
 libgoa-1.0-0b:amd64				install
 libgoa-1.0-common				install
 libgoffice-0.10-10				install
@@ -1032,6 +1049,7 @@ libgs9-common					install
 libgsasl7					install
 libgsf-1-114:amd64				install
 libgsf-1-common					install
+libgsf-1-dev:amd64				install
 libgsl23:amd64					install
 libgslcblas0:amd64				install
 libgsm1:amd64					install
@@ -1060,6 +1078,7 @@ libgtkspell0:amd64				install
 libgts-0.7-5:amd64				install
 libguava-java					install
 libgudev-1.0-0:amd64				install
+libgudev-1.0-dev:amd64				install
 libguice-java					install
 libgupnp-1.0-4:amd64				install
 libgupnp-av-1.0-2				install
@@ -1108,6 +1127,7 @@ libicu63:amd64					install
 libid3tag0:amd64				install
 libidn11:amd64					install
 libidn2-0:amd64					install
+libidn2-dev:amd64				install
 libiec61883-0:amd64				install
 libieee1284-3:amd64				install
 libigdgmm5:amd64				install
@@ -1408,6 +1428,7 @@ libosp5						install
 libossp-uuid-perl				install
 libossp-uuid16:amd64				install
 libostyle1c2					install
+libp11-kit-dev:amd64				install
 libp11-kit0:amd64				install
 libpackage-stash-perl				install
 libpackage-stash-xs-perl			install
@@ -1486,6 +1507,9 @@ libpod-constants-perl				install
 libpolkit-agent-1-0:amd64			install
 libpolkit-backend-1-0:amd64			install
 libpolkit-gobject-1-0:amd64			install
+libpolkit-gobject-1-dev				install
+libpoppler-dev:amd64				install
+libpoppler-glib-dev				install
 libpoppler-glib8:amd64				install
 libpoppler-qt5-1:amd64				install
 libpoppler82:amd64				install
@@ -1602,6 +1626,7 @@ librepository-java				install
 libresid-builder0c2a				install
 librest-0.7-0:amd64				install
 librevenge-0.0-0:amd64				install
+librhash0:amd64					install
 librngom-java					install
 libroar-compat2:amd64				install
 libroar-dev					install
@@ -1614,6 +1639,7 @@ librpmsign8					install
 librsvg2-2:amd64				install
 librsvg2-bin					install
 librsvg2-common:amd64				install
+librsvg2-dev:amd64				install
 librtmp1:amd64					install
 librubberband2:amd64				install
 libruby2.5:amd64				install
@@ -1701,6 +1727,7 @@ libssl-dev:amd64				install
 libssl1.1:amd64					install
 libstaroffice-0.0-0:amd64			install
 libstartup-notification0:amd64			install
+libstartup-notification0-dev:amd64		install
 libstax-ex-java					install
 libstdc++-8-dev:amd64				install
 libstdc++6:amd64				install
@@ -1733,6 +1760,8 @@ libtagc0:amd64					install
 libtalloc2:amd64				install
 libtask-weaken-perl				install
 libtasn1-6:amd64				install
+libtasn1-6-dev:amd64				install
+libtasn1-doc					install
 libtcl8.6:amd64					install
 libtdb1:amd64					install
 libteamdctl0:amd64				install
@@ -1797,6 +1826,7 @@ libunique-1.0-0					install
 libunistring2:amd64				install
 libunwind8:amd64				install
 libupnp13:amd64					install
+libupower-glib-dev:amd64			install
 libupower-glib3:amd64				install
 liburi-perl					install
 liburiparser1:amd64				install
@@ -1807,6 +1837,7 @@ libusbmuxd4:amd64				install
 libutempter-dev:amd64				install
 libutempter0:amd64				install
 libuuid1:amd64					install
+libuv1:amd64					install
 libv4l-0:amd64					install
 libv4lconvert0:amd64				install
 libva-drm2:amd64				install
@@ -1832,6 +1863,8 @@ libvorbisfile3:amd64				install
 libvpx5:amd64					install
 libvte-2.91-0:amd64				install
 libvte-2.91-common				install
+libvte-2.91-dev:amd64				install
+libvte-2.91-doc					install
 libvulkan1:amd64				install
 libwacom-bin					install
 libwacom-common					install
@@ -1859,6 +1892,7 @@ libwmf-bin					install
 libwmf0.2-7:amd64				install
 libwnck-3-0:amd64				install
 libwnck-3-common				install
+libwnck-3-dev					install
 libwnck-common					install
 libwnck22:amd64					install
 libwoff1:amd64					install
@@ -1932,12 +1966,15 @@ libxext6:amd64					install
 libxfce4panel-2.0-4				install
 libxfce4ui-1-0:amd64				install
 libxfce4ui-2-0:amd64				install
+libxfce4ui-2-dev:amd64				install
 libxfce4ui-common				install
 libxfce4ui-utils				install
 libxfce4util-bin				install
 libxfce4util-common				install
+libxfce4util-dev:amd64				install
 libxfce4util7:amd64				install
 libxfconf-0-2					install
+libxfconf-0-dev					install
 libxfixes-dev:amd64				install
 libxfixes3:amd64				install
 libxfont2:amd64					install
@@ -1951,6 +1988,7 @@ libxkbcommon-dev:amd64				install
 libxkbcommon-x11-0:amd64			install
 libxkbcommon0:amd64				install
 libxkbfile1:amd64				install
+libxklavier-dev:amd64				install
 libxklavier16:amd64				install
 libxml-commons-external-java			install
 libxml-commons-resolver1.1-java			install
@@ -1986,6 +2024,7 @@ libxrandr-dev:amd64				install
 libxrandr2:amd64				install
 libxrender-dev:amd64				install
 libxrender1:amd64				install
+libxres-dev					install
 libxres1:amd64					install
 libxshmfence-dev:amd64				install
 libxshmfence1:amd64				install
@@ -2164,6 +2203,7 @@ neofetch					install
 netbase						install
 netcat-traditional				install
 netpbm						install
+nettle-dev:amd64				install
 network-manager					install
 network-manager-gnome				install
 ninja-build					deinstall
@@ -2645,6 +2685,7 @@ xfce4-clipman-plugin				install
 xfce4-cpufreq-plugin				install
 xfce4-cpugraph-plugin				install
 xfce4-datetime-plugin				install
+xfce4-dev-tools					install
 xfce4-dict					install
 xfce4-diskperf-plugin				install
 xfce4-fsguard-plugin				install
@@ -2694,7 +2735,7 @@ xorg-docs-core					install
 xorg-sgml-doctools				install
 xsane						install
 xsane-common					install
-xscreensaver					install
+xscreensaver					deinstall
 xscreensaver-data				install
 xscreensaver-data-extra				install
 xscreensaver-gl					install
@@ -2704,6 +2745,7 @@ xserver-xorg					install
 xserver-xorg-core				install
 xserver-xorg-input-all				install
 xserver-xorg-input-libinput			install
+xserver-xorg-input-libinput-dev			install
 xserver-xorg-input-wacom			install
 xserver-xorg-legacy				install
 xserver-xorg-video-all				install
