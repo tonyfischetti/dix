@@ -9,8 +9,8 @@ add mod4 = Super_L
 keycode 66 = Control_L Caps_Lock NoSymbol NoSymbol
 
 ! page up and down to lower and raise volume
-keycode 112 = XF86AudioRaiseVolume
-keycode 117 = XF86AudioLowerVolume
+keycode 104 = XF86AudioRaiseVolume
+keycode 109 = XF86AudioLowerVolume
 
 ! Super (Right) -> Multi (Compose) key
 keycode 134 = Multi_key
