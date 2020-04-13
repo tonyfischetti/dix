@@ -2136,6 +2136,7 @@ linux-image-5.6.1-pj-harvey+			deinstall
 linux-image-5.6.2-pj-harvey+			deinstall
 linux-image-5.6.3-pj-harvey+			deinstall
 linux-image-5.6.4-pj-harvey+			install
+linux-image-5.7.0-rc1-kim-deal+			install
 linux-image-amd64				install
 linux-kbuild-4.19				install
 linux-libc-dev:amd64				install
@@ -2435,6 +2436,13 @@ python3-xdg					install
 python3.7					install
 python3.7-dev					install
 python3.7-minimal				install
+qml-module-qtgraphicaleffects:amd64		install
+qml-module-qtquick-controls:amd64		install
+qml-module-qtquick-dialogs:amd64		install
+qml-module-qtquick-layouts:amd64		install
+qml-module-qtquick-privatewidgets:amd64		install
+qml-module-qtquick-window2:amd64		install
+qml-module-qtquick2:amd64			install
 qpdf						install
 qt5-gtk-platformtheme:amd64			install
 qttranslations5-l10n				install
@@ -2513,7 +2521,7 @@ tcl						install
 tcl-dev:amd64					install
 tcl8.6						install
 tcl8.6-dev:amd64				install
-teamviewer					deinstall
+teamviewer					install
 teckit						install
 telnet						install
 tex-common					install
