@@ -1,11 +1,9 @@
 
 ! Make CapsLock -> Control (Caps lock can be Shift+CapsLock)
-! and make Super (left) act like a control, too
+!     (modifier keys have to be cleared)
 clear lock
-clear mod4
 clear control
 add control = Caps_Lock Control_L Control_R
-add mod4 = Super_L
 keycode 66 = Control_L Caps_Lock NoSymbol NoSymbol
 
 ! page up and down to lower and raise volume
@@ -22,3 +20,14 @@ keycode 108 = Multi_key
 keycode 165 = XF86AudioPrev
 keycode 163 = XF86AudioNext
 keycode 164 = XF86AudioPlay
+
+
+! Super_L + Backspac -> Delete
+! (so I can move stuff to trash in xfce easier)
+keysym Super_L = Mode_switch
+keycode 22 = BackSpace BackSpace Delete Delete Delete Delete
+
+!!! NOTES
+! add 8 to whatever `sudo showkey -k` says
+! xev
+! show the table: `xmodmap -pke` & `xmodmap -pm`
