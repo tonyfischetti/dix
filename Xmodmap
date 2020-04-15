@@ -17,9 +17,9 @@ keycode 134 = Multi_key
 keycode 108 = Multi_key
 
 ! fixed for matias keyboard
-keycode 165 = XF86AudioPrev
-keycode 163 = XF86AudioNext
-keycode 164 = XF86AudioPlay
+keycode 173 = XF86AudioPrev
+keycode 174 = XF86AudioNext
+keycode 172 = XF86AudioPlay
 
 
 ! Super_L + Backspac -> Delete
