@@ -441,6 +441,8 @@ gstreamer1.0-plugins-good:amd64			install
 gstreamer1.0-plugins-ugly:amd64			install
 gstreamer1.0-pulseaudio:amd64			install
 gstreamer1.0-x:amd64				install
+gthumb						install
+gthumb-data					install
 gtk-update-icon-cache				install
 gtk2-engines-pixbuf:amd64			install
 gtk2-engines-xfce				install
@@ -1410,6 +1412,8 @@ libopenblas-base:amd64				install
 libopencore-amrnb0:amd64			install
 libopencore-amrwb0:amd64			install
 libopencsd0:amd64				install
+libopencv-core3.2:amd64				install
+libopencv-imgproc3.2:amd64			install
 libopenexr23:amd64				install
 libopengl0:amd64				install
 libopenjp2-7:amd64				install
@@ -1555,6 +1559,7 @@ libqpdf21:amd64					install
 libqrencode4:amd64				install
 libqscintilla2-qt5-13				install
 libqscintilla2-qt5-l10n				install
+libqt5concurrent5:amd64				install
 libqt5core5a:amd64				install
 libqt5dbus5:amd64				install
 libqt5designer5:amd64				install
@@ -1576,6 +1581,7 @@ libqt5widgets5:amd64				install
 libqt5x11extras5:amd64				install
 libqt5xml5:amd64				install
 libquadmath0:amd64				install
+libquazip5-1:amd64				install
 libquvi-0.9-0.9.3:amd64				install
 libquvi-scripts-0.9				install
 libqxp-0.0-0					install
@@ -1762,6 +1768,7 @@ libtask-weaken-perl				install
 libtasn1-6:amd64				install
 libtasn1-6-dev:amd64				install
 libtasn1-doc					install
+libtbb2:amd64					install
 libtcl8.6:amd64					install
 libtdb1:amd64					install
 libteamdctl0:amd64				install
@@ -2185,6 +2192,7 @@ mesa-utils					install
 mesa-va-drivers:amd64				install
 mesa-vdpau-drivers:amd64			install
 mime-support					install
+mirage						deinstall
 mobile-broadband-provider-info			install
 modemmanager					install
 moreutils					install
@@ -2210,6 +2218,8 @@ network-manager					install
 network-manager-gnome				install
 ninja-build					deinstall
 node-normalize.css				install
+nomacs						install
+nomacs-l10n					install
 notification-daemon				install
 ntfs-3g						install
 odbcinst					install
@@ -2445,6 +2455,7 @@ qml-module-qtquick-window2:amd64		install
 qml-module-qtquick2:amd64			install
 qpdf						install
 qt5-gtk-platformtheme:amd64			install
+qt5-image-formats-plugins:amd64			install
 qttranslations5-l10n				install
 quilt						install
 quodlibet					install
