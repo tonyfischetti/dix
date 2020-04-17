@@ -2142,7 +2142,8 @@ linux-image-5.6.0-rc4-kim-deal+			deinstall
 linux-image-5.6.1-pj-harvey+			deinstall
 linux-image-5.6.2-pj-harvey+			deinstall
 linux-image-5.6.3-pj-harvey+			deinstall
-linux-image-5.6.4-pj-harvey+			install
+linux-image-5.6.4-pj-harvey+			deinstall
+linux-image-5.6.5-pj-harvey+			install
 linux-image-5.7.0-rc1-kim-deal+			install
 linux-image-amd64				install
 linux-kbuild-4.19				install
