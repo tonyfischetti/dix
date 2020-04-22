@@ -1,7 +1,7 @@
 From cf710e8bea075afedc3a7ae200ced2778a31f1b6 Mon Sep 17 00:00:00 2001
 From: Tony Fischetti <tony.fischetti@gmail.com>
 Date: Wed, 4 Mar 2020 11:03:26 -0500
-Subject: [PATCH] Make latency-improving changes to CFS defaults
+Subject: [PATCH] make latency-improving changes to CFS defaults
 
 ---
  kernel/sched/core.c |  6 +++---
