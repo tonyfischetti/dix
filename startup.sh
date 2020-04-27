@@ -4,10 +4,8 @@
 
 THEHOST=`hostname`
 
-# if [ $THEHOST == "qonos" ] ; then
-#     synclient VertScrollDelta=-73
-#     # another non-working option
-#     xinput --set-int-prop 12 "libinput Natural Scrolling Enabled" 8 1 
-# fi
+if [ $THEHOST == "qonos" ] ; then
+    xinput --set-int-prop 13 "libinput Natural Scrolling Enabled" 8 1
+fi
 
 sh ~/starlight/start-starlight.sh
