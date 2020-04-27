@@ -1,0 +1,25 @@
+From 4cbddecc17cab27f29d9e8da8d93ae793cad7151 Mon Sep 17 00:00:00 2001
+From: Tony Fischetti <tony.fischetti@gmail.com>
+Date: Tue, 21 Apr 2020 09:14:28 -0400
+Subject: [PATCH] Set schedutil's `rate_limit_us` parameter to 0
+
+---
+ kernel/sched/cpufreq_schedutil.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/kernel/sched/cpufreq_schedutil.c b/kernel/sched/cpufreq_schedutil.c
+index 7fbaee24c824..b51959c50577 100644
+--- a/kernel/sched/cpufreq_schedutil.c
++++ b/kernel/sched/cpufreq_schedutil.c
+@@ -776,7 +776,7 @@ static int sugov_init(struct cpufreq_policy *policy)
+ 		goto stop_kthread;
+ 	}
+ 
+-	tunables->rate_limit_us = cpufreq_policy_transition_delay_us(policy);
++	tunables->rate_limit_us = 0;
+ 
+ 	policy->governor_data = sg_policy;
+ 	sg_policy->tunables = tunables;
+-- 
+2.20.1
+
