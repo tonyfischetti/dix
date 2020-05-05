@@ -1,4 +1,4 @@
-From df8ccabd961122a4269d7ba851539175421fc01a Mon Sep 17 00:00:00 2001
+From 68a50bf5e7877e50f9c11e595c13c73fd24c1497 Mon Sep 17 00:00:00 2001
 From: Tony Fischetti <tony.fischetti@gmail.com>
 Date: Wed, 4 Mar 2020 10:51:34 -0500
 Subject: [PATCH] fix Magic SysRq for Matias mini keyboard

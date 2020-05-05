@@ -1,7 +1,7 @@
 From cb1076f1540c8611710510df98da2299bacf9447 Mon Sep 17 00:00:00 2001
 From: Tony Fischetti <tony.fischetti@gmail.com>
 Date: Tue, 5 May 2020 16:17:01 -0400
-Subject: [PATCH] x86/setup: Add boot messages about cmdline builtins
+Subject: [PATCH v2] x86/setup: Add boot messages about cmdline builtins
 
 While the ability to override or append to the boot command line has
 been added, the boot messages contain no information as to whether the

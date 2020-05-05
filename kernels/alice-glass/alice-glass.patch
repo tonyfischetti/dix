@@ -1,7 +1,7 @@
-From df8ccabd961122a4269d7ba851539175421fc01a Mon Sep 17 00:00:00 2001
+From 68a50bf5e7877e50f9c11e595c13c73fd24c1497 Mon Sep 17 00:00:00 2001
 From: Tony Fischetti <tony.fischetti@gmail.com>
 Date: Wed, 4 Mar 2020 10:51:34 -0500
-Subject: [PATCH 1/7] fix Magic SysRq for Matias mini keyboard
+Subject: [PATCH] fix Magic SysRq for Matias mini keyboard
 
 ---
  include/uapi/linux/input-event-codes.h | 6 ++++--
@@ -35,10 +35,10 @@ index b6a835d37826..4db444094a3e 100644
 2.20.1
 
 
-From 0032b279d8ad9dfb9178c290ee531a83cbd03d0a Mon Sep 17 00:00:00 2001
+From 74d0896c2ebb61777f6e2dd794f4572664d37890 Mon Sep 17 00:00:00 2001
 From: Tony Fischetti <tony.fischetti@gmail.com>
 Date: Wed, 4 Mar 2020 10:54:55 -0500
-Subject: [PATCH 2/7] make IO scheduler default to BFQ
+Subject: [PATCH] make IO scheduler default to BFQ
 
 ---
  block/elevator.c | 9 +++------
@@ -71,10 +71,10 @@ index 4eab3d70e880..524534cc5306 100644
 2.20.1
 
 
-From 9e2c77952fddf159a0b0bd90719f89c07bc52467 Mon Sep 17 00:00:00 2001
+From 28c18c64e257902d0b2e44cfd5be75110c8464f6 Mon Sep 17 00:00:00 2001
 From: Tony Fischetti <tony.fischetti@gmail.com>
 Date: Mon, 27 Apr 2020 08:58:44 -0400
-Subject: [PATCH 3/7] make latency-improving changes to CFS defaults
+Subject: [PATCH] make latency-improving changes to CFS defaults
 
 ---
  kernel/sched/core.c |  6 +++---
@@ -178,10 +178,10 @@ index 02f323b85b6d..f32c4d9e25db 100644
 2.20.1
 
 
-From f9b9093c228d50f40f63d1f33bf1ce4a5dde91f4 Mon Sep 17 00:00:00 2001
+From 3bd61171b319da5dcac3b3600a0ccf7315ac509e Mon Sep 17 00:00:00 2001
 From: Tony Fischetti <tony.fischetti@gmail.com>
 Date: Thu, 12 Mar 2020 15:39:35 -0400
-Subject: [PATCH 4/7] change swappiness default from 60 to 15
+Subject: [PATCH] change swappiness default from 60 to 15
 
 ---
  mm/vmscan.c | 2 +-
@@ -204,10 +204,10 @@ index b06868fc4926..5148d05ed925 100644
 2.20.1
 
 
-From c55c59d941b6eb929050badd5e85a51b2a1fae6d Mon Sep 17 00:00:00 2001
+From 86c278c40c925565ca6d92d01285a1c034bd402f Mon Sep 17 00:00:00 2001
 From: Tony Fischetti <tony.fischetti@gmail.com>
 Date: Thu, 12 Mar 2020 15:40:07 -0400
-Subject: [PATCH 5/7] max_user_watches (inotify) from 8192 to 100000
+Subject: [PATCH] max_user_watches (inotify) from 8192 to 100000
 
 ---
  fs/notify/inotify/inotify_user.c | 2 +-
@@ -230,10 +230,10 @@ index 81ffc8629fc4..bd47f8db102b 100644
 2.20.1
 
 
-From 4cbddecc17cab27f29d9e8da8d93ae793cad7151 Mon Sep 17 00:00:00 2001
+From f91387714dd4b5b0e6b7bc4e0a87539c118b7aee Mon Sep 17 00:00:00 2001
 From: Tony Fischetti <tony.fischetti@gmail.com>
 Date: Tue, 21 Apr 2020 09:14:28 -0400
-Subject: [PATCH 6/7] Set schedutil's `rate_limit_us` parameter to 0
+Subject: [PATCH] Set schedutil's `rate_limit_us` parameter to 0
 
 ---
  kernel/sched/cpufreq_schedutil.c | 2 +-
@@ -256,53 +256,40 @@ index 7fbaee24c824..b51959c50577 100644
 2.20.1
 
 
-From e01e68e036807fae6b6403fe1ee76976ecde86a0 Mon Sep 17 00:00:00 2001
+From cb1076f1540c8611710510df98da2299bacf9447 Mon Sep 17 00:00:00 2001
 From: Tony Fischetti <tony.fischetti@gmail.com>
-Date: Tue, 21 Apr 2020 23:56:09 -0400
-Subject: [PATCH 7/7] x86/setup: Add boot messages about cmdline builtins
+Date: Tue, 5 May 2020 16:17:01 -0400
+Subject: [PATCH] x86/setup: Add boot messages about cmdline builtins
 
 While the ability to override or append to the boot command line has
 been added, the boot messages contain no information as to whether the
 cmdline was manipulated by the build-time options. This patch, for x86,
-adds boot messages specifying whether the cmdline was manipulated and
-waits for the potential changes to take place before printing the final
-boot command line.
+adds boot messages specifying the intital cmdline, and the final cmdline
+after possible manipulation via the kernel config.
 
 Signed-off-by: Tony Fischetti <tony.fischetti@gmail.com>
 ---
- arch/x86/kernel/setup.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ arch/x86/kernel/setup.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
 diff --git a/arch/x86/kernel/setup.c b/arch/x86/kernel/setup.c
-index 4b3fa6cd3106..28d77f01fd0d 100644
+index 4b3fa6cd3106..ee90dffcfd79 100644
 --- a/arch/x86/kernel/setup.c
 +++ b/arch/x86/kernel/setup.c
-@@ -828,7 +828,6 @@ void __init setup_arch(char **cmdline_p)
+@@ -828,7 +828,7 @@ void __init setup_arch(char **cmdline_p)
  	 */
  	__flush_tlb_all();
  #else
 -	printk(KERN_INFO "Command line: %s\n", boot_command_line);
++	pr_info("Initial command line: %s\n", boot_command_line);
  	boot_cpu_data.x86_phys_bits = MAX_PHYSMEM_BITS;
  #endif
  
-@@ -904,10 +903,12 @@ void __init setup_arch(char **cmdline_p)
- 
- #ifdef CONFIG_CMDLINE_BOOL
- #ifdef CONFIG_CMDLINE_OVERRIDE
-+	pr_info("Overriding command line with builtin\n");
- 	strlcpy(boot_command_line, builtin_cmdline, COMMAND_LINE_SIZE);
- #else
- 	if (builtin_cmdline[0]) {
- 		/* append boot loader cmdline to builtin */
-+		pr_info("Appending command line to builtin\n");
- 		strlcat(builtin_cmdline, " ", COMMAND_LINE_SIZE);
- 		strlcat(builtin_cmdline, boot_command_line, COMMAND_LINE_SIZE);
- 		strlcpy(boot_command_line, builtin_cmdline, COMMAND_LINE_SIZE);
-@@ -916,6 +917,7 @@ void __init setup_arch(char **cmdline_p)
+@@ -916,6 +916,7 @@ void __init setup_arch(char **cmdline_p)
  #endif
  
  	strlcpy(command_line, boot_command_line, COMMAND_LINE_SIZE);
-+	pr_info("Command line: %s\n", command_line);
++	pr_info("Final command line: %s\n", command_line);
  	*cmdline_p = command_line;
  
  	/*
