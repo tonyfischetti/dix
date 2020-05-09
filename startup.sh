@@ -2,6 +2,8 @@
 
 # add this to the xfce session autostart executing "sh /home/tony/.dix/startup.sh"
 
+sh ~/starlight/start-starlight.sh
+
 THEHOST=`hostname`
 
 if [ $THEHOST == "qonos" ] ; then
@@ -9,4 +11,3 @@ if [ $THEHOST == "qonos" ] ; then
     xinput --set-int-prop 13 "libinput Tapping Enabled" 8 1
 fi
 
-sh ~/starlight/start-starlight.sh
