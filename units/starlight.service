@@ -1,0 +1,9 @@
+[Unit]
+Description=Starlight
+
+[Service]
+ExecStart=/usr/bin/racket -e '(require (file "~/starlight/starlight.rkt"))'
+Restart=always
+
+[Install]
+WantedBy=default.target
