@@ -1,6 +1,8 @@
 [Unit]
 Description=Starlight
 
+StartLimitIntervalSec=0
+
 [Service]
 ExecStart=/usr/bin/racket -e '(require (file "~/starlight/starlight.rkt"))'
 Restart=always
