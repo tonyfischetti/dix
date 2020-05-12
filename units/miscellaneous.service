@@ -1,13 +1,16 @@
 [Unit]
-Description=Starlight
+Description=Miscellaneous
 Requires=graphical-session.target
 After=graphical-session.target
 
 StartLimitIntervalSec=0
 
 [Service]
-ExecStart=/usr/bin/racket -L "warning" -e '(require (file "~/starlight/starlight.rkt"))'
-Restart=always
+Type=simple
+RemainAfterExit=true
+ExecStart=/home/tony/.dix/startup.sh
+StandardOutput=journal
+Restart=on-failure
 
 [Install]
 WantedBy=default.target
