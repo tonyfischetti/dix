@@ -1,4 +1,4 @@
-From cb1076f1540c8611710510df98da2299bacf9447 Mon Sep 17 00:00:00 2001
+From 113d33e28213c32ee80d86374e06bf6293764483 Mon Sep 17 00:00:00 2001
 From: Tony Fischetti <tony.fischetti@gmail.com>
 Date: Tue, 5 May 2020 16:17:01 -0400
 Subject: [PATCH] x86/setup: Add boot messages about cmdline builtins
