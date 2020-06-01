@@ -1,4 +1,4 @@
-From 0473c37b3e4b69257e4a3e57c5dd5b0a311c8fdb Mon Sep 17 00:00:00 2001
+From 44d7ae8ed05bb330ad006fd6556339178b6e7720 Mon Sep 17 00:00:00 2001
 From: Tony Fischetti <tony.fischetti@gmail.com>
 Date: Wed, 4 Mar 2020 10:54:55 -0500
 Subject: [PATCH] make IO scheduler default to BFQ
@@ -8,7 +8,7 @@ Subject: [PATCH] make IO scheduler default to BFQ
  1 file changed, 3 insertions(+), 6 deletions(-)
 
 diff --git a/block/elevator.c b/block/elevator.c
-index 4eab3d70e880a..524534cc5306c 100644
+index 4eab3d70e880..524534cc5306 100644
 --- a/block/elevator.c
 +++ b/block/elevator.c
 @@ -623,15 +623,12 @@ static inline bool elv_support_iosched(struct request_queue *q)

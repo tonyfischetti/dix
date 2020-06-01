@@ -1,6 +1,6 @@
-From cf710e8bea075afedc3a7ae200ced2778a31f1b6 Mon Sep 17 00:00:00 2001
+From 975908ac6844b991c25023dc0ff9da2ec8de8080 Mon Sep 17 00:00:00 2001
 From: Tony Fischetti <tony.fischetti@gmail.com>
-Date: Wed, 4 Mar 2020 11:03:26 -0500
+Date: Mon, 27 Apr 2020 08:58:44 -0400
 Subject: [PATCH] make latency-improving changes to CFS defaults
 
 ---
@@ -9,7 +9,7 @@ Subject: [PATCH] make latency-improving changes to CFS defaults
  2 files changed, 17 insertions(+), 16 deletions(-)
 
 diff --git a/kernel/sched/core.c b/kernel/sched/core.c
-index 9e7768dbd92d2..f24d86fbb3930 100644
+index 9a2fbf98fd6f..f452d1e9fb14 100644
 --- a/kernel/sched/core.c
 +++ b/kernel/sched/core.c
 @@ -57,7 +57,7 @@ const_debug unsigned int sysctl_sched_features =
@@ -34,7 +34,7 @@ index 9e7768dbd92d2..f24d86fbb3930 100644
  /*
   * __task_rq_lock - lock the rq @p resides on.
 diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
-index 0ff2f43ac9cd7..1aa7f73f3b5ac 100644
+index 02f323b85b6d..f32c4d9e25db 100644
 --- a/kernel/sched/fair.c
 +++ b/kernel/sched/fair.c
 @@ -35,10 +35,11 @@
@@ -87,9 +87,9 @@ index 0ff2f43ac9cd7..1aa7f73f3b5ac 100644
 -const_debug unsigned int sysctl_sched_migration_cost	= 500000UL;
 +const_debug unsigned int sysctl_sched_migration_cost	= 350000UL;
  
- #ifdef CONFIG_SMP
- /*
-@@ -113,9 +114,9 @@ int __weak arch_asym_cpu_priority(int cpu)
+ int sched_thermal_decay_shift;
+ static int __init setup_sched_thermal_decay_shift(char *str)
+@@ -126,9 +127,9 @@ int __weak arch_asym_cpu_priority(int cpu)
   * to consumption or the quota being specified to be smaller than the slice)
   * we will always only issue the remaining available time.
   *

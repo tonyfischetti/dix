@@ -1,4 +1,4 @@
-From 2c27809e0222ce0786eb0ca4273b19e7fb034705 Mon Sep 17 00:00:00 2001
+From 35b348c1e60fb27f5b9d5e253639b2b4be5d8eda Mon Sep 17 00:00:00 2001
 From: Tony Fischetti <tony.fischetti@gmail.com>
 Date: Wed, 4 Mar 2020 10:51:34 -0500
 Subject: [PATCH] fix Magic SysRq for Matias mini keyboard
@@ -8,7 +8,7 @@ Subject: [PATCH] fix Magic SysRq for Matias mini keyboard
  1 file changed, 4 insertions(+), 2 deletions(-)
 
 diff --git a/include/uapi/linux/input-event-codes.h b/include/uapi/linux/input-event-codes.h
-index 0f1db1cccc3fd..0255c6c4e8c85 100644
+index b6a835d37826..4db444094a3e 100644
 --- a/include/uapi/linux/input-event-codes.h
 +++ b/include/uapi/linux/input-event-codes.h
 @@ -139,7 +139,8 @@
