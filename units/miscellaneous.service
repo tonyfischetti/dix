@@ -3,7 +3,8 @@ Description=Miscellaneous
 Requires=graphical-session.target
 After=graphical-session.target
 
-StartLimitIntervalSec=0
+StartLimitIntervalSec=60
+StartLimitBurst=30
 
 [Service]
 Type=simple

@@ -3,7 +3,8 @@ Description=Starlight
 Requires=graphical-session.target
 After=graphical-session.target
 
-StartLimitIntervalSec=0
+StartLimitIntervalSec=60
+StartLimitBurst=30
 
 [Service]
 ExecStart=/usr/bin/racket -L "warning" -e '(require (file "~/starlight/starlight.rkt"))'
