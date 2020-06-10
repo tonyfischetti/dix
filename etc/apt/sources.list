@@ -11,8 +11,7 @@ deb-src http://deb.debian.org/debian/ buster-updates main contrib non-free
 deb http://deb.debian.org/debian buster-backports main
 deb-src http://deb.debian.org/debian buster-backports main
 
-deb http://repository.spotify.com stable non-free
-
 deb http://liquorix.net/debian buster main
 deb-src http://liquorix.net/debian buster main
 
+deb http://repository.spotify.com stable non-free
