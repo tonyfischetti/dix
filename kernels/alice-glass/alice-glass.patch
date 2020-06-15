@@ -1,4 +1,4 @@
-From 35b348c1e60fb27f5b9d5e253639b2b4be5d8eda Mon Sep 17 00:00:00 2001
+From 8a9739acc6b1434bcb6c9603e7c1751f8135e619 Mon Sep 17 00:00:00 2001
 From: Tony Fischetti <tony.fischetti@gmail.com>
 Date: Wed, 4 Mar 2020 10:51:34 -0500
 Subject: [PATCH 1/8] fix Magic SysRq for Matias mini keyboard
@@ -35,7 +35,7 @@ index b6a835d37826..4db444094a3e 100644
 2.20.1
 
 
-From 44d7ae8ed05bb330ad006fd6556339178b6e7720 Mon Sep 17 00:00:00 2001
+From f2645b8b59596b55d6611210e481d3a993c52172 Mon Sep 17 00:00:00 2001
 From: Tony Fischetti <tony.fischetti@gmail.com>
 Date: Wed, 4 Mar 2020 10:54:55 -0500
 Subject: [PATCH 2/8] make IO scheduler default to BFQ
@@ -71,7 +71,7 @@ index 4eab3d70e880..524534cc5306 100644
 2.20.1
 
 
-From 975908ac6844b991c25023dc0ff9da2ec8de8080 Mon Sep 17 00:00:00 2001
+From 875d86f86cda7c19ca06756be2b833fcaa5897ae Mon Sep 17 00:00:00 2001
 From: Tony Fischetti <tony.fischetti@gmail.com>
 Date: Mon, 27 Apr 2020 08:58:44 -0400
 Subject: [PATCH 3/8] make latency-improving changes to CFS defaults
@@ -82,10 +82,10 @@ Subject: [PATCH 3/8] make latency-improving changes to CFS defaults
  2 files changed, 17 insertions(+), 16 deletions(-)
 
 diff --git a/kernel/sched/core.c b/kernel/sched/core.c
-index 9a2fbf98fd6f..f452d1e9fb14 100644
+index 8f360326861e..b4247964d53d 100644
 --- a/kernel/sched/core.c
 +++ b/kernel/sched/core.c
-@@ -57,7 +57,7 @@ const_debug unsigned int sysctl_sched_features =
+@@ -59,7 +59,7 @@ const_debug unsigned int sysctl_sched_features =
   * Number of tasks to iterate in a single balance run.
   * Limited because this is done with IRQs disabled.
   */
@@ -94,7 +94,7 @@ index 9a2fbf98fd6f..f452d1e9fb14 100644
  
  /*
   * period over which we measure -rt task CPU usage in us.
-@@ -69,9 +69,9 @@ __read_mostly int scheduler_running;
+@@ -71,9 +71,9 @@ __read_mostly int scheduler_running;
  
  /*
   * part of the period that we allow rt tasks to run in us.
@@ -107,7 +107,7 @@ index 9a2fbf98fd6f..f452d1e9fb14 100644
  /*
   * __task_rq_lock - lock the rq @p resides on.
 diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
-index 02f323b85b6d..f32c4d9e25db 100644
+index cbcb2f71599b..94b7ce3bac44 100644
 --- a/kernel/sched/fair.c
 +++ b/kernel/sched/fair.c
 @@ -35,10 +35,11 @@
@@ -178,25 +178,25 @@ index 02f323b85b6d..f32c4d9e25db 100644
 2.20.1
 
 
-From ae751e2424b89ae037d3d956eaa1d67e33a13465 Mon Sep 17 00:00:00 2001
+From 862b3bc4c6b6413bb46b60610f494deffad4cdf3 Mon Sep 17 00:00:00 2001
 From: Tony Fischetti <tony.fischetti@gmail.com>
-Date: Thu, 12 Mar 2020 15:39:35 -0400
-Subject: [PATCH 4/8] change swappiness default from 60 to 15
+Date: Mon, 15 Jun 2020 07:58:36 -0400
+Subject: [PATCH 4/8] change swappiness default from 60 to 13
 
 ---
  mm/vmscan.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/mm/vmscan.c b/mm/vmscan.c
-index a37c87b5aee2..0b5e87503516 100644
+index b6d84326bdf2..bc16539360c2 100644
 --- a/mm/vmscan.c
 +++ b/mm/vmscan.c
-@@ -163,7 +163,7 @@ struct scan_control {
+@@ -169,7 +169,7 @@ struct scan_control {
  /*
-  * From 0 .. 100.  Higher means more swappy.
+  * From 0 .. 200.  Higher means more swappy.
   */
 -int vm_swappiness = 60;
-+int vm_swappiness = 15;
++int vm_swappiness = 13;
  /*
   * The total number of pages which are beyond the high watermark within all
   * zones.
@@ -204,7 +204,7 @@ index a37c87b5aee2..0b5e87503516 100644
 2.20.1
 
 
-From 0bfd29fc693d181aecc05a7e6cfd404d5179d819 Mon Sep 17 00:00:00 2001
+From 9a671ce0327e0bf99322cb7093e6eb4f72af8366 Mon Sep 17 00:00:00 2001
 From: Tony Fischetti <tony.fischetti@gmail.com>
 Date: Thu, 12 Mar 2020 15:40:07 -0400
 Subject: [PATCH 5/8] max_user_watches (inotify) from 8192 to 100000
@@ -214,10 +214,10 @@ Subject: [PATCH 5/8] max_user_watches (inotify) from 8192 to 100000
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/fs/notify/inotify/inotify_user.c b/fs/notify/inotify/inotify_user.c
-index 81ffc8629fc4..bd47f8db102b 100644
+index f88bbcc9efeb..a64e641f7386 100644
 --- a/fs/notify/inotify/inotify_user.c
 +++ b/fs/notify/inotify/inotify_user.c
-@@ -827,7 +827,7 @@ static int __init inotify_user_setup(void)
+@@ -825,7 +825,7 @@ static int __init inotify_user_setup(void)
  
  	inotify_max_queued_events = 16384;
  	init_user_ns.ucount_max[UCOUNT_INOTIFY_INSTANCES] = 128;
@@ -230,7 +230,7 @@ index 81ffc8629fc4..bd47f8db102b 100644
 2.20.1
 
 
-From 78f7e4cbb12d3b8aee5633ced2853fb1787a8a16 Mon Sep 17 00:00:00 2001
+From bbbc20aff709a81e3f09cec09847f24d8f59fdea Mon Sep 17 00:00:00 2001
 From: Tony Fischetti <tony.fischetti@gmail.com>
 Date: Tue, 21 Apr 2020 09:14:28 -0400
 Subject: [PATCH 6/8] Set schedutil's `rate_limit_us` parameter to 0
@@ -256,7 +256,7 @@ index 7fbaee24c824..b51959c50577 100644
 2.20.1
 
 
-From 113d33e28213c32ee80d86374e06bf6293764483 Mon Sep 17 00:00:00 2001
+From 164e3eea6f453a1c68e22838d8159386e579ed03 Mon Sep 17 00:00:00 2001
 From: Tony Fischetti <tony.fischetti@gmail.com>
 Date: Tue, 5 May 2020 16:17:01 -0400
 Subject: [PATCH 7/8] x86/setup: Add boot messages about cmdline builtins
@@ -273,10 +273,10 @@ Signed-off-by: Tony Fischetti <tony.fischetti@gmail.com>
  1 file changed, 2 insertions(+), 1 deletion(-)
 
 diff --git a/arch/x86/kernel/setup.c b/arch/x86/kernel/setup.c
-index 4b3fa6cd3106..ee90dffcfd79 100644
+index a3767e74c758..d0aace2f4970 100644
 --- a/arch/x86/kernel/setup.c
 +++ b/arch/x86/kernel/setup.c
-@@ -828,7 +828,7 @@ void __init setup_arch(char **cmdline_p)
+@@ -834,7 +834,7 @@ void __init setup_arch(char **cmdline_p)
  	 */
  	__flush_tlb_all();
  #else
@@ -285,7 +285,7 @@ index 4b3fa6cd3106..ee90dffcfd79 100644
  	boot_cpu_data.x86_phys_bits = MAX_PHYSMEM_BITS;
  #endif
  
-@@ -916,6 +916,7 @@ void __init setup_arch(char **cmdline_p)
+@@ -922,6 +922,7 @@ void __init setup_arch(char **cmdline_p)
  #endif
  
  	strlcpy(command_line, boot_command_line, COMMAND_LINE_SIZE);
@@ -297,7 +297,7 @@ index 4b3fa6cd3106..ee90dffcfd79 100644
 2.20.1
 
 
-From e4569b39f59e46cd2dd43e417ced4268861c8312 Mon Sep 17 00:00:00 2001
+From 943d415059d316559d5e2187ac37d4efae4af467 Mon Sep 17 00:00:00 2001
 From: Tony Fischetti <tony.fischetti@gmail.com>
 Date: Fri, 22 May 2020 12:28:37 -0400
 Subject: [PATCH 8/8] change vm.max_map_count default from 65530 to 262144
@@ -309,10 +309,10 @@ for lisp
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/include/linux/mm.h b/include/linux/mm.h
-index 5a323422d783..d34c826ae8f9 100644
+index dc7b87310c10..948c67e1e9d2 100644
 --- a/include/linux/mm.h
 +++ b/include/linux/mm.h
-@@ -190,7 +190,7 @@ static inline void __mm_zero_struct_page(struct page *page)
+@@ -191,7 +191,7 @@ static inline void __mm_zero_struct_page(struct page *page)
   * that.
   */
  #define MAPCOUNT_ELF_CORE_MARGIN	(5)

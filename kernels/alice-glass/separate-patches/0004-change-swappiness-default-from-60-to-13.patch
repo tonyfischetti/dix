@@ -1,22 +1,22 @@
-From ae751e2424b89ae037d3d956eaa1d67e33a13465 Mon Sep 17 00:00:00 2001
+From 862b3bc4c6b6413bb46b60610f494deffad4cdf3 Mon Sep 17 00:00:00 2001
 From: Tony Fischetti <tony.fischetti@gmail.com>
-Date: Thu, 12 Mar 2020 15:39:35 -0400
-Subject: [PATCH] change swappiness default from 60 to 15
+Date: Mon, 15 Jun 2020 07:58:36 -0400
+Subject: [PATCH] change swappiness default from 60 to 13
 
 ---
  mm/vmscan.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/mm/vmscan.c b/mm/vmscan.c
-index a37c87b5aee2..0b5e87503516 100644
+index b6d84326bdf2..bc16539360c2 100644
 --- a/mm/vmscan.c
 +++ b/mm/vmscan.c
-@@ -163,7 +163,7 @@ struct scan_control {
+@@ -169,7 +169,7 @@ struct scan_control {
  /*
-  * From 0 .. 100.  Higher means more swappy.
+  * From 0 .. 200.  Higher means more swappy.
   */
 -int vm_swappiness = 60;
-+int vm_swappiness = 15;
++int vm_swappiness = 13;
  /*
   * The total number of pages which are beyond the high watermark within all
   * zones.
