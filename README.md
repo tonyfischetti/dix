@@ -7,6 +7,7 @@ A place to update and store my debian configuration (kernel config y lo que sea)
     ln -s ~/.dix/XCompose ~/.XCompose
     ln -s ~/.dix/Xmodmap ~/.Xmodmap
     ln -s ~/.dix/xinitrc ~/.xinitrc
+    ln -s ~/.dix/gtkrc-2.0 ~/.gtkrc-2.0
     ln -s ~/.dix/face ~/.face
     ln -s ~/.dix/dot-config/libinput-gestures.conf ~/.config/libinput-gestures.conf
     ln -s ~/.dix/dot-config/cava-config ~/.config/cava/config
@@ -18,3 +19,6 @@ The units...
     systemctl --user enable starlight.service
     ...
 
+---
+
+Oh, and the GhostIt firefox extension hotkey now has to be "AltGraph"
