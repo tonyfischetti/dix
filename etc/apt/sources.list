@@ -18,5 +18,6 @@ deb http://repository.spotify.com stable non-free
 
 deb [trusted=yes] https://apt.fury.io/flirc/ /
 
-deb https://desktop-download.mendeley.com/download/apt stable main
+# deb https://desktop-download.mendeley.com/download/apt stable main
 
+deb https://repo.nordvpn.com/deb/nordvpn/debian stable main
