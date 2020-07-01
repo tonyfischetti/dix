@@ -1,0 +1,50 @@
+
+skeeter@betazed:~/torvalds$ git bisect log
+git bisect start
+# bad: [b3a9e3b9622ae10064826dccb4f7a52bd88c7407] Linux 5.8-rc1
+git bisect bad b3a9e3b9622ae10064826dccb4f7a52bd88c7407
+# good: [c5d6c13843880ad0112f0513f3eb041b258be66e] Merge tag 'mmc-v5.8' of git://git.kernel.org/pub/scm/linux/kernel/git/ulfh/mmc
+git bisect good c5d6c13843880ad0112f0513f3eb041b258be66e
+# good: [631d6914085b4eea8d68a84f800974a6ad8fb5c0] Merge tag 'sound-5.8-rc1' of git://git.kernel.org/pub/scm/linux/kernel/git/tiwai/sound
+git bisect good 631d6914085b4eea8d68a84f800974a6ad8fb5c0
+# good: [081096d98bb23946f16215357b141c5616b234bf] Merge tag 'tty-5.8-rc1' of git://git.kernel.org/pub/scm/linux/kernel/git/gregkh/tty
+git bisect good 081096d98bb23946f16215357b141c5616b234bf
+# good: [52435c86bf0f5c892804912481af7f1a5b95ff2d] Merge tag 'ovl-update-5.8' of git://git.kernel.org/pub/scm/linux/kernel/git/mszeredi/vfs
+git bisect good 52435c86bf0f5c892804912481af7f1a5b95ff2d
+# good: [623f6dc593eaf98b91916836785278eddddaacf8] Merge branch 'akpm' (patches from Andrew)
+git bisect good 623f6dc593eaf98b91916836785278eddddaacf8
+# good: [076f14be7fc942e112c94c841baec44124275cd0] Merge tag 'x86-entry-2020-06-12' of git://git.kernel.org/pub/scm/linux/kernel/git/tip/tip
+git bisect good 076f14be7fc942e112c94c841baec44124275cd0
+# good: [ac911b316336ad3d22b09e82698f0463347a5507] Merge tag 'media/v5.8-2' of git://git.kernel.org/pub/scm/linux/kernel/git/mchehab/linux-media
+git bisect good ac911b316336ad3d22b09e82698f0463347a5507
+# bad: [3df83e164f1f39c614a3f31e39164756945ae2ea] Merge tag 'scsi-misc' of git://git.kernel.org/pub/scm/linux/kernel/git/jejb/scsi
+git bisect bad 3df83e164f1f39c614a3f31e39164756945ae2ea
+# good: [4f118a7e4686062bd4df4a37e24c22cd71495b5f] Merge tag 'for-5.8-i2c' of git://git.kernel.org/pub/scm/linux/kernel/git/tegra/linux into i2c/for-5.8
+git bisect good 4f118a7e4686062bd4df4a37e24c22cd71495b5f
+# bad: [fad5972a1eca71c797e2e209ec403ade9bf69384] i2c: add 'single-master' property to generic bindings
+git bisect bad fad5972a1eca71c797e2e209ec403ade9bf69384
+# good: [bee0d92c899b8600102eedf5e6e5e88a43c0ffdf] i2c: slave-eeprom: skip useless initialization
+git bisect good bee0d92c899b8600102eedf5e6e5e88a43c0ffdf
+# bad: [0029d097956e700b6b498ce39d6d745adc35b39c] dt-bindings: i2c: dw: Add Baikal-T1 SoC I2C controller
+git bisect bad 0029d097956e700b6b498ce39d6d745adc35b39c
+# bad: [01590f361e94a01e9b9868fa81d4079d255c681f] i2c: i801: Instantiate SPD EEPROMs automatically
+git bisect bad 01590f361e94a01e9b9868fa81d4079d255c681f
+# good: [7df915e540ec51ce9ac5f2d2d9801d0356b617da] i2c: avoid confusing naming in header
+git bisect good 7df915e540ec51ce9ac5f2d2d9801d0356b617da
+
+
+
+01590f361e94a01e9b9868fa81d4079d255c681f BAD.       Instantiate SPD EEPROMs
+7df915e540ec51ce9ac5f2d2d9801d0356b617da GOOD     i2c: avoid confusing naming in h
+5ace60859e84113b7a185c117fbf2c429d381b59 MUST HAVE BEEN BAD COMMIT
+(i2c: smbus: Add a way to instantiate SPD EEPROMs automatically)
+testing now
+
+I just tested it now and both 5ace and 7df915 worked
+
+01590f361e94a01 IS THE BAD COMMIT 01590f361e94a01 IS THE BAD COMMIT
+01590f361e94a01 IS THE BAD COMMIT 01590f361e94a01 IS THE BAD COMMIT
+01590f361e94a01 IS THE BAD COMMIT 01590f361e94a01 IS THE BAD COMMIT
+01590f361e94a01 IS THE BAD COMMIT 01590f361e94a01 IS THE BAD COMMIT
+
+
