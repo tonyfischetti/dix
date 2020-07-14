@@ -1,0 +1,148 @@
+
+
+usermod -a tony -G sudo
+usermod -a tony -G systemd-journal
+sudo apt remove rsyslog
+sudo apt build-dep r-base zpaq tmux zsh vim sbcl cmus linux
+sudo apt install build-essential git rsync curl wget vlc mpv
+sudo apt install vim-gtk3 htop ack apt-utils autotools-dev
+
+Make XFCE pretty (use reference)
+hide menubar in terminal
+
+
+FIREFOX
+    - Install firefox
+    - sync
+    - login to all websites
+    - all extensions (Carlos IV/Backups/Firefox/firefox-extensions-2020-02-12.txt)
+    - download and install dropbox
+    - replace FIREFOXPROFILE (does hostname branch work?)
+
+DROPBOX
+    - apt install dropbox nautilus-dropbox thunar-dropbox-plugin
+    - selective sync (start with OS and histories, wallpaper)
+    - ln -s ~/Dropbox/histories/zsh_history-HOSTNAME ~/.zsh_history
+
+Set wallpaper
+
+COMPILE, INSTALL, CONFIGURE ZSH
+COMPILE, INSTALL, CONFIGURE VIM (including font)
+change font of terminal
+COMPILE, INSTALL, CONFIGURE TMUX
+COMPILE, INSTALL, CONFIGURE ZPAQ
+COMPILE, INSTALL, CONFIGURE SBCL
+
+fix the /etc/apt/sources.list
+
+(or pinstall)
+sudo apt install automake autoconf ack apt-utils binutils
+sudo apt install ca-certificates debconf debianutils iconv
+sudo apt install diffutils moreutils dpkg-dev e2fsprogs 
+sudo apt install grub-customizer ffmpeg fakeroot firmware-linux-free
+sudo apt install figlet htop imagemagick libxml2 liblzma-dev
+sudo apt install libncurses-dev libtool ncdu openssl python3-pip
+sudo apt install xz-utils racket apt-xapian-index libwxgtk3.0
+sudo apt install xserver-xorg-input-libinput wmctrl xinput
+sudo apt install xserver-xorg-input-libinput-dev debsums
+sudo apt install xclip spotify-client lshw inxi blueman pciutils
+sudo apt install python-gpgme python-gpg jhead eyed3 libsecret
+sudo apt install firmware-linux sqlite3 libsecret-1-dev evince
+sudo apt install lame easytag par debuild libgtk-3-dev
+sudo apt install gtk-doc-tools libglade-ui-dev ristretto
+sudo apt install libextutils-depends-perl libextutils-pkgconfig-perl
+sudo apt install libwnck-3-dev libxfce4utils-dev parallel
+sudo apt install powertop acpica-tools acpitool cheese apt-rdepends
+sudo apt install lshw alsa-tools-gui libpcre2-dev linux-cpupower
+sudo apt install unrar playerctl cargo gvfs libfm4 gvfs-common 
+sudo apt install gvfs-bin neofetch redshift libinput-tools
+sudo apt install xdotool gnome-power-statistics wavemon mpg123
+sudo apt install libffmpegthumbnailer-dev iotop fd-find imv
+sudo apt install renameutils i2c-tools kerneltop genisoimage
+sudo apt install gparted gnome-disk-utility cmus-plugin-ffmpeg
+sudo apt install libpulse-dev libpulse0 pulseaudio-utils
+sudo apt install opusfile libroar bluez-tools blt cdrdao cdcd
+sudo apt install cdparanoia chktex colordiff cmake-data cm-super
+sudo apt install cpuinfo cscope dh-exec dos2unix ffmpegthumnailer
+sudo apt install fig3dev finger flac gawk gconf2 gnu-standards
+sudo apt install goobox gthumb-data gvfs-backends id3tool info
+sudo apt install install-info jpegoptim keyutils procps fftw-dev
+sudo apt install libiniparser-dev cava evtest nmap mesa-utils
+
+Keyboard shortcuts
+      <property name="&lt;Shift&gt;BackSpace" type="string" value="curl &quot;http://localhost:9876&quot;"/>
+      <property name="XF86Back" type="string" value="/home/tony/.zsh/more-scripts/laudioctl -n"/>
+      <property name="XF86HomePage" type="string" value="/home/tony/.zsh/more-scripts/laudioctl -r"/>
+      <property name="XF86WWW" type="string" value="/home/tony/.zsh/more-scripts/laudioctl -u"/>
+      <property name="XF86AudioNext" type="string" value="/home/tony/.zsh/more-scripts/laudioctl -n"/>
+      <property name="XF86AudioPrev" type="string" value="/home/tony/.zsh/more-scripts/laudioctl -r"/>
+
+libinput
+    xinput list
+    ; choose id of virtual core pointer (elan?) touchpad
+    xinput list-props 13
+    xinput --set-int-prop 13 "libinput Natural Scrolling Enabled" 8 1
+    xinput --set-int-prop 13 "libinput Tapping Enabled" 8 1
+
+Make journal persistent
+    mkdir -p /var/log/journal
+    systemd-tmpfiles --create --prefix /var/log/journal
+    systemctl restart systemd-journald
+
+Add noatime to /etc/fstab
+
+Install new kernel and test
+
+Is the journal ~ p e r s i s t e n t ~
+
+MAKE STARLIGHT WORK
+Do dix
+    GhostIt firefox extension hotkey now has to be "AltGraph"
+    Test it
+Put keys in right place
+
+Restart and test
+    starlight, gestures, compose
+
+Is the journal ~ p e r s i s t e n t ~
+
+add to /etc/security/limits.conf
+    tony             -       nice            -20
+
+Make these match
+    /lib/console-setup/console-setup.sh
+    /lib/console-setup/keyboard-setup.sh
+
+Make /etc/cron.* match (logrotate, sysstat)
+
+/etc/sysctl.conf has nothing
+
+LINUX FIRMWARE
+    git clone https://git.kernel.org/pub/scm/linux/kernel/git/firmware/linux-firmware.git
+    cd /lib/firmware
+    cd linux-firmware/i915
+    sudo cp *.bin /lib/firmware/i915
+
+Turn off journal (if you want)
+    https://foxutech.com/how-to-disable-enable-journaling/
+
+Install and test veracrypt
+    - and test vlc config
+
+make a skeeter and clone stable
+
+Install WALC
+
+Do and test git libsecret thing
+    cd /usr/share/doc/git/contrib/credential/libsecret
+    sudo make
+
+
+pinstall network-manager-openconnect-gnome openvpn networkmanager-vpnc-gnome
+Install nordvpn deb
+Make sure the /etc/apt/sources* is still ok
+pinstall nordvpn
+sudo systemctl disable nordvpnd.socket
+sudo systemctl disable nordvpnd.service
+sudo systemctl stop nordvpnd.service
+
