@@ -60,7 +60,7 @@ sudo apt install xdotool gnome-power-statistics wavemon mpg123
 sudo apt install libffmpegthumbnailer-dev iotop fd-find imv
 sudo apt install renameutils i2c-tools kerneltop genisoimage
 sudo apt install gparted gnome-disk-utility cmus-plugin-ffmpeg
-sudo apt install libpulse-dev libpulse0 pulseaudio-utils
+sudo apt install libpulse-dev libpulse0 pulseaudio-utils gnupg
 sudo apt install opusfile libroar bluez-tools blt cdrdao cdcd
 sudo apt install cdparanoia chktex colordiff cmake-data cm-super
 sudo apt install cpuinfo cscope dh-exec dos2unix ffmpegthumnailer
