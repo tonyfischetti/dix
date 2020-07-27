@@ -146,3 +146,4 @@ sudo systemctl disable nordvpnd.socket
 sudo systemctl disable nordvpnd.service
 sudo systemctl stop nordvpnd.service
 
+Clock format is %A %Y-%m-%d  %I:%M %p
