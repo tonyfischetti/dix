@@ -1,4 +1,4 @@
-From 975908ac6844b991c25023dc0ff9da2ec8de8080 Mon Sep 17 00:00:00 2001
+From 875d86f86cda7c19ca06756be2b833fcaa5897ae Mon Sep 17 00:00:00 2001
 From: Tony Fischetti <tony.fischetti@gmail.com>
 Date: Mon, 27 Apr 2020 08:58:44 -0400
 Subject: [PATCH] make latency-improving changes to CFS defaults
@@ -9,10 +9,10 @@ Subject: [PATCH] make latency-improving changes to CFS defaults
  2 files changed, 17 insertions(+), 16 deletions(-)
 
 diff --git a/kernel/sched/core.c b/kernel/sched/core.c
-index 9a2fbf98fd6f..f452d1e9fb14 100644
+index 8f360326861e..b4247964d53d 100644
 --- a/kernel/sched/core.c
 +++ b/kernel/sched/core.c
-@@ -57,7 +57,7 @@ const_debug unsigned int sysctl_sched_features =
+@@ -59,7 +59,7 @@ const_debug unsigned int sysctl_sched_features =
   * Number of tasks to iterate in a single balance run.
   * Limited because this is done with IRQs disabled.
   */
@@ -21,7 +21,7 @@ index 9a2fbf98fd6f..f452d1e9fb14 100644
  
  /*
   * period over which we measure -rt task CPU usage in us.
-@@ -69,9 +69,9 @@ __read_mostly int scheduler_running;
+@@ -71,9 +71,9 @@ __read_mostly int scheduler_running;
  
  /*
   * part of the period that we allow rt tasks to run in us.
@@ -34,7 +34,7 @@ index 9a2fbf98fd6f..f452d1e9fb14 100644
  /*
   * __task_rq_lock - lock the rq @p resides on.
 diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
-index 02f323b85b6d..f32c4d9e25db 100644
+index cbcb2f71599b..94b7ce3bac44 100644
 --- a/kernel/sched/fair.c
 +++ b/kernel/sched/fair.c
 @@ -35,10 +35,11 @@
