@@ -1,18 +1,18 @@
-From 875d86f86cda7c19ca06756be2b833fcaa5897ae Mon Sep 17 00:00:00 2001
+From bdc66c5c12aab46b562aa140dda41a9672baa6d9 Mon Sep 17 00:00:00 2001
 From: Tony Fischetti <tony.fischetti@gmail.com>
-Date: Mon, 27 Apr 2020 08:58:44 -0400
+Date: Mon, 17 Aug 2020 09:29:11 -0400
 Subject: [PATCH] make latency-improving changes to CFS defaults
 
 ---
- kernel/sched/core.c |  6 +++---
- kernel/sched/fair.c | 27 ++++++++++++++-------------
- 2 files changed, 17 insertions(+), 16 deletions(-)
+ kernel/sched/core.c |  4 ++--
+ kernel/sched/fair.c | 26 +++++++++++++-------------
+ 2 files changed, 15 insertions(+), 15 deletions(-)
 
 diff --git a/kernel/sched/core.c b/kernel/sched/core.c
-index 8f360326861e..b4247964d53d 100644
+index 8471a0f7eb32..946b8a359d4a 100644
 --- a/kernel/sched/core.c
 +++ b/kernel/sched/core.c
-@@ -59,7 +59,7 @@ const_debug unsigned int sysctl_sched_features =
+@@ -63,7 +63,7 @@ const_debug unsigned int sysctl_sched_features =
   * Number of tasks to iterate in a single balance run.
   * Limited because this is done with IRQs disabled.
   */
@@ -21,38 +21,34 @@ index 8f360326861e..b4247964d53d 100644
  
  /*
   * period over which we measure -rt task CPU usage in us.
-@@ -71,9 +71,9 @@ __read_mostly int scheduler_running;
- 
- /*
+@@ -77,7 +77,7 @@ __read_mostly int scheduler_running;
   * part of the period that we allow rt tasks to run in us.
-- * default: 0.95s
-+ * default: 0.98s
+  * default: 0.95s
   */
 -int sysctl_sched_rt_runtime = 950000;
 +int sysctl_sched_rt_runtime = 980000;
  
+ 
  /*
-  * __task_rq_lock - lock the rq @p resides on.
 diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
-index cbcb2f71599b..94b7ce3bac44 100644
+index 1a68a0536add..66198db375b1 100644
 --- a/kernel/sched/fair.c
 +++ b/kernel/sched/fair.c
-@@ -35,10 +35,11 @@
+@@ -33,10 +33,10 @@
   * (to see the precise effective timeslice length of your workload,
   *  run vmstat and monitor the context-switches (cs) field)
   *
 - * (default: 6ms * (1 + ilog(ncpus)), units: nanoseconds)
-+ * (default: 2.7 msec * (1 + ilog(ncpus)), units: nanoseconds)
++ * (default: 2.7 ms * (1 + ilog(ncpus)), units: nanoseconds)
   */
 -unsigned int sysctl_sched_latency			= 6000000ULL;
 -static unsigned int normalized_sysctl_sched_latency	= 6000000ULL;
 +unsigned int sysctl_sched_latency			= 2700000ULL;
 +static unsigned int normalized_sysctl_sched_latency	= 2700000ULL;
-+
  
  /*
   * The initial- and re-scaling of tunables is configurable
-@@ -56,15 +57,15 @@ enum sched_tunable_scaling sysctl_sched_tunable_scaling = SCHED_TUNABLESCALING_L
+@@ -54,15 +54,15 @@ enum sched_tunable_scaling sysctl_sched_tunable_scaling = SCHED_TUNABLESCALING_L
  /*
   * Minimal preemption granularity for CPU-bound tasks:
   *
@@ -72,7 +68,7 @@ index cbcb2f71599b..94b7ce3bac44 100644
  
  /*
   * After fork, child runs first. If set to 0 (default) then
-@@ -79,12 +80,12 @@ unsigned int sysctl_sched_child_runs_first __read_mostly;
+@@ -77,12 +77,12 @@ unsigned int sysctl_sched_child_runs_first __read_mostly;
   * and reduces their over-scheduling. Synchronous workloads will still
   * have immediate wakeup/sleep latencies.
   *
@@ -89,7 +85,7 @@ index cbcb2f71599b..94b7ce3bac44 100644
  
  int sched_thermal_decay_shift;
  static int __init setup_sched_thermal_decay_shift(char *str)
-@@ -126,9 +127,9 @@ int __weak arch_asym_cpu_priority(int cpu)
+@@ -124,9 +124,9 @@ int __weak arch_asym_cpu_priority(int cpu)
   * to consumption or the quota being specified to be smaller than the slice)
   * we will always only issue the remaining available time.
   *
