@@ -16,7 +16,7 @@ deb-src http://liquorix.net/debian buster main
 
 deb http://repository.spotify.com stable non-free
 
-deb [trusted=yes] https://apt.fury.io/flirc/ /
+# deb [trusted=yes] https://apt.fury.io/flirc/ /
 
 # deb https://desktop-download.mendeley.com/download/apt stable main
 
