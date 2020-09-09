@@ -24,12 +24,15 @@ include "%L"
 <Multi_key> <N> <N> : "Ñ"
 
 # emojis
-<Multi_key> <e> <r> : "🐇"
-<Multi_key> <e> <h> : "💕"
-<Multi_key> <e> <b> : "🍌"
-<Multi_key> <e> <o> : "💯"
-<Multi_key> <e> <m> : "🐁"
-<Multi_key> <e> <c> : "😭"
-<Multi_key> <e> <l> : "🦞"
-<Multi_key> <e> <k> : "🥬"
-<Multi_key> <e> <f> : "🔥"
+<Multi_key> <e> <r> : "🐇"  # rabbit
+<Multi_key> <e> <h> : "💕"  # hearts (two)
+<Multi_key> <e> <b> : "🍌"  # banana
+<Multi_key> <e> <o> : "💯"  # 100
+<Multi_key> <e> <m> : "🐁"  # mouse
+<Multi_key> <e> <c> : "😭"  # crying
+<Multi_key> <e> <l> : "🦞"  # lobster
+<Multi_key> <e> <k> : "🥬"  # kale
+<Multi_key> <e> <f> : "🔥"  # fire
+<Multi_key> <e> <a> : "🐜"  # ant
+<Multi_key> <e> <s> : "⚽"  # soccer ball
+
