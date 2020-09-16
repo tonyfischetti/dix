@@ -19,6 +19,12 @@ The units...
     systemctl --user enable starlight.service
     ...
 
+After installation of libpam-ssh
+    
+    mkdir ~/.ssh/login-keys.d
+    ...
+
 ---
 
 Oh, and the GhostIt firefox extension hotkey now has to be "AltGraph"
+
