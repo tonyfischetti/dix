@@ -1,0 +1,1 @@
+ssh betazed "amixer set Master 5%-"

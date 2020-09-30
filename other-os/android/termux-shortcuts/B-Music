@@ -1,0 +1,1 @@
+ssh -t betazed "zsh -c 'tmux attach -t music'"
