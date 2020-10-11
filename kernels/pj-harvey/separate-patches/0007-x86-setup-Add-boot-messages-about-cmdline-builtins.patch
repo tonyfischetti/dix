@@ -1,4 +1,4 @@
-From 164e3eea6f453a1c68e22838d8159386e579ed03 Mon Sep 17 00:00:00 2001
+From f06c0577bd4ed1be233f9e93fabb1eb80baa3825 Mon Sep 17 00:00:00 2001
 From: Tony Fischetti <tony.fischetti@gmail.com>
 Date: Tue, 5 May 2020 16:17:01 -0400
 Subject: [PATCH] x86/setup: Add boot messages about cmdline builtins
@@ -15,10 +15,10 @@ Signed-off-by: Tony Fischetti <tony.fischetti@gmail.com>
  1 file changed, 2 insertions(+), 1 deletion(-)
 
 diff --git a/arch/x86/kernel/setup.c b/arch/x86/kernel/setup.c
-index a3767e74c758..d0aace2f4970 100644
+index 3511736fbc74..e1852af8b5e6 100644
 --- a/arch/x86/kernel/setup.c
 +++ b/arch/x86/kernel/setup.c
-@@ -834,7 +834,7 @@ void __init setup_arch(char **cmdline_p)
+@@ -835,7 +835,7 @@ void __init setup_arch(char **cmdline_p)
  	 */
  	__flush_tlb_all();
  #else
@@ -27,7 +27,7 @@ index a3767e74c758..d0aace2f4970 100644
  	boot_cpu_data.x86_phys_bits = MAX_PHYSMEM_BITS;
  #endif
  
-@@ -922,6 +922,7 @@ void __init setup_arch(char **cmdline_p)
+@@ -921,6 +921,7 @@ void __init setup_arch(char **cmdline_p)
  #endif
  
  	strlcpy(command_line, boot_command_line, COMMAND_LINE_SIZE);

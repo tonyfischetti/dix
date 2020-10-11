@@ -1,6 +1,6 @@
-From 862b3bc4c6b6413bb46b60610f494deffad4cdf3 Mon Sep 17 00:00:00 2001
+From b0ee0fd2e53b6b10f93d1313024d8aefdf4d0e5b Mon Sep 17 00:00:00 2001
 From: Tony Fischetti <tony.fischetti@gmail.com>
-Date: Mon, 15 Jun 2020 07:58:36 -0400
+Date: Mon, 17 Aug 2020 09:30:29 -0400
 Subject: [PATCH] change swappiness default from 60 to 13
 
 ---
@@ -8,7 +8,7 @@ Subject: [PATCH] change swappiness default from 60 to 13
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/mm/vmscan.c b/mm/vmscan.c
-index b6d84326bdf2..bc16539360c2 100644
+index 99e1796eb833..eef7600c5dbc 100644
 --- a/mm/vmscan.c
 +++ b/mm/vmscan.c
 @@ -169,7 +169,7 @@ struct scan_control {
@@ -17,9 +17,9 @@ index b6d84326bdf2..bc16539360c2 100644
   */
 -int vm_swappiness = 60;
 +int vm_swappiness = 13;
- /*
-  * The total number of pages which are beyond the high watermark within all
-  * zones.
+ 
+ static void set_task_reclaim_state(struct task_struct *task,
+ 				   struct reclaim_state *rs)
 -- 
 2.20.1
 
