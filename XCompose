@@ -20,8 +20,9 @@ include "%L"
 
 
 <Multi_key> <n> <n> : "ñ"
-<Multi_key> <l> <l> : "λ"
 <Multi_key> <N> <N> : "Ñ"
+<Multi_key> <l> <l> : "λ"
+<Multi_key> <L> <L> : "Λ"
 
 # emojis
 <Multi_key> <e> <r> : "🐇"  # rabbit
@@ -35,4 +36,5 @@ include "%L"
 <Multi_key> <e> <f> : "🔥"  # fire
 <Multi_key> <e> <a> : "🐜"  # ant
 <Multi_key> <e> <s> : "⚽"  # soccer ball
+<Multi_key> <e> <B> : "🅱️"   # B emoji
 
