@@ -1,0 +1,25 @@
+From b0ee0fd2e53b6b10f93d1313024d8aefdf4d0e5b Mon Sep 17 00:00:00 2001
+From: Tony Fischetti <tony.fischetti@gmail.com>
+Date: Mon, 17 Aug 2020 09:30:29 -0400
+Subject: [PATCH] change swappiness default from 60 to 13
+
+---
+ mm/vmscan.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/mm/vmscan.c b/mm/vmscan.c
+index 99e1796eb833..eef7600c5dbc 100644
+--- a/mm/vmscan.c
++++ b/mm/vmscan.c
+@@ -169,7 +169,7 @@ struct scan_control {
+ /*
+  * From 0 .. 200.  Higher means more swappy.
+  */
+-int vm_swappiness = 60;
++int vm_swappiness = 13;
+ 
+ static void set_task_reclaim_state(struct task_struct *task,
+ 				   struct reclaim_state *rs)
+-- 
+2.20.1
+

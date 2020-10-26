@@ -1,0 +1,40 @@
+From f06c0577bd4ed1be233f9e93fabb1eb80baa3825 Mon Sep 17 00:00:00 2001
+From: Tony Fischetti <tony.fischetti@gmail.com>
+Date: Tue, 5 May 2020 16:17:01 -0400
+Subject: [PATCH] x86/setup: Add boot messages about cmdline builtins
+
+While the ability to override or append to the boot command line has
+been added, the boot messages contain no information as to whether the
+cmdline was manipulated by the build-time options. This patch, for x86,
+adds boot messages specifying the intital cmdline, and the final cmdline
+after possible manipulation via the kernel config.
+
+Signed-off-by: Tony Fischetti <tony.fischetti@gmail.com>
+---
+ arch/x86/kernel/setup.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/arch/x86/kernel/setup.c b/arch/x86/kernel/setup.c
+index 3511736fbc74..e1852af8b5e6 100644
+--- a/arch/x86/kernel/setup.c
++++ b/arch/x86/kernel/setup.c
+@@ -835,7 +835,7 @@ void __init setup_arch(char **cmdline_p)
+ 	 */
+ 	__flush_tlb_all();
+ #else
+-	printk(KERN_INFO "Command line: %s\n", boot_command_line);
++	pr_info("Initial command line: %s\n", boot_command_line);
+ 	boot_cpu_data.x86_phys_bits = MAX_PHYSMEM_BITS;
+ #endif
+ 
+@@ -921,6 +921,7 @@ void __init setup_arch(char **cmdline_p)
+ #endif
+ 
+ 	strlcpy(command_line, boot_command_line, COMMAND_LINE_SIZE);
++	pr_info("Final command line: %s\n", command_line);
+ 	*cmdline_p = command_line;
+ 
+ 	/*
+-- 
+2.20.1
+

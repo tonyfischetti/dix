@@ -1,0 +1,25 @@
+From 03e0da87414c0aaf02d0a6752db6b5ddd5bdcb19 Mon Sep 17 00:00:00 2001
+From: Tony Fischetti <tony.fischetti@gmail.com>
+Date: Thu, 12 Mar 2020 15:40:07 -0400
+Subject: [PATCH] max_user_watches (inotify) from 8192 to 100000
+
+---
+ fs/notify/inotify/inotify_user.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/fs/notify/inotify/inotify_user.c b/fs/notify/inotify/inotify_user.c
+index 186722ba3894..edc22f42b19c 100644
+--- a/fs/notify/inotify/inotify_user.c
++++ b/fs/notify/inotify/inotify_user.c
+@@ -827,7 +827,7 @@ static int __init inotify_user_setup(void)
+ 
+ 	inotify_max_queued_events = 16384;
+ 	init_user_ns.ucount_max[UCOUNT_INOTIFY_INSTANCES] = 128;
+-	init_user_ns.ucount_max[UCOUNT_INOTIFY_WATCHES] = 8192;
++	init_user_ns.ucount_max[UCOUNT_INOTIFY_WATCHES] = 100000;
+ 
+ 	return 0;
+ }
+-- 
+2.20.1
+

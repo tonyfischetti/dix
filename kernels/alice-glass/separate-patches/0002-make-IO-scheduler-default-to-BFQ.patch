@@ -1,0 +1,35 @@
+From c5e395165ae9faf7725c18a1e666255ab7080ea2 Mon Sep 17 00:00:00 2001
+From: Tony Fischetti <tony.fischetti@gmail.com>
+Date: Wed, 4 Mar 2020 10:54:55 -0500
+Subject: [PATCH] make IO scheduler default to BFQ
+
+---
+ block/elevator.c | 9 +++------
+ 1 file changed, 3 insertions(+), 6 deletions(-)
+
+diff --git a/block/elevator.c b/block/elevator.c
+index 90ed7a28c21d..15e3f4cb9ba2 100644
+--- a/block/elevator.c
++++ b/block/elevator.c
+@@ -623,15 +623,12 @@ static inline bool elv_support_iosched(struct request_queue *q)
+ }
+ 
+ /*
+- * For single queue devices, default to using mq-deadline. If we have multiple
+- * queues or mq-deadline is not available, default to "none".
++ * For single queue devices, default to using bfq, If we have multiple
++ * queues or bfq is not available, default to "none".
+  */
+ static struct elevator_type *elevator_get_default(struct request_queue *q)
+ {
+-	if (q->nr_hw_queues != 1)
+-		return NULL;
+-
+-	return elevator_get(q, "mq-deadline", false);
++	return elevator_get(q, "bfq", false);
+ }
+ 
+ /*
+-- 
+2.20.1
+
