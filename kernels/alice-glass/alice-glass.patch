@@ -1,7 +1,7 @@
 From 37b64568080ef1d57668d1debf2d5c4f81497695 Mon Sep 17 00:00:00 2001
 From: Tony Fischetti <tony.fischetti@gmail.com>
 Date: Wed, 4 Mar 2020 10:51:34 -0500
-Subject: [PATCH 1/7] fix Magic SysRq for Matias mini keyboard
+Subject: [PATCH 1/8] fix Magic SysRq for Matias mini keyboard
 
 ---
  include/uapi/linux/input-event-codes.h | 6 ++++--
@@ -38,7 +38,7 @@ index ee93428ced9a..e2aba3c5277e 100644
 From fd23d43f508d1dd35fc9e897197f918bae4b8d29 Mon Sep 17 00:00:00 2001
 From: Tony Fischetti <tony.fischetti@gmail.com>
 Date: Wed, 4 Mar 2020 10:54:55 -0500
-Subject: [PATCH 2/7] make IO scheduler default to BFQ
+Subject: [PATCH 2/8] make IO scheduler default to BFQ
 
 ---
  block/elevator.c | 9 +++------
@@ -74,7 +74,7 @@ index 293c5c81397a..a038d6e5358a 100644
 From ed6135054b213d4f28b55cf82b626e7948334c1e Mon Sep 17 00:00:00 2001
 From: Tony Fischetti <tony.fischetti@gmail.com>
 Date: Mon, 17 Aug 2020 09:29:11 -0400
-Subject: [PATCH 3/7] make latency-improving changes to CFS defaults
+Subject: [PATCH 3/8] make latency-improving changes to CFS defaults
 
 ---
  kernel/sched/core.c |  4 ++--
@@ -177,7 +177,7 @@ index 04a3ce20da67..da977b0e2097 100644
 From d7415d5ea8eaa6768760b1217bd7c60457a55158 Mon Sep 17 00:00:00 2001
 From: Tony Fischetti <tony.fischetti@gmail.com>
 Date: Mon, 17 Aug 2020 09:30:29 -0400
-Subject: [PATCH 4/7] change swappiness default from 60 to 13
+Subject: [PATCH 4/8] change swappiness default from 60 to 13
 
 ---
  mm/vmscan.c | 2 +-
@@ -203,7 +203,7 @@ index 257cba79a96d..8d6940f586a5 100644
 From 076defc1d8edc3276d73d2260a814414537a1a61 Mon Sep 17 00:00:00 2001
 From: Tony Fischetti <tony.fischetti@gmail.com>
 Date: Tue, 21 Apr 2020 09:14:28 -0400
-Subject: [PATCH 5/7] Set schedutil's `rate_limit_us` parameter to 0
+Subject: [PATCH 5/8] Set schedutil's `rate_limit_us` parameter to 0
 
 ---
  kernel/sched/cpufreq_schedutil.c | 2 +-
@@ -229,7 +229,7 @@ index 6931f0cdeb80..cefd08ce1122 100644
 From 3e979b58a07a3f3f7d58f82bb71d881dfb39a59f Mon Sep 17 00:00:00 2001
 From: Tony Fischetti <tony.fischetti@gmail.com>
 Date: Tue, 5 May 2020 16:17:01 -0400
-Subject: [PATCH 6/7] x86/setup: Add boot messages about cmdline builtins
+Subject: [PATCH 6/8] x86/setup: Add boot messages about cmdline builtins
 
 While the ability to override or append to the boot command line has
 been added, the boot messages contain no information as to whether the
@@ -270,7 +270,7 @@ index 740f3bdb3f61..4d5c77ffcf8a 100644
 From 57d0659e4153e89a1093b51109072f7c0025e37d Mon Sep 17 00:00:00 2001
 From: Tony Fischetti <tony.fischetti@gmail.com>
 Date: Fri, 22 May 2020 12:28:37 -0400
-Subject: [PATCH 7/7] change vm.max_map_count default from 65530 to 262144
+Subject: [PATCH 7/8] change vm.max_map_count default from 65530 to 262144
 
 it was ((unsigned short) ~ 0U) - 5 but now its 262144
 for lisp
@@ -291,6 +291,32 @@ index 5299b90a6c40..f26b24c1fae6 100644
  
  extern int sysctl_max_map_count;
  
+-- 
+2.20.1
+
+
+From c713ed063e840e239f14838303c765ff48b415b4 Mon Sep 17 00:00:00 2001
+From: Tony Fischetti <tony.fischetti@gmail.com>
+Date: Mon, 28 Dec 2020 11:04:58 -0500
+Subject: [PATCH 8/8] add message containing chosen max_user_watches from
+ inotify_user.c
+
+---
+ fs/notify/inotify/inotify_user.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/fs/notify/inotify/inotify_user.c b/fs/notify/inotify/inotify_user.c
+index 59c177011a0f..cff3e72c6b83 100644
+--- a/fs/notify/inotify/inotify_user.c
++++ b/fs/notify/inotify/inotify_user.c
+@@ -817,6 +817,7 @@ static int __init inotify_user_setup(void)
+ 	watches_max = (((si.totalram - si.totalhigh) / 100) << PAGE_SHIFT) /
+ 			INOTIFY_WATCH_COST;
+ 	watches_max = clamp(watches_max, 8192UL, 1048576UL);
++	pr_info("inotify max_user_watches set to %lu\n", watches_max);
+ 
+ 	BUILD_BUG_ON(IN_ACCESS != FS_ACCESS);
+ 	BUILD_BUG_ON(IN_MODIFY != FS_MODIFY);
 -- 
 2.20.1
 
