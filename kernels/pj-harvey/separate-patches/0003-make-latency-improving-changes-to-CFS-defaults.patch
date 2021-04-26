@@ -1,4 +1,4 @@
-From ed6135054b213d4f28b55cf82b626e7948334c1e Mon Sep 17 00:00:00 2001
+From 0f45cdd369a4a78f69b2473e35e7b715ae53916f Mon Sep 17 00:00:00 2001
 From: Tony Fischetti <tony.fischetti@gmail.com>
 Date: Mon, 17 Aug 2020 09:29:11 -0400
 Subject: [PATCH] make latency-improving changes to CFS defaults
@@ -9,7 +9,7 @@ Subject: [PATCH] make latency-improving changes to CFS defaults
  2 files changed, 15 insertions(+), 15 deletions(-)
 
 diff --git a/kernel/sched/core.c b/kernel/sched/core.c
-index 15d2562118d1..27ec2a5ffcc4 100644
+index 98191218d891..c81ee10ba55e 100644
 --- a/kernel/sched/core.c
 +++ b/kernel/sched/core.c
 @@ -64,7 +64,7 @@ const_debug unsigned int sysctl_sched_features =
@@ -31,7 +31,7 @@ index 15d2562118d1..27ec2a5ffcc4 100644
  
  /*
 diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
-index 04a3ce20da67..da977b0e2097 100644
+index 794c2cb945f8..756c4d60553a 100644
 --- a/kernel/sched/fair.c
 +++ b/kernel/sched/fair.c
 @@ -33,10 +33,10 @@

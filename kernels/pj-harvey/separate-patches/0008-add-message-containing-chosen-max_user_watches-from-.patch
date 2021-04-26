@@ -1,4 +1,4 @@
-From c713ed063e840e239f14838303c765ff48b415b4 Mon Sep 17 00:00:00 2001
+From 4795e41505ff04ab3bb004d60bb69a0c77a7b675 Mon Sep 17 00:00:00 2001
 From: Tony Fischetti <tony.fischetti@gmail.com>
 Date: Mon, 28 Dec 2020 11:04:58 -0500
 Subject: [PATCH] add message containing chosen max_user_watches from
@@ -9,7 +9,7 @@ Subject: [PATCH] add message containing chosen max_user_watches from
  1 file changed, 1 insertion(+)
 
 diff --git a/fs/notify/inotify/inotify_user.c b/fs/notify/inotify/inotify_user.c
-index 59c177011a0f..cff3e72c6b83 100644
+index c71be4fb7dc5..e38a66b042bc 100644
 --- a/fs/notify/inotify/inotify_user.c
 +++ b/fs/notify/inotify/inotify_user.c
 @@ -817,6 +817,7 @@ static int __init inotify_user_setup(void)
