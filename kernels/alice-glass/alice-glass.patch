@@ -1,0 +1,323 @@
+From b9999057bd11fc7cfa14da715033f03434b4cca6 Mon Sep 17 00:00:00 2001
+From: Tony Fischetti <tony.fischetti@gmail.com>
+Date: Wed, 4 Mar 2020 10:51:34 -0500
+Subject: [PATCH 1/8] fix Magic SysRq for Matias mini keyboard
+
+---
+ include/uapi/linux/input-event-codes.h | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
+
+diff --git a/include/uapi/linux/input-event-codes.h b/include/uapi/linux/input-event-codes.h
+index 225ec87d4f22..956e470e024d 100644
+--- a/include/uapi/linux/input-event-codes.h
++++ b/include/uapi/linux/input-event-codes.h
+@@ -139,7 +139,8 @@
+ #define KEY_F6			64
+ #define KEY_F7			65
+ #define KEY_F8			66
+-#define KEY_F9			67
++// F9 is the new sysreq
++#define KEY_F9			99
+ #define KEY_F10			68
+ #define KEY_NUMLOCK		69
+ #define KEY_SCROLLLOCK		70
+@@ -171,7 +172,8 @@
+ #define KEY_KPENTER		96
+ #define KEY_RIGHTCTRL		97
+ #define KEY_KPSLASH		98
+-#define KEY_SYSRQ		99
++// sysrq is the new F9
++#define KEY_SYSRQ		67
+ #define KEY_RIGHTALT		100
+ #define KEY_LINEFEED		101
+ #define KEY_HOME		102
+-- 
+2.20.1
+
+
+From a572b0b8883759a9f6a784973240281a5e29552a Mon Sep 17 00:00:00 2001
+From: Tony Fischetti <tony.fischetti@gmail.com>
+Date: Tue, 8 Jun 2021 13:19:27 -0400
+Subject: [PATCH 2/8] make IO scheduler default to BFQ
+
+---
+ block/elevator.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/block/elevator.c b/block/elevator.c
+index 440699c28119..47fffc18978f 100644
+--- a/block/elevator.c
++++ b/block/elevator.c
+@@ -616,8 +616,8 @@ static inline bool elv_support_iosched(struct request_queue *q)
+ }
+ 
+ /*
+- * For single queue devices, default to using mq-deadline. If we have multiple
+- * queues or mq-deadline is not available, default to "none".
++ * For single queue devices, default to using bfq. If we have multiple
++ * queues or bfq is not available, default to "none".
+  */
+ static struct elevator_type *elevator_get_default(struct request_queue *q)
+ {
+@@ -625,7 +625,7 @@ static struct elevator_type *elevator_get_default(struct request_queue *q)
+ 			!blk_mq_is_sbitmap_shared(q->tag_set->flags))
+ 		return NULL;
+ 
+-	return elevator_get(q, "mq-deadline", false);
++	return elevator_get(q, "bfq", false);
+ }
+ 
+ /*
+-- 
+2.20.1
+
+
+From a7ef57805cab3832bee93f4d6bc3d27dd3d8b9d5 Mon Sep 17 00:00:00 2001
+From: Tony Fischetti <tony.fischetti@gmail.com>
+Date: Mon, 17 Aug 2020 09:29:11 -0400
+Subject: [PATCH 3/8] make latency-improving changes to CFS defaults
+
+---
+ kernel/sched/core.c |  4 ++--
+ kernel/sched/fair.c | 26 +++++++++++++-------------
+ 2 files changed, 15 insertions(+), 15 deletions(-)
+
+diff --git a/kernel/sched/core.c b/kernel/sched/core.c
+index 5226cc26a095..d3779b13bc8f 100644
+--- a/kernel/sched/core.c
++++ b/kernel/sched/core.c
+@@ -74,7 +74,7 @@ __read_mostly int sysctl_resched_latency_warn_once = 1;
+  * Number of tasks to iterate in a single balance run.
+  * Limited because this is done with IRQs disabled.
+  */
+-const_debug unsigned int sysctl_sched_nr_migrate = 32;
++const_debug unsigned int sysctl_sched_nr_migrate = 128;
+ 
+ /*
+  * period over which we measure -rt task CPU usage in us.
+@@ -88,7 +88,7 @@ __read_mostly int scheduler_running;
+  * part of the period that we allow rt tasks to run in us.
+  * default: 0.95s
+  */
+-int sysctl_sched_rt_runtime = 950000;
++int sysctl_sched_rt_runtime = 980000;
+ 
+ 
+ /*
+diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
+index 3248e24a90b0..8df0bd15040b 100644
+--- a/kernel/sched/fair.c
++++ b/kernel/sched/fair.c
+@@ -33,10 +33,10 @@
+  * (to see the precise effective timeslice length of your workload,
+  *  run vmstat and monitor the context-switches (cs) field)
+  *
+- * (default: 6ms * (1 + ilog(ncpus)), units: nanoseconds)
++ * (default: 2.7 ms * (1 + ilog(ncpus)), units: nanoseconds)
+  */
+-unsigned int sysctl_sched_latency			= 6000000ULL;
+-static unsigned int normalized_sysctl_sched_latency	= 6000000ULL;
++unsigned int sysctl_sched_latency			= 2700000ULL;
++static unsigned int normalized_sysctl_sched_latency	= 2700000ULL;
+ 
+ /*
+  * The initial- and re-scaling of tunables is configurable
+@@ -54,15 +54,15 @@ unsigned int sysctl_sched_tunable_scaling = SCHED_TUNABLESCALING_LOG;
+ /*
+  * Minimal preemption granularity for CPU-bound tasks:
+  *
+- * (default: 0.75 msec * (1 + ilog(ncpus)), units: nanoseconds)
++ * (default: 0.4 msec * (1 + ilog(ncpus)), units: nanoseconds)
+  */
+-unsigned int sysctl_sched_min_granularity			= 750000ULL;
+-static unsigned int normalized_sysctl_sched_min_granularity	= 750000ULL;
++unsigned int sysctl_sched_min_granularity			= 400000ULL;
++static unsigned int normalized_sysctl_sched_min_granularity	= 400000ULL;
+ 
+ /*
+  * This value is kept at sysctl_sched_latency/sysctl_sched_min_granularity
+  */
+-static unsigned int sched_nr_latency = 8;
++static unsigned int sched_nr_latency = 10;
+ 
+ /*
+  * After fork, child runs first. If set to 0 (default) then
+@@ -77,12 +77,12 @@ unsigned int sysctl_sched_child_runs_first __read_mostly;
+  * and reduces their over-scheduling. Synchronous workloads will still
+  * have immediate wakeup/sleep latencies.
+  *
+- * (default: 1 msec * (1 + ilog(ncpus)), units: nanoseconds)
++ * (default: 0.5 msec * (1 + ilog(ncpus)), units: nanoseconds)
+  */
+-unsigned int sysctl_sched_wakeup_granularity			= 1000000UL;
+-static unsigned int normalized_sysctl_sched_wakeup_granularity	= 1000000UL;
++unsigned int sysctl_sched_wakeup_granularity			= 500000UL;
++static unsigned int normalized_sysctl_sched_wakeup_granularity	= 500000UL;
+ 
+-const_debug unsigned int sysctl_sched_migration_cost	= 500000UL;
++const_debug unsigned int sysctl_sched_migration_cost	= 350000UL;
+ 
+ int sched_thermal_decay_shift;
+ static int __init setup_sched_thermal_decay_shift(char *str)
+@@ -131,9 +131,9 @@ int __weak arch_asym_cpu_priority(int cpu)
+  * to consumption or the quota being specified to be smaller than the slice)
+  * we will always only issue the remaining available time.
+  *
+- * (default: 5 msec, units: microseconds)
++ * (default: 3 msec, units: microseconds)
+  */
+-unsigned int sysctl_sched_cfs_bandwidth_slice		= 5000UL;
++unsigned int sysctl_sched_cfs_bandwidth_slice		= 3000UL;
+ #endif
+ 
+ static inline void update_load_add(struct load_weight *lw, unsigned long inc)
+-- 
+2.20.1
+
+
+From 0081b4544be7aebd795ee419b499009f7b7463c8 Mon Sep 17 00:00:00 2001
+From: Tony Fischetti <tony.fischetti@gmail.com>
+Date: Mon, 17 Aug 2020 09:30:29 -0400
+Subject: [PATCH 4/8] change swappiness default from 60 to 13
+
+---
+ mm/vmscan.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/mm/vmscan.c b/mm/vmscan.c
+index 5199b9696bab..a26fc84f2306 100644
+--- a/mm/vmscan.c
++++ b/mm/vmscan.c
+@@ -167,7 +167,7 @@ struct scan_control {
+ /*
+  * From 0 .. 200.  Higher means more swappy.
+  */
+-int vm_swappiness = 60;
++int vm_swappiness = 13;
+ 
+ static void set_task_reclaim_state(struct task_struct *task,
+ 				   struct reclaim_state *rs)
+-- 
+2.20.1
+
+
+From bd7f1c7086f10494ebe7b4999cf05ab6c74da8f1 Mon Sep 17 00:00:00 2001
+From: Tony Fischetti <tony.fischetti@gmail.com>
+Date: Tue, 21 Apr 2020 09:14:28 -0400
+Subject: [PATCH 5/8] Set schedutil's `rate_limit_us` parameter to 0
+
+---
+ kernel/sched/cpufreq_schedutil.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/kernel/sched/cpufreq_schedutil.c b/kernel/sched/cpufreq_schedutil.c
+index 4f09afd2f321..1721a29b7634 100644
+--- a/kernel/sched/cpufreq_schedutil.c
++++ b/kernel/sched/cpufreq_schedutil.c
+@@ -688,7 +688,7 @@ static int sugov_init(struct cpufreq_policy *policy)
+ 		goto stop_kthread;
+ 	}
+ 
+-	tunables->rate_limit_us = cpufreq_policy_transition_delay_us(policy);
++	tunables->rate_limit_us = 0;
+ 
+ 	policy->governor_data = sg_policy;
+ 	sg_policy->tunables = tunables;
+-- 
+2.20.1
+
+
+From d82debc7d4608215503818adf099093346b5fd3b Mon Sep 17 00:00:00 2001
+From: Tony Fischetti <tony.fischetti@gmail.com>
+Date: Tue, 5 May 2020 16:17:01 -0400
+Subject: [PATCH 6/8] x86/setup: Add boot messages about cmdline builtins
+
+While the ability to override or append to the boot command line has
+been added, the boot messages contain no information as to whether the
+cmdline was manipulated by the build-time options. This patch, for x86,
+adds boot messages specifying the intital cmdline, and the final cmdline
+after possible manipulation via the kernel config.
+
+Signed-off-by: Tony Fischetti <tony.fischetti@gmail.com>
+---
+ arch/x86/kernel/setup.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/arch/x86/kernel/setup.c b/arch/x86/kernel/setup.c
+index 1e720626069a..4574a05d41fe 100644
+--- a/arch/x86/kernel/setup.c
++++ b/arch/x86/kernel/setup.c
+@@ -812,7 +812,7 @@ void __init setup_arch(char **cmdline_p)
+ 	 */
+ 	__flush_tlb_all();
+ #else
+-	printk(KERN_INFO "Command line: %s\n", boot_command_line);
++	pr_info("Initial command line: %s\n", boot_command_line);
+ 	boot_cpu_data.x86_phys_bits = MAX_PHYSMEM_BITS;
+ #endif
+ 
+@@ -898,6 +898,7 @@ void __init setup_arch(char **cmdline_p)
+ #endif
+ 
+ 	strlcpy(command_line, boot_command_line, COMMAND_LINE_SIZE);
++	pr_info("Final command line: %s\n", command_line);
+ 	*cmdline_p = command_line;
+ 
+ 	/*
+-- 
+2.20.1
+
+
+From b5eae8c419078d6abd8ccfe94d1a78d79518c386 Mon Sep 17 00:00:00 2001
+From: Tony Fischetti <tony.fischetti@gmail.com>
+Date: Fri, 22 May 2020 12:28:37 -0400
+Subject: [PATCH 7/8] change vm.max_map_count default from 65530 to 262144
+
+it was ((unsigned short) ~ 0U) - 5 but now its 262144
+for lisp
+---
+ include/linux/mm.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/include/linux/mm.h b/include/linux/mm.h
+index c274f75efcf9..0d77f7c92114 100644
+--- a/include/linux/mm.h
++++ b/include/linux/mm.h
+@@ -209,7 +209,7 @@ static inline void __mm_zero_struct_page(struct page *page)
+  * that.
+  */
+ #define MAPCOUNT_ELF_CORE_MARGIN	(5)
+-#define DEFAULT_MAX_MAP_COUNT	(USHRT_MAX - MAPCOUNT_ELF_CORE_MARGIN)
++#define DEFAULT_MAX_MAP_COUNT		262144
+ 
+ extern int sysctl_max_map_count;
+ 
+-- 
+2.20.1
+
+
+From c0a709ff0d919fc50bb5ea78524e158373805b47 Mon Sep 17 00:00:00 2001
+From: Tony Fischetti <tony.fischetti@gmail.com>
+Date: Mon, 28 Dec 2020 11:04:58 -0500
+Subject: [PATCH 8/8] add message containing chosen max_user_watches from
+ inotify_user.c
+
+---
+ fs/notify/inotify/inotify_user.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/fs/notify/inotify/inotify_user.c b/fs/notify/inotify/inotify_user.c
+index 98f61b31745a..06cfc8783d79 100644
+--- a/fs/notify/inotify/inotify_user.c
++++ b/fs/notify/inotify/inotify_user.c
+@@ -816,6 +816,7 @@ static int __init inotify_user_setup(void)
+ 	watches_max = (((si.totalram - si.totalhigh) / 100) << PAGE_SHIFT) /
+ 			INOTIFY_WATCH_COST;
+ 	watches_max = clamp(watches_max, 8192UL, 1048576UL);
++	pr_info("inotify max_user_watches set to %lu\n", watches_max);
+ 
+ 	BUILD_BUG_ON(IN_ACCESS != FS_ACCESS);
+ 	BUILD_BUG_ON(IN_MODIFY != FS_MODIFY);
+-- 
+2.20.1
+
