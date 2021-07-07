@@ -1,4 +1,4 @@
-From 42eeb87d1469a84368b4cd9dc9eb7acdb6eaead8 Mon Sep 17 00:00:00 2001
+From bd7f1c7086f10494ebe7b4999cf05ab6c74da8f1 Mon Sep 17 00:00:00 2001
 From: Tony Fischetti <tony.fischetti@gmail.com>
 Date: Tue, 21 Apr 2020 09:14:28 -0400
 Subject: [PATCH] Set schedutil's `rate_limit_us` parameter to 0
@@ -8,10 +8,10 @@ Subject: [PATCH] Set schedutil's `rate_limit_us` parameter to 0
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/kernel/sched/cpufreq_schedutil.c b/kernel/sched/cpufreq_schedutil.c
-index 50cbad89f7fa..4dda5a857e61 100644
+index 4f09afd2f321..1721a29b7634 100644
 --- a/kernel/sched/cpufreq_schedutil.c
 +++ b/kernel/sched/cpufreq_schedutil.c
-@@ -693,7 +693,7 @@ static int sugov_init(struct cpufreq_policy *policy)
+@@ -688,7 +688,7 @@ static int sugov_init(struct cpufreq_policy *policy)
  		goto stop_kthread;
  	}
  

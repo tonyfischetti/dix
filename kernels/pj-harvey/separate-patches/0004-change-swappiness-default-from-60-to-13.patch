@@ -1,4 +1,4 @@
-From 7d899d1cf4e37a8d33fd7ea549760e405bbf734b Mon Sep 17 00:00:00 2001
+From 0081b4544be7aebd795ee419b499009f7b7463c8 Mon Sep 17 00:00:00 2001
 From: Tony Fischetti <tony.fischetti@gmail.com>
 Date: Mon, 17 Aug 2020 09:30:29 -0400
 Subject: [PATCH] change swappiness default from 60 to 13
@@ -8,7 +8,7 @@ Subject: [PATCH] change swappiness default from 60 to 13
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/mm/vmscan.c b/mm/vmscan.c
-index 562e87cbd7a1..861734e9c5e3 100644
+index 5199b9696bab..a26fc84f2306 100644
 --- a/mm/vmscan.c
 +++ b/mm/vmscan.c
 @@ -167,7 +167,7 @@ struct scan_control {

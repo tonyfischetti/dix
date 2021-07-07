@@ -1,30 +1,31 @@
-From 97b5f1498b4d4c0ded1a87c6c1f5b663461314b5 Mon Sep 17 00:00:00 2001
+From a572b0b8883759a9f6a784973240281a5e29552a Mon Sep 17 00:00:00 2001
 From: Tony Fischetti <tony.fischetti@gmail.com>
-Date: Wed, 4 Mar 2020 10:54:55 -0500
+Date: Tue, 8 Jun 2021 13:19:27 -0400
 Subject: [PATCH] make IO scheduler default to BFQ
 
 ---
- block/elevator.c | 9 +++------
- 1 file changed, 3 insertions(+), 6 deletions(-)
+ block/elevator.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/block/elevator.c b/block/elevator.c
-index 293c5c81397a..a038d6e5358a 100644
+index 440699c28119..47fffc18978f 100644
 --- a/block/elevator.c
 +++ b/block/elevator.c
-@@ -616,15 +616,12 @@ static inline bool elv_support_iosched(struct request_queue *q)
+@@ -616,8 +616,8 @@ static inline bool elv_support_iosched(struct request_queue *q)
  }
  
  /*
 - * For single queue devices, default to using mq-deadline. If we have multiple
 - * queues or mq-deadline is not available, default to "none".
-+ * For single queue devices, default to using bfq, If we have multiple
++ * For single queue devices, default to using bfq. If we have multiple
 + * queues or bfq is not available, default to "none".
   */
  static struct elevator_type *elevator_get_default(struct request_queue *q)
  {
--	if (q->nr_hw_queues != 1)
--		return NULL;
--
+@@ -625,7 +625,7 @@ static struct elevator_type *elevator_get_default(struct request_queue *q)
+ 			!blk_mq_is_sbitmap_shared(q->tag_set->flags))
+ 		return NULL;
+ 
 -	return elevator_get(q, "mq-deadline", false);
 +	return elevator_get(q, "bfq", false);
  }

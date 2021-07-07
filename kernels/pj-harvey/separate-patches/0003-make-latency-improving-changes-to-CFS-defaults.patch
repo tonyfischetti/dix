@@ -1,4 +1,4 @@
-From 0f45cdd369a4a78f69b2473e35e7b715ae53916f Mon Sep 17 00:00:00 2001
+From a7ef57805cab3832bee93f4d6bc3d27dd3d8b9d5 Mon Sep 17 00:00:00 2001
 From: Tony Fischetti <tony.fischetti@gmail.com>
 Date: Mon, 17 Aug 2020 09:29:11 -0400
 Subject: [PATCH] make latency-improving changes to CFS defaults
@@ -9,10 +9,10 @@ Subject: [PATCH] make latency-improving changes to CFS defaults
  2 files changed, 15 insertions(+), 15 deletions(-)
 
 diff --git a/kernel/sched/core.c b/kernel/sched/core.c
-index 98191218d891..c81ee10ba55e 100644
+index 5226cc26a095..d3779b13bc8f 100644
 --- a/kernel/sched/core.c
 +++ b/kernel/sched/core.c
-@@ -64,7 +64,7 @@ const_debug unsigned int sysctl_sched_features =
+@@ -74,7 +74,7 @@ __read_mostly int sysctl_resched_latency_warn_once = 1;
   * Number of tasks to iterate in a single balance run.
   * Limited because this is done with IRQs disabled.
   */
@@ -21,7 +21,7 @@ index 98191218d891..c81ee10ba55e 100644
  
  /*
   * period over which we measure -rt task CPU usage in us.
-@@ -78,7 +78,7 @@ __read_mostly int scheduler_running;
+@@ -88,7 +88,7 @@ __read_mostly int scheduler_running;
   * part of the period that we allow rt tasks to run in us.
   * default: 0.95s
   */
@@ -31,7 +31,7 @@ index 98191218d891..c81ee10ba55e 100644
  
  /*
 diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
-index 794c2cb945f8..756c4d60553a 100644
+index 3248e24a90b0..8df0bd15040b 100644
 --- a/kernel/sched/fair.c
 +++ b/kernel/sched/fair.c
 @@ -33,10 +33,10 @@
@@ -48,7 +48,7 @@ index 794c2cb945f8..756c4d60553a 100644
  
  /*
   * The initial- and re-scaling of tunables is configurable
-@@ -54,15 +54,15 @@ enum sched_tunable_scaling sysctl_sched_tunable_scaling = SCHED_TUNABLESCALING_L
+@@ -54,15 +54,15 @@ unsigned int sysctl_sched_tunable_scaling = SCHED_TUNABLESCALING_LOG;
  /*
   * Minimal preemption granularity for CPU-bound tasks:
   *
@@ -85,7 +85,7 @@ index 794c2cb945f8..756c4d60553a 100644
  
  int sched_thermal_decay_shift;
  static int __init setup_sched_thermal_decay_shift(char *str)
-@@ -124,9 +124,9 @@ int __weak arch_asym_cpu_priority(int cpu)
+@@ -131,9 +131,9 @@ int __weak arch_asym_cpu_priority(int cpu)
   * to consumption or the quota being specified to be smaller than the slice)
   * we will always only issue the remaining available time.
   *
