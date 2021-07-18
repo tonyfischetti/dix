@@ -139,11 +139,6 @@ Do and test git libsecret thing
 
 
 pinstall network-manager-openconnect-gnome openvpn networkmanager-vpnc-gnome
-Install nordvpn deb
-Make sure the /etc/apt/sources* is still ok
-pinstall nordvpn
-sudo systemctl disable nordvpnd.socket
-sudo systemctl disable nordvpnd.service
-sudo systemctl stop nordvpnd.service
+pinstall ipset libipset11
 
 Clock format is %A %Y-%m-%d  %I:%M %p
