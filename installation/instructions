@@ -139,6 +139,6 @@ Do and test git libsecret thing
 
 
 pinstall network-manager-openconnect-gnome openvpn networkmanager-vpnc-gnome
-pinstall ipset libipset11
+pinstall ipset libipset11 nftables wireguard
 
 Clock format is %A %Y-%m-%d  %I:%M %p
