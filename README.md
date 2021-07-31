@@ -12,6 +12,8 @@ A place to update and store my debian configuration (kernel config y lo que sea)
     ln -s ~/.dix/dot-config/libinput-gestures.conf ~/.config/libinput-gestures.conf
     ln -s ~/.dix/dot-config/cava-config ~/.config/cava/config
     ln -s ~/.dix/dot-config/vlcrc ~/.config/vlc/vlcrc
+    ln -s ~/.dix/dot-config/skippy-xd.rc ~/.config/skippy-xd/skippy-xd.rc
+    ln -s ~/.dix/dot-config/bl-hotcornersrc  ~/.config/bl-hotcorners/bl-hotcornersrc
 
 The units...
 

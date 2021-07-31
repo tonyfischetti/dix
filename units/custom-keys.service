@@ -1,0 +1,17 @@
+[Unit]
+Description=Set Custom Keybindings
+Requires=graphical-session.target
+After=graphical-session.target
+
+StartLimitIntervalSec=60
+StartLimitBurst=30
+
+[Service]
+Type=simple
+RemainAfterExit=true
+ExecStart=/usr/bin/xmodmap /home/tony/.Xmodmap
+StandardOutput=journal
+Restart=on-failure
+
+[Install]
+WantedBy=default.target

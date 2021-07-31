@@ -1,5 +1,5 @@
 [Unit]
-Description=Miscellaneous
+Description=Hotcorners
 Requires=graphical-session.target
 After=graphical-session.target
 
@@ -9,7 +9,7 @@ StartLimitBurst=30
 [Service]
 Type=simple
 RemainAfterExit=true
-ExecStart=/home/tony/.dix/startup.sh
+ExecStart=/home/tony/.zsh/more-scripts/bl-hotcorners -d
 StandardOutput=journal
 Restart=on-failure
 

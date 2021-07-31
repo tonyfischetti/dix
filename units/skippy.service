@@ -1,0 +1,17 @@
+[Unit]
+Description=Skippy
+Requires=graphical-session.target
+After=graphical-session.target
+
+StartLimitIntervalSec=60
+StartLimitBurst=30
+
+[Service]
+Type=simple
+RemainAfterExit=true
+ExecStart=/usr/local/bin/skippy-xd --start-daemon 2> /dev/null
+StandardOutput=journal
+Restart=on-failure
+
+[Install]
+WantedBy=default.target
