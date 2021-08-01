@@ -29,5 +29,6 @@ The units...
     - Mess with `/usr/share/polkit-1/actions/org.freedesktop.UDisks2.policy`
     - Remove some cron stuff
     - Oh, and the GhostIt firefox extension hotkey now has to be "AltGraph"
+    - Read installation notes
 
 

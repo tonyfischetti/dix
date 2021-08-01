@@ -88,6 +88,7 @@ Make journal persistent
     mkdir -p /var/log/journal
     systemd-tmpfiles --create --prefix /var/log/journal
     systemctl restart systemd-journald
+(default on bullseye now?)
 
 Add noatime to /etc/fstab
 
@@ -108,6 +109,9 @@ Is the journal ~ p e r s i s t e n t ~
 
 add to /etc/security/limits.conf
     tony             -       nice            -20
+
+hotcorners / skippy
+    pinstall python3-xlib xdotool
 
 Make these match
     /lib/console-setup/console-setup.sh
@@ -141,4 +145,4 @@ Do and test git libsecret thing
 pinstall network-manager-openconnect-gnome openvpn networkmanager-vpnc-gnome
 pinstall ipset libipset11 nftables wireguard
 
-Clock format is %A %Y-%m-%d  %I:%M %p
+Clock format is " %A %Y-%m-%d  %I:%M %p"
