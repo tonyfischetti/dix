@@ -1,37 +1,16 @@
-From a7ef57805cab3832bee93f4d6bc3d27dd3d8b9d5 Mon Sep 17 00:00:00 2001
+From d6d6827f33e98d3b11500d58c2c4751afca2e5d0 Mon Sep 17 00:00:00 2001
 From: Tony Fischetti <tony.fischetti@gmail.com>
-Date: Mon, 17 Aug 2020 09:29:11 -0400
-Subject: [PATCH] make latency-improving changes to CFS defaults
+Date: Mon, 26 Jul 2021 15:53:59 -0400
+Subject: [PATCH] make latency-improving changes to CFS defaults...
 
+see https://github.com/zen-kernel/zen-kernel/commit/7de2596b35ac1db
+for more information
 ---
- kernel/sched/core.c |  4 ++--
  kernel/sched/fair.c | 26 +++++++++++++-------------
- 2 files changed, 15 insertions(+), 15 deletions(-)
+ 1 file changed, 13 insertions(+), 13 deletions(-)
 
-diff --git a/kernel/sched/core.c b/kernel/sched/core.c
-index 5226cc26a095..d3779b13bc8f 100644
---- a/kernel/sched/core.c
-+++ b/kernel/sched/core.c
-@@ -74,7 +74,7 @@ __read_mostly int sysctl_resched_latency_warn_once = 1;
-  * Number of tasks to iterate in a single balance run.
-  * Limited because this is done with IRQs disabled.
-  */
--const_debug unsigned int sysctl_sched_nr_migrate = 32;
-+const_debug unsigned int sysctl_sched_nr_migrate = 128;
- 
- /*
-  * period over which we measure -rt task CPU usage in us.
-@@ -88,7 +88,7 @@ __read_mostly int scheduler_running;
-  * part of the period that we allow rt tasks to run in us.
-  * default: 0.95s
-  */
--int sysctl_sched_rt_runtime = 950000;
-+int sysctl_sched_rt_runtime = 980000;
- 
- 
- /*
 diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
-index 3248e24a90b0..8df0bd15040b 100644
+index f60ef0b4ec33..21ab36d75c2e 100644
 --- a/kernel/sched/fair.c
 +++ b/kernel/sched/fair.c
 @@ -33,10 +33,10 @@
@@ -39,12 +18,12 @@ index 3248e24a90b0..8df0bd15040b 100644
   *  run vmstat and monitor the context-switches (cs) field)
   *
 - * (default: 6ms * (1 + ilog(ncpus)), units: nanoseconds)
-+ * (default: 2.7 ms * (1 + ilog(ncpus)), units: nanoseconds)
++ * (default: 3.7ms * (1 + ilog(ncpus)), units: nanoseconds)
   */
 -unsigned int sysctl_sched_latency			= 6000000ULL;
 -static unsigned int normalized_sysctl_sched_latency	= 6000000ULL;
-+unsigned int sysctl_sched_latency			= 2700000ULL;
-+static unsigned int normalized_sysctl_sched_latency	= 2700000ULL;
++unsigned int sysctl_sched_latency			= 3700000ULL;
++static unsigned int normalized_sysctl_sched_latency	= 3700000ULL;
  
  /*
   * The initial- and re-scaling of tunables is configurable
@@ -53,12 +32,12 @@ index 3248e24a90b0..8df0bd15040b 100644
   * Minimal preemption granularity for CPU-bound tasks:
   *
 - * (default: 0.75 msec * (1 + ilog(ncpus)), units: nanoseconds)
-+ * (default: 0.4 msec * (1 + ilog(ncpus)), units: nanoseconds)
++ * (default: 0.41 msec * (1 + ilog(ncpus)), units: nanoseconds)
   */
 -unsigned int sysctl_sched_min_granularity			= 750000ULL;
 -static unsigned int normalized_sysctl_sched_min_granularity	= 750000ULL;
-+unsigned int sysctl_sched_min_granularity			= 400000ULL;
-+static unsigned int normalized_sysctl_sched_min_granularity	= 400000ULL;
++unsigned int sysctl_sched_min_granularity			= 410000ULL;
++static unsigned int normalized_sysctl_sched_min_granularity	= 410000ULL;
  
  /*
   * This value is kept at sysctl_sched_latency/sysctl_sched_min_granularity
@@ -73,12 +52,12 @@ index 3248e24a90b0..8df0bd15040b 100644
   * have immediate wakeup/sleep latencies.
   *
 - * (default: 1 msec * (1 + ilog(ncpus)), units: nanoseconds)
-+ * (default: 0.5 msec * (1 + ilog(ncpus)), units: nanoseconds)
++ * (default: 0.47 msec * (1 + ilog(ncpus)), units: nanoseconds)
   */
 -unsigned int sysctl_sched_wakeup_granularity			= 1000000UL;
 -static unsigned int normalized_sysctl_sched_wakeup_granularity	= 1000000UL;
-+unsigned int sysctl_sched_wakeup_granularity			= 500000UL;
-+static unsigned int normalized_sysctl_sched_wakeup_granularity	= 500000UL;
++unsigned int sysctl_sched_wakeup_granularity			= 470000UL;
++static unsigned int normalized_sysctl_sched_wakeup_granularity	= 470000UL;
  
 -const_debug unsigned int sysctl_sched_migration_cost	= 500000UL;
 +const_debug unsigned int sysctl_sched_migration_cost	= 230000UL;
@@ -90,10 +69,10 @@ index 3248e24a90b0..8df0bd15040b 100644
   * we will always only issue the remaining available time.
   *
 - * (default: 5 msec, units: microseconds)
-+ * (default: 3 msec, units: microseconds)
++ * (default: 3.1 msec, units: microseconds)
   */
 -unsigned int sysctl_sched_cfs_bandwidth_slice		= 5000UL;
-+unsigned int sysctl_sched_cfs_bandwidth_slice		= 3000UL;
++unsigned int sysctl_sched_cfs_bandwidth_slice		= 3100UL;
  #endif
  
  static inline void update_load_add(struct load_weight *lw, unsigned long inc)

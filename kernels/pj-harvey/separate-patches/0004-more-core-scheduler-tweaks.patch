@@ -1,0 +1,34 @@
+From 391e816246c9fdc93965e9f9d1d060738a8552e2 Mon Sep 17 00:00:00 2001
+From: Tony Fischetti <tony.fischetti@gmail.com>
+Date: Mon, 26 Jul 2021 16:02:53 -0400
+Subject: [PATCH] more core scheduler tweaks
+
+---
+ kernel/sched/core.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/kernel/sched/core.c b/kernel/sched/core.c
+index e5858999b54d..b27c14d7e1cf 100644
+--- a/kernel/sched/core.c
++++ b/kernel/sched/core.c
+@@ -74,7 +74,7 @@ __read_mostly int sysctl_resched_latency_warn_once = 1;
+  * Number of tasks to iterate in a single balance run.
+  * Limited because this is done with IRQs disabled.
+  */
+-const_debug unsigned int sysctl_sched_nr_migrate = 32;
++const_debug unsigned int sysctl_sched_nr_migrate = 128;
+ 
+ /*
+  * period over which we measure -rt task CPU usage in us.
+@@ -88,7 +88,7 @@ __read_mostly int scheduler_running;
+  * part of the period that we allow rt tasks to run in us.
+  * default: 0.95s
+  */
+-int sysctl_sched_rt_runtime = 950000;
++int sysctl_sched_rt_runtime = 980000;
+ 
+ 
+ /*
+-- 
+2.20.1
+

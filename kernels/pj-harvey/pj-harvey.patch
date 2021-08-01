@@ -1,7 +1,7 @@
-From b9999057bd11fc7cfa14da715033f03434b4cca6 Mon Sep 17 00:00:00 2001
+From 9de636e058238e3e7770ce808f5c88273d408058 Mon Sep 17 00:00:00 2001
 From: Tony Fischetti <tony.fischetti@gmail.com>
 Date: Wed, 4 Mar 2020 10:51:34 -0500
-Subject: [PATCH 1/8] fix Magic SysRq for Matias mini keyboard
+Subject: [PATCH 01/13] fix Magic SysRq for Matias mini keyboard
 
 ---
  include/uapi/linux/input-event-codes.h | 6 ++++--
@@ -35,10 +35,10 @@ index 225ec87d4f22..956e470e024d 100644
 2.20.1
 
 
-From a572b0b8883759a9f6a784973240281a5e29552a Mon Sep 17 00:00:00 2001
+From 6df11f51c6ea6d5d6fa949761f0bdcae80a83a00 Mon Sep 17 00:00:00 2001
 From: Tony Fischetti <tony.fischetti@gmail.com>
 Date: Tue, 8 Jun 2021 13:19:27 -0400
-Subject: [PATCH 2/8] make IO scheduler default to BFQ
+Subject: [PATCH 02/13] make IO scheduler default to BFQ
 
 ---
  block/elevator.c | 6 +++---
@@ -72,18 +72,99 @@ index 440699c28119..47fffc18978f 100644
 2.20.1
 
 
-From a7ef57805cab3832bee93f4d6bc3d27dd3d8b9d5 Mon Sep 17 00:00:00 2001
+From d6d6827f33e98d3b11500d58c2c4751afca2e5d0 Mon Sep 17 00:00:00 2001
 From: Tony Fischetti <tony.fischetti@gmail.com>
-Date: Mon, 17 Aug 2020 09:29:11 -0400
-Subject: [PATCH 3/8] make latency-improving changes to CFS defaults
+Date: Mon, 26 Jul 2021 15:53:59 -0400
+Subject: [PATCH 03/13] make latency-improving changes to CFS defaults...
+
+see https://github.com/zen-kernel/zen-kernel/commit/7de2596b35ac1db
+for more information
+---
+ kernel/sched/fair.c | 26 +++++++++++++-------------
+ 1 file changed, 13 insertions(+), 13 deletions(-)
+
+diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
+index f60ef0b4ec33..21ab36d75c2e 100644
+--- a/kernel/sched/fair.c
++++ b/kernel/sched/fair.c
+@@ -33,10 +33,10 @@
+  * (to see the precise effective timeslice length of your workload,
+  *  run vmstat and monitor the context-switches (cs) field)
+  *
+- * (default: 6ms * (1 + ilog(ncpus)), units: nanoseconds)
++ * (default: 3.7ms * (1 + ilog(ncpus)), units: nanoseconds)
+  */
+-unsigned int sysctl_sched_latency			= 6000000ULL;
+-static unsigned int normalized_sysctl_sched_latency	= 6000000ULL;
++unsigned int sysctl_sched_latency			= 3700000ULL;
++static unsigned int normalized_sysctl_sched_latency	= 3700000ULL;
+ 
+ /*
+  * The initial- and re-scaling of tunables is configurable
+@@ -54,15 +54,15 @@ unsigned int sysctl_sched_tunable_scaling = SCHED_TUNABLESCALING_LOG;
+ /*
+  * Minimal preemption granularity for CPU-bound tasks:
+  *
+- * (default: 0.75 msec * (1 + ilog(ncpus)), units: nanoseconds)
++ * (default: 0.41 msec * (1 + ilog(ncpus)), units: nanoseconds)
+  */
+-unsigned int sysctl_sched_min_granularity			= 750000ULL;
+-static unsigned int normalized_sysctl_sched_min_granularity	= 750000ULL;
++unsigned int sysctl_sched_min_granularity			= 410000ULL;
++static unsigned int normalized_sysctl_sched_min_granularity	= 410000ULL;
+ 
+ /*
+  * This value is kept at sysctl_sched_latency/sysctl_sched_min_granularity
+  */
+-static unsigned int sched_nr_latency = 8;
++static unsigned int sched_nr_latency = 10;
+ 
+ /*
+  * After fork, child runs first. If set to 0 (default) then
+@@ -77,12 +77,12 @@ unsigned int sysctl_sched_child_runs_first __read_mostly;
+  * and reduces their over-scheduling. Synchronous workloads will still
+  * have immediate wakeup/sleep latencies.
+  *
+- * (default: 1 msec * (1 + ilog(ncpus)), units: nanoseconds)
++ * (default: 0.47 msec * (1 + ilog(ncpus)), units: nanoseconds)
+  */
+-unsigned int sysctl_sched_wakeup_granularity			= 1000000UL;
+-static unsigned int normalized_sysctl_sched_wakeup_granularity	= 1000000UL;
++unsigned int sysctl_sched_wakeup_granularity			= 470000UL;
++static unsigned int normalized_sysctl_sched_wakeup_granularity	= 470000UL;
+ 
+-const_debug unsigned int sysctl_sched_migration_cost	= 500000UL;
++const_debug unsigned int sysctl_sched_migration_cost	= 230000UL;
+ 
+ int sched_thermal_decay_shift;
+ static int __init setup_sched_thermal_decay_shift(char *str)
+@@ -131,9 +131,9 @@ int __weak arch_asym_cpu_priority(int cpu)
+  * to consumption or the quota being specified to be smaller than the slice)
+  * we will always only issue the remaining available time.
+  *
+- * (default: 5 msec, units: microseconds)
++ * (default: 3.1 msec, units: microseconds)
+  */
+-unsigned int sysctl_sched_cfs_bandwidth_slice		= 5000UL;
++unsigned int sysctl_sched_cfs_bandwidth_slice		= 3100UL;
+ #endif
+ 
+ static inline void update_load_add(struct load_weight *lw, unsigned long inc)
+-- 
+2.20.1
+
+
+From 391e816246c9fdc93965e9f9d1d060738a8552e2 Mon Sep 17 00:00:00 2001
+From: Tony Fischetti <tony.fischetti@gmail.com>
+Date: Mon, 26 Jul 2021 16:02:53 -0400
+Subject: [PATCH 04/13] more core scheduler tweaks
 
 ---
- kernel/sched/core.c |  4 ++--
- kernel/sched/fair.c | 26 +++++++++++++-------------
- 2 files changed, 15 insertions(+), 15 deletions(-)
+ kernel/sched/core.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/kernel/sched/core.c b/kernel/sched/core.c
-index 5226cc26a095..d3779b13bc8f 100644
+index e5858999b54d..b27c14d7e1cf 100644
 --- a/kernel/sched/core.c
 +++ b/kernel/sched/core.c
 @@ -74,7 +74,7 @@ __read_mostly int sysctl_resched_latency_warn_once = 1;
@@ -104,88 +185,21 @@ index 5226cc26a095..d3779b13bc8f 100644
  
  
  /*
-diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
-index 3248e24a90b0..8df0bd15040b 100644
---- a/kernel/sched/fair.c
-+++ b/kernel/sched/fair.c
-@@ -33,10 +33,10 @@
-  * (to see the precise effective timeslice length of your workload,
-  *  run vmstat and monitor the context-switches (cs) field)
-  *
-- * (default: 6ms * (1 + ilog(ncpus)), units: nanoseconds)
-+ * (default: 2.7 ms * (1 + ilog(ncpus)), units: nanoseconds)
-  */
--unsigned int sysctl_sched_latency			= 6000000ULL;
--static unsigned int normalized_sysctl_sched_latency	= 6000000ULL;
-+unsigned int sysctl_sched_latency			= 2700000ULL;
-+static unsigned int normalized_sysctl_sched_latency	= 2700000ULL;
- 
- /*
-  * The initial- and re-scaling of tunables is configurable
-@@ -54,15 +54,15 @@ unsigned int sysctl_sched_tunable_scaling = SCHED_TUNABLESCALING_LOG;
- /*
-  * Minimal preemption granularity for CPU-bound tasks:
-  *
-- * (default: 0.75 msec * (1 + ilog(ncpus)), units: nanoseconds)
-+ * (default: 0.4 msec * (1 + ilog(ncpus)), units: nanoseconds)
-  */
--unsigned int sysctl_sched_min_granularity			= 750000ULL;
--static unsigned int normalized_sysctl_sched_min_granularity	= 750000ULL;
-+unsigned int sysctl_sched_min_granularity			= 400000ULL;
-+static unsigned int normalized_sysctl_sched_min_granularity	= 400000ULL;
- 
- /*
-  * This value is kept at sysctl_sched_latency/sysctl_sched_min_granularity
-  */
--static unsigned int sched_nr_latency = 8;
-+static unsigned int sched_nr_latency = 10;
- 
- /*
-  * After fork, child runs first. If set to 0 (default) then
-@@ -77,12 +77,12 @@ unsigned int sysctl_sched_child_runs_first __read_mostly;
-  * and reduces their over-scheduling. Synchronous workloads will still
-  * have immediate wakeup/sleep latencies.
-  *
-- * (default: 1 msec * (1 + ilog(ncpus)), units: nanoseconds)
-+ * (default: 0.5 msec * (1 + ilog(ncpus)), units: nanoseconds)
-  */
--unsigned int sysctl_sched_wakeup_granularity			= 1000000UL;
--static unsigned int normalized_sysctl_sched_wakeup_granularity	= 1000000UL;
-+unsigned int sysctl_sched_wakeup_granularity			= 500000UL;
-+static unsigned int normalized_sysctl_sched_wakeup_granularity	= 500000UL;
- 
--const_debug unsigned int sysctl_sched_migration_cost	= 500000UL;
-+const_debug unsigned int sysctl_sched_migration_cost	= 350000UL;
- 
- int sched_thermal_decay_shift;
- static int __init setup_sched_thermal_decay_shift(char *str)
-@@ -131,9 +131,9 @@ int __weak arch_asym_cpu_priority(int cpu)
-  * to consumption or the quota being specified to be smaller than the slice)
-  * we will always only issue the remaining available time.
-  *
-- * (default: 5 msec, units: microseconds)
-+ * (default: 3 msec, units: microseconds)
-  */
--unsigned int sysctl_sched_cfs_bandwidth_slice		= 5000UL;
-+unsigned int sysctl_sched_cfs_bandwidth_slice		= 3000UL;
- #endif
- 
- static inline void update_load_add(struct load_weight *lw, unsigned long inc)
 -- 
 2.20.1
 
 
-From 0081b4544be7aebd795ee419b499009f7b7463c8 Mon Sep 17 00:00:00 2001
+From 1b028ed890d5433f37de9185b4c47207ad7e0781 Mon Sep 17 00:00:00 2001
 From: Tony Fischetti <tony.fischetti@gmail.com>
 Date: Mon, 17 Aug 2020 09:30:29 -0400
-Subject: [PATCH 4/8] change swappiness default from 60 to 13
+Subject: [PATCH 05/13] change swappiness default from 60 to 31
 
 ---
  mm/vmscan.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/mm/vmscan.c b/mm/vmscan.c
-index 5199b9696bab..a26fc84f2306 100644
+index 5199b9696bab..bfd4bb96dfb9 100644
 --- a/mm/vmscan.c
 +++ b/mm/vmscan.c
 @@ -167,7 +167,7 @@ struct scan_control {
@@ -193,7 +207,7 @@ index 5199b9696bab..a26fc84f2306 100644
   * From 0 .. 200.  Higher means more swappy.
   */
 -int vm_swappiness = 60;
-+int vm_swappiness = 13;
++int vm_swappiness = 31;
  
  static void set_task_reclaim_state(struct task_struct *task,
  				   struct reclaim_state *rs)
@@ -201,10 +215,10 @@ index 5199b9696bab..a26fc84f2306 100644
 2.20.1
 
 
-From bd7f1c7086f10494ebe7b4999cf05ab6c74da8f1 Mon Sep 17 00:00:00 2001
+From 99d033cdcb78ab6222ffadfac17098f1259a212b Mon Sep 17 00:00:00 2001
 From: Tony Fischetti <tony.fischetti@gmail.com>
 Date: Tue, 21 Apr 2020 09:14:28 -0400
-Subject: [PATCH 5/8] Set schedutil's `rate_limit_us` parameter to 0
+Subject: [PATCH 06/13] Set schedutil's `rate_limit_us` parameter to 0
 
 ---
  kernel/sched/cpufreq_schedutil.c | 2 +-
@@ -227,10 +241,10 @@ index 4f09afd2f321..1721a29b7634 100644
 2.20.1
 
 
-From d82debc7d4608215503818adf099093346b5fd3b Mon Sep 17 00:00:00 2001
+From f82f0d447f262bb6766c5b4cbeca86a8c9d6de46 Mon Sep 17 00:00:00 2001
 From: Tony Fischetti <tony.fischetti@gmail.com>
 Date: Tue, 5 May 2020 16:17:01 -0400
-Subject: [PATCH 6/8] x86/setup: Add boot messages about cmdline builtins
+Subject: [PATCH 07/13] x86/setup: Add boot messages about cmdline builtins
 
 While the ability to override or append to the boot command line has
 been added, the boot messages contain no information as to whether the
@@ -268,10 +282,10 @@ index 1e720626069a..4574a05d41fe 100644
 2.20.1
 
 
-From b5eae8c419078d6abd8ccfe94d1a78d79518c386 Mon Sep 17 00:00:00 2001
+From 7d16b50e1cfde63a79937fc681e6d93106fcaa5f Mon Sep 17 00:00:00 2001
 From: Tony Fischetti <tony.fischetti@gmail.com>
 Date: Fri, 22 May 2020 12:28:37 -0400
-Subject: [PATCH 7/8] change vm.max_map_count default from 65530 to 262144
+Subject: [PATCH 08/13] change vm.max_map_count default from 65530 to 262144
 
 it was ((unsigned short) ~ 0U) - 5 but now its 262144
 for lisp
@@ -280,7 +294,7 @@ for lisp
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/include/linux/mm.h b/include/linux/mm.h
-index c274f75efcf9..0d77f7c92114 100644
+index 9afb8998e7e5..f0df7516d07c 100644
 --- a/include/linux/mm.h
 +++ b/include/linux/mm.h
 @@ -209,7 +209,7 @@ static inline void __mm_zero_struct_page(struct page *page)
@@ -296,10 +310,10 @@ index c274f75efcf9..0d77f7c92114 100644
 2.20.1
 
 
-From c0a709ff0d919fc50bb5ea78524e158373805b47 Mon Sep 17 00:00:00 2001
+From 0b35eaca749c1fa79c3c621852985be2d508a312 Mon Sep 17 00:00:00 2001
 From: Tony Fischetti <tony.fischetti@gmail.com>
 Date: Mon, 28 Dec 2020 11:04:58 -0500
-Subject: [PATCH 8/8] add message containing chosen max_user_watches from
+Subject: [PATCH 09/13] add message containing chosen max_user_watches from
  inotify_user.c
 
 ---
@@ -318,6 +332,187 @@ index 98f61b31745a..06cfc8783d79 100644
  
  	BUILD_BUG_ON(IN_ACCESS != FS_ACCESS);
  	BUILD_BUG_ON(IN_MODIFY != FS_MODIFY);
+-- 
+2.20.1
+
+
+From 07925d2c2b8ba275d4b1ad6802eb41c1148347d6 Mon Sep 17 00:00:00 2001
+From: Alexandre Frade <admfrade@gmail.com>
+Date: Sun, 13 Oct 2019 03:10:39 -0300
+Subject: [PATCH 10/13] XANMOD: kconfig: set PREEMPT and RCU_BOOST without
+ delay by default
+
+Signed-off-by: Alexandre Frade <admfrade@gmail.com>
+---
+ kernel/Kconfig.preempt | 2 +-
+ kernel/rcu/Kconfig     | 6 +++---
+ 2 files changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/kernel/Kconfig.preempt b/kernel/Kconfig.preempt
+index 416017301660..293725c44cbb 100644
+--- a/kernel/Kconfig.preempt
++++ b/kernel/Kconfig.preempt
+@@ -2,7 +2,7 @@
+ 
+ choice
+ 	prompt "Preemption Model"
+-	default PREEMPT_NONE
++	default PREEMPT
+ 
+ config PREEMPT_NONE
+ 	bool "No Forced Preemption (Server)"
+diff --git a/kernel/rcu/Kconfig b/kernel/rcu/Kconfig
+index 3128b7cf8e1f..abfae9afbdc8 100644
+--- a/kernel/rcu/Kconfig
++++ b/kernel/rcu/Kconfig
+@@ -189,8 +189,8 @@ config RCU_FAST_NO_HZ
+ 
+ config RCU_BOOST
+ 	bool "Enable RCU priority boosting"
+-	depends on (RT_MUTEXES && PREEMPT_RCU && RCU_EXPERT) || PREEMPT_RT
+-	default y if PREEMPT_RT
++	depends on (RT_MUTEXES && PREEMPT_RCU) || PREEMPT_RT
++	default y
+ 	help
+ 	  This option boosts the priority of preempted RCU readers that
+ 	  block the current preemptible RCU grace period for too long.
+@@ -204,7 +204,7 @@ config RCU_BOOST_DELAY
+ 	int "Milliseconds to delay boosting after RCU grace-period start"
+ 	range 0 3000
+ 	depends on RCU_BOOST
+-	default 500
++	default 0
+ 	help
+ 	  This option specifies the time to wait after the beginning of
+ 	  a given grace period before priority-boosting preempted RCU
+-- 
+2.20.1
+
+
+From eec91fa45959a6f19d52973d94ff70ebef82b83b Mon Sep 17 00:00:00 2001
+From: Tony Fischetti <tony.fischetti@gmail.com>
+Date: Mon, 26 Jul 2021 16:19:53 -0400
+Subject: [PATCH 11/13] virtual memory default tweaks
+
+---
+ mm/page-writeback.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/mm/page-writeback.c b/mm/page-writeback.c
+index 0062d5c57d41..ef79a405e5b0 100644
+--- a/mm/page-writeback.c
++++ b/mm/page-writeback.c
+@@ -71,7 +71,7 @@ static long ratelimit_pages = 32;
+ /*
+  * Start background writeback (via writeback threads) at this percentage
+  */
+-int dirty_background_ratio = 10;
++int dirty_background_ratio = 20;
+ 
+ /*
+  * dirty_background_bytes starts at 0 (disabled) so that it is a function of
+@@ -88,7 +88,7 @@ int vm_highmem_is_dirtyable;
+ /*
+  * The generator of dirty data starts writeback at this percentage
+  */
+-int vm_dirty_ratio = 20;
++int vm_dirty_ratio = 50;
+ 
+ /*
+  * vm_dirty_bytes starts at 0 (disabled) so that it is a function of
+-- 
+2.20.1
+
+
+From 080527b6b3834803b009c56d593b9ab42aedf608 Mon Sep 17 00:00:00 2001
+From: Tony Fischetti <tony.fischetti@gmail.com>
+Date: Mon, 26 Jul 2021 16:24:41 -0400
+Subject: [PATCH 12/13] vfs cache pressure default tweak
+
+---
+ fs/dcache.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/fs/dcache.c b/fs/dcache.c
+index cf871a81f4fd..38ec53b50294 100644
+--- a/fs/dcache.c
++++ b/fs/dcache.c
+@@ -71,7 +71,7 @@
+  * If no ancestor relationship:
+  * arbitrary, since it's serialized on rename_lock
+  */
+-int sysctl_vfs_cache_pressure __read_mostly = 100;
++int sysctl_vfs_cache_pressure __read_mostly = 50;
+ EXPORT_SYMBOL_GPL(sysctl_vfs_cache_pressure);
+ 
+ __cacheline_aligned_in_smp DEFINE_SEQLOCK(rename_lock);
+-- 
+2.20.1
+
+
+From 0840dce04fed501be31c6fc25797c2b9b37a281a Mon Sep 17 00:00:00 2001
+From: Tony Fischetti <tony.fischetti@gmail.com>
+Date: Tue, 27 Jul 2021 15:57:58 -0400
+Subject: [PATCH 13/13] add option to make threadirqs default
+
+---
+ kernel/irq/Kconfig  | 17 +++++++++++++++++
+ kernel/irq/manage.c | 11 +++++++++++
+ 2 files changed, 28 insertions(+)
+
+diff --git a/kernel/irq/Kconfig b/kernel/irq/Kconfig
+index d79ef2493a28..8aa20871e7d0 100644
+--- a/kernel/irq/Kconfig
++++ b/kernel/irq/Kconfig
+@@ -108,6 +108,23 @@ config GENERIC_IRQ_RESERVATION_MODE
+ config IRQ_FORCED_THREADING
+        bool
+ 
++config FORCE_IRQ_THREADING
++	bool "Make IRQ threading compulsory"
++	depends on IRQ_FORCED_THREADING
++	default n
++	help
++
++	  Make IRQ threading mandatory for any IRQ handlers that support it
++	  instead of being optional and requiring the threadirqs kernel
++	  parameter. Instead they can be optionally disabled with the
++	  nothreadirqs kernel parameter.
++
++	  Enabling this may make some architectures not boot with runqueue
++	  sharing and MuQSS.
++
++	  Enable if you are building for a desktop or low latency system,
++	  otherwise say N.
++
+ config SPARSE_IRQ
+ 	bool "Support sparse irq numbering" if MAY_HAVE_SPARSE_IRQ
+ 	help
+diff --git a/kernel/irq/manage.c b/kernel/irq/manage.c
+index 4c14356543d9..8cf5cae5284c 100644
+--- a/kernel/irq/manage.c
++++ b/kernel/irq/manage.c
+@@ -25,9 +25,20 @@
+ #include "internals.h"
+ 
+ #if defined(CONFIG_IRQ_FORCED_THREADING) && !defined(CONFIG_PREEMPT_RT)
++#ifdef CONFIG_FORCE_IRQ_THREADING
++__read_mostly bool force_irqthreads = true;
++#else
+ __read_mostly bool force_irqthreads;
++#endif
+ EXPORT_SYMBOL_GPL(force_irqthreads);
+ 
++static int __init setup_noforced_irqthreads(char *arg)
++{
++	force_irqthreads = false;
++	return 0;
++}
++early_param("nothreadirqs", setup_noforced_irqthreads);
++
+ static int __init setup_forced_irqthreads(char *arg)
+ {
+ 	force_irqthreads = true;
 -- 
 2.20.1
 

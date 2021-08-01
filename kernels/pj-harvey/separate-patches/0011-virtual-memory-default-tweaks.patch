@@ -1,0 +1,34 @@
+From eec91fa45959a6f19d52973d94ff70ebef82b83b Mon Sep 17 00:00:00 2001
+From: Tony Fischetti <tony.fischetti@gmail.com>
+Date: Mon, 26 Jul 2021 16:19:53 -0400
+Subject: [PATCH] virtual memory default tweaks
+
+---
+ mm/page-writeback.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/mm/page-writeback.c b/mm/page-writeback.c
+index 0062d5c57d41..ef79a405e5b0 100644
+--- a/mm/page-writeback.c
++++ b/mm/page-writeback.c
+@@ -71,7 +71,7 @@ static long ratelimit_pages = 32;
+ /*
+  * Start background writeback (via writeback threads) at this percentage
+  */
+-int dirty_background_ratio = 10;
++int dirty_background_ratio = 20;
+ 
+ /*
+  * dirty_background_bytes starts at 0 (disabled) so that it is a function of
+@@ -88,7 +88,7 @@ int vm_highmem_is_dirtyable;
+ /*
+  * The generator of dirty data starts writeback at this percentage
+  */
+-int vm_dirty_ratio = 20;
++int vm_dirty_ratio = 50;
+ 
+ /*
+  * vm_dirty_bytes starts at 0 (disabled) so that it is a function of
+-- 
+2.20.1
+

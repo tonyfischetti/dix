@@ -1,0 +1,25 @@
+From 080527b6b3834803b009c56d593b9ab42aedf608 Mon Sep 17 00:00:00 2001
+From: Tony Fischetti <tony.fischetti@gmail.com>
+Date: Mon, 26 Jul 2021 16:24:41 -0400
+Subject: [PATCH] vfs cache pressure default tweak
+
+---
+ fs/dcache.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/fs/dcache.c b/fs/dcache.c
+index cf871a81f4fd..38ec53b50294 100644
+--- a/fs/dcache.c
++++ b/fs/dcache.c
+@@ -71,7 +71,7 @@
+  * If no ancestor relationship:
+  * arbitrary, since it's serialized on rename_lock
+  */
+-int sysctl_vfs_cache_pressure __read_mostly = 100;
++int sysctl_vfs_cache_pressure __read_mostly = 50;
+ EXPORT_SYMBOL_GPL(sysctl_vfs_cache_pressure);
+ 
+ __cacheline_aligned_in_smp DEFINE_SEQLOCK(rename_lock);
+-- 
+2.20.1
+
