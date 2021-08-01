@@ -9,8 +9,8 @@ StartLimitBurst=30
 [Service]
 Type=simple
 RemainAfterExit=true
-ExecStart=/usr/local/bin/skippy-xd --start-daemon 2> /dev/null
-StandardOutput=journal
+ExecStart=/usr/local/bin/skippy-xd --start-daemon
+StandardOutput=null
 Restart=on-failure
 
 [Install]

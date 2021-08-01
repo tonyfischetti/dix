@@ -10,7 +10,7 @@ StartLimitBurst=30
 Type=simple
 RemainAfterExit=true
 ExecStart=/home/tony/.zsh/more-scripts/bl-hotcorners -d
-StandardOutput=journal
+StandardOutput=null
 Restart=on-failure
 
 [Install]
