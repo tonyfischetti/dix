@@ -2,5 +2,5 @@
 top_left_corner_command = 
 top_right_corner_command = skippy-xd --toggle-window-picker
 bottom_left_corner_command = skippy-xd --toggle-window-picker 
-bottom_right_corner_command = slock
+bottom_right_corner_command =
 
