@@ -8,8 +8,8 @@ StartLimitBurst=30
 
 [Service]
 Type=simple
-RemainAfterExit=true
 ExecStart=/home/tony/.zsh/more-scripts/bl-hotcorners -d
+ExecStop=/bin/kill -STOP $MAINPID
 StandardOutput=null
 Restart=on-failure
 

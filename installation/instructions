@@ -1,5 +1,7 @@
 
 
+# chose debian desktop environment, too (in addition to xfce)
+
 usermod -a tony -G sudo
 usermod -a tony -G systemd-journal
 sudo apt remove rsyslog
@@ -9,6 +11,9 @@ sudo apt install vim-gtk3 htop ack apt-utils autotools-dev
 
 Make XFCE pretty (use reference)
 hide menubar in terminal
+Settings > Window Manager > Keyboard
+  Do "Move window to upper/etc... worksapce"
+  "Shade window" Alt+Up
 
 
 FIREFOX
@@ -38,7 +43,7 @@ fix the /etc/apt/sources.list
 (or pinstall)
 sudo apt install automake autoconf ack apt-utils binutils
 sudo apt install ca-certificates debconf debianutils iconv
-sudo apt install diffutils moreutils dpkg-dev e2fsprogs 
+sudo apt install diffutils moreutils dpkg-dev e2fsprogs
 sudo apt install grub-customizer ffmpeg fakeroot firmware-linux-free
 sudo apt install figlet htop imagemagick libxml2 liblzma-dev
 sudo apt install libncurses-dev libtool ncdu openssl python3-pip
@@ -48,13 +53,13 @@ sudo apt install xserver-xorg-input-libinput-dev debsums
 sudo apt install xclip spotify-client lshw inxi blueman pciutils
 sudo apt install python-gpgme python-gpg jhead eyed3 libsecret
 sudo apt install firmware-linux sqlite3 libsecret-1-dev evince
-sudo apt install lame easytag par debuild libgtk-3-dev
+sudo apt install lame easytag par debuild libgtk-3-dev libxml2-dev
 sudo apt install gtk-doc-tools libglade-ui-dev ristretto
 sudo apt install libextutils-depends-perl libextutils-pkgconfig-perl
 sudo apt install libwnck-3-dev libxfce4utils-dev parallel
 sudo apt install powertop acpica-tools acpitool cheese apt-rdepends
 sudo apt install lshw alsa-tools-gui libpcre2-dev linux-cpupower
-sudo apt install unrar playerctl cargo gvfs libfm4 gvfs-common 
+sudo apt install unrar playerctl cargo gvfs libfm4 gvfs-common
 sudo apt install gvfs-bin neofetch redshift libinput-tools
 sudo apt install xdotool gnome-power-statistics wavemon mpg123
 sudo apt install libffmpegthumbnailer-dev iotop fd-find imv
@@ -77,6 +82,7 @@ Keyboard shortcuts
       <property name="XF86AudioNext" type="string" value="/home/tony/.zsh/more-scripts/laudioctl -n"/>
       <property name="XF86AudioPrev" type="string" value="/home/tony/.zsh/more-scripts/laudioctl -r"/>
 
+# not needed in bullseye?
 libinput
     xinput list
     ; choose id of virtual core pointer (elan?) touchpad
@@ -143,6 +149,7 @@ Do and test git libsecret thing
 
 
 pinstall network-manager-openconnect-gnome openvpn networkmanager-vpnc-gnome
-pinstall ipset libipset11 nftables wireguard
+pinstall ipset libipset13 nftables wireguard
+# libipset11 for buster
 
 Clock format is " %A %Y-%m-%d  %I:%M %p"

@@ -8,8 +8,8 @@ StartLimitBurst=30
 
 [Service]
 Type=simple
-RemainAfterExit=true
 ExecStart=/usr/local/bin/skippy-xd --start-daemon
+ExecStop=/usr/local/bin/skippy-xd --stop-daemon
 StandardOutput=null
 Restart=on-failure
 
