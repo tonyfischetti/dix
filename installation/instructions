@@ -60,7 +60,7 @@ sudo apt install libwnck-3-dev libxfce4utils-dev parallel
 sudo apt install powertop acpica-tools acpitool cheese apt-rdepends
 sudo apt install lshw alsa-tools-gui libpcre2-dev linux-cpupower
 sudo apt install unrar playerctl cargo gvfs libfm4 gvfs-common
-sudo apt install gvfs-bin neofetch redshift libinput-tools
+sudo apt install gvfs-bin neofetch redshift libinput-tools jhead
 sudo apt install xdotool gnome-power-statistics wavemon mpg123
 sudo apt install libffmpegthumbnailer-dev iotop fd-find imv
 sudo apt install renameutils i2c-tools kerneltop genisoimage
