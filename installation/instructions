@@ -13,7 +13,9 @@ Make XFCE pretty (use reference)
 hide menubar in terminal
 Settings > Window Manager > Keyboard
   Do "Move window to upper/etc... worksapce"
-  "Shade window" Alt+Up
+  "Shade window"    Alt+Up
+  "Move window"     Alt+m
+  "Resize window"   Alt+r
 
 
 FIREFOX
@@ -54,7 +56,7 @@ sudo apt install xclip spotify-client lshw inxi blueman pciutils
 sudo apt install python-gpgme python-gpg jhead eyed3 libsecret
 sudo apt install firmware-linux sqlite3 libsecret-1-dev evince
 sudo apt install lame easytag par debuild libgtk-3-dev libxml2-dev
-sudo apt install gtk-doc-tools libglade-ui-dev ristretto
+sudo apt install gtk-doc-tools libglade-ui-dev ristretto qpdf
 sudo apt install libextutils-depends-perl libextutils-pkgconfig-perl
 sudo apt install libwnck-3-dev libxfce4utils-dev parallel
 sudo apt install powertop acpica-tools acpitool cheese apt-rdepends
