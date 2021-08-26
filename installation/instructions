@@ -43,22 +43,22 @@ COMPILE, INSTALL, CONFIGURE SBCL
 fix the /etc/apt/sources.list
 
 (or pinstall)
-sudo apt install automake autoconf ack apt-utils binutils
-sudo apt install ca-certificates debconf debianutils iconv
-sudo apt install diffutils moreutils dpkg-dev e2fsprogs
+sudo apt install automake autoconf ack apt-utils binutils libv8-dev
+sudo apt install ca-certificates debconf debianutils acpi libpam-ssh
+sudo apt install diffutils moreutils dpkg-dev e2fsprogs libudunits2-dev
 sudo apt install grub-customizer ffmpeg fakeroot firmware-linux-free
-sudo apt install figlet htop imagemagick libxml2 liblzma-dev
+sudo apt install figlet htop imagemagick libxml2 liblzma-dev vlc ecl
 sudo apt install libncurses-dev libtool ncdu openssl python3-pip
-sudo apt install xz-utils racket apt-xapian-index libwxgtk3.0
-sudo apt install xserver-xorg-input-libinput wmctrl xinput
-sudo apt install xserver-xorg-input-libinput-dev debsums
-sudo apt install xclip spotify-client lshw inxi blueman pciutils
-sudo apt install python-gpgme python-gpg jhead eyed3 libsecret
+sudo apt install xz-utils racket apt-xapian-index libcurses-perl
+sudo apt install xserver-xorg-input-libinput wmctrl xinput clisp zip
+sudo apt install xserver-xorg-input-libinput-dev debsums suckless-tools
+sudo apt install xclip lshw inxi blueman pciutils filezilla gimp
+sudo apt install python-gpgme python-gpg jhead eyed3 libsecret-1-0
 sudo apt install firmware-linux sqlite3 libsecret-1-dev evince
-sudo apt install lame easytag par debuild libgtk-3-dev libxml2-dev
-sudo apt install gtk-doc-tools libglade-ui-dev ristretto qpdf
+sudo apt install lame easytag par libgtk-3-dev libxml2-dev pandoc
+sudo apt install gtk-doc-tools ristretto qpdf ccze pwgen vainfo
 sudo apt install libextutils-depends-perl libextutils-pkgconfig-perl
-sudo apt install libwnck-3-dev libxfce4utils-dev parallel
+sudo apt install libwnck-3-dev libxfce4util-dev parallel
 sudo apt install powertop acpica-tools acpitool cheese apt-rdepends
 sudo apt install lshw alsa-tools-gui libpcre2-dev linux-cpupower
 sudo apt install unrar playerctl cargo gvfs libfm4 gvfs-common
@@ -66,15 +66,18 @@ sudo apt install gvfs-bin neofetch redshift libinput-tools jhead
 sudo apt install xdotool gnome-power-statistics wavemon mpg123
 sudo apt install libffmpegthumbnailer-dev iotop fd-find imv
 sudo apt install renameutils i2c-tools kerneltop genisoimage
-sudo apt install gparted gnome-disk-utility cmus-plugin-ffmpeg
+sudo apt install gparted gnome-disk-utility apt-transport-https
 sudo apt install libpulse-dev libpulse0 pulseaudio-utils gnupg
-sudo apt install opusfile libroar bluez-tools blt cdrdao cdcd
+sudo apt install bluez-tools blt cdrdao cdcd libnotify-dev
 sudo apt install cdparanoia chktex colordiff cmake-data cm-super
-sudo apt install cpuinfo cscope dh-exec dos2unix ffmpegthumnailer
+sudo apt install cpuinfo cscope dh-exec dos2unix ffmpegthumbnailer
 sudo apt install fig3dev finger flac gawk gconf2 gnu-standards
 sudo apt install goobox gthumb-data gvfs-backends id3tool info
 sudo apt install install-info jpegoptim keyutils procps fftw-dev
 sudo apt install libiniparser-dev cava evtest nmap mesa-utils
+sudo apt install bluez-firmware network-manager-openconnect-gnome
+sudo apt install openvpn ipset libipset13 nftables wireguard
+sudo apt install intel-gpu-tools
 
 Keyboard shortcuts
       <property name="&lt;Shift&gt;BackSpace" type="string" value="curl &quot;http://localhost:9876&quot;"/>
@@ -150,8 +153,6 @@ Do and test git libsecret thing
     sudo make
 
 
-pinstall network-manager-openconnect-gnome openvpn networkmanager-vpnc-gnome
-pinstall ipset libipset13 nftables wireguard
-# libipset11 for buster
-
 Clock format is " %A %Y-%m-%d  %I:%M %p"
+
+spotify client
