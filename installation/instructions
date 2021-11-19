@@ -60,7 +60,7 @@ sudo apt install gtk-doc-tools ristretto qpdf ccze pwgen vainfo
 sudo apt install libextutils-depends-perl libextutils-pkgconfig-perl
 sudo apt install libwnck-3-dev libxfce4util-dev parallel
 sudo apt install powertop acpica-tools acpitool cheese apt-rdepends
-sudo apt install lshw alsa-tools-gui libpcre2-dev linux-cpupower
+sudo apt install alsa-tools-gui libpcre2-dev linux-cpupower
 sudo apt install unrar playerctl cargo gvfs libfm4 gvfs-common
 sudo apt install gvfs-bin neofetch redshift libinput-tools jhead
 sudo apt install xdotool gnome-power-statistics wavemon mpg123
@@ -77,7 +77,13 @@ sudo apt install install-info jpegoptim keyutils procps fftw-dev
 sudo apt install libiniparser-dev cava evtest nmap mesa-utils
 sudo apt install bluez-firmware network-manager-openconnect-gnome
 sudo apt install openvpn ipset libipset13 nftables wireguard
-sudo apt install intel-gpu-tools rlwrap
+sudo apt install intel-gpu-tools rlwrap pigz diffstat ecl clisp
+sudo apt install firmware-linux-free firmware-linux-nonfree firmware-linux
+sudo apt install firmware-linux-iwlwifi firmware-misc-nonfree
+sudo apt install postgresql-client gnupg-utils gparted gpg-agent
+sudo apt install gpgconf iotop libsystemd-dev libsystemd0 par zstd
+sudo apt install patchutils poppler-data poppler-utils sqlitebrowser
+
 
 Keyboard shortcuts
       <property name="&lt;Shift&gt;BackSpace" type="string" value="curl &quot;http://localhost:9876&quot;"/>
