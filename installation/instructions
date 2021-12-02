@@ -79,7 +79,7 @@ sudo apt install bluez-firmware network-manager-openconnect-gnome
 sudo apt install openvpn ipset libipset13 nftables wireguard
 sudo apt install intel-gpu-tools rlwrap pigz diffstat ecl clisp
 sudo apt install firmware-linux-free firmware-linux-nonfree firmware-linux
-sudo apt install firmware-linux-iwlwifi firmware-misc-nonfree
+sudo apt install firmware-linux-iwlwifi firmware-misc-nonfree ccze
 sudo apt install postgresql-client gnupg-utils gparted gpg-agent
 sudo apt install gpgconf iotop libsystemd-dev libsystemd0 par zstd
 sudo apt install patchutils poppler-data poppler-utils sqlitebrowser
