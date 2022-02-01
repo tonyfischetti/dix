@@ -58,7 +58,7 @@ sudo apt install firmware-linux sqlite3 libsecret-1-dev evince
 sudo apt install lame easytag par libgtk-3-dev libxml2-dev pandoc
 sudo apt install gtk-doc-tools ristretto qpdf ccze pwgen vainfo
 sudo apt install libextutils-depends-perl libextutils-pkgconfig-perl
-sudo apt install libwnck-3-dev libxfce4util-dev parallel
+sudo apt install libwnck-3-dev libxfce4util-dev parallel pigz
 sudo apt install powertop acpica-tools acpitool cheese apt-rdepends
 sudo apt install alsa-tools-gui libpcre2-dev linux-cpupower
 sudo apt install unrar playerctl cargo gvfs libfm4 gvfs-common
