@@ -36,5 +36,6 @@ include "%L"
 <Multi_key> <e> <f> : "🔥"  # fire
 <Multi_key> <e> <a> : "🐜"  # ant
 <Multi_key> <e> <s> : "⚽"  # soccer ball
-<Multi_key> <e> <B> : "🅱️"   # B emoji
+<Multi_key> <e> <B> : "🅱️"  # B emoji
+<Multi_key> <e> <d> : "🦆"  # duck
 
