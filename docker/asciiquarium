@@ -1,0 +1,13 @@
+
+FROM debian:bullseye
+
+RUN cd root && \
+    apt-get update -qq && \
+    apt-get install -qq -y --no-install-recommends \
+      libcurses-perl wget cpanminus build-essential && \
+    apt-get clean && \
+    cpanm install Term::Animation && \
+    wget --no-check-certificate "https://raw.githubusercontent.com/tonyfischetti/zix/master/bin/asciiquarium" && \
+    chmod +x asciiquarium
+
+CMD /root/asciiquarium

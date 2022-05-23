@@ -1,0 +1,93 @@
+
+FROM debian:bullseye
+
+LABEL maintainer="tony.fischetti@gmail.com"
+
+ENV TERM=xterm-256color
+ENV LANG=C.UTF-8
+
+ARG USERNAME=marvin
+ARG USER_UID=1000
+ARG USER_GID=$USER_UID
+
+
+# "essential" packages
+RUN apt-get update -qq                                                  && \
+    apt-get install -qq -y --no-install-recommends apt-utils            && \
+    apt-get install -qq -y --no-install-recommends                      \
+      r-base r-base-dev git nodejs npm vim zsh wget curl gnupg ssh      \
+      vim ack autotools-dev sbcl libsystemd0 libsystemd-dev             \
+      libcurses-perl build-essential tmux sudo htop cpanminus           \
+      xz-utils automake autoconf ca-certificates libevent-dev           \
+      debianutils diffutils moreutils ffmpeg figlet ncdu libxml2 ecl    \
+      libncurses-dev libtool ncdu openssl python3-pip racket zip        \
+      suckless-tools sqlite3 par pandoc pwgen ccze parallel pigz        \
+      neofetch iotop imv renameutils apt-transport-https fd-find        \
+      libnotify-dev colordiff dos2unix gawk jpegoptim keyutils          \
+      patchutils bison libcurl4-openssl-dev libxml2-dev                 \
+      apt-xapian-index                                                  && \
+    apt-get clean                                                       && \
+    cpanm install Term::Animation
+
+# create non-root user
+RUN groupadd --gid $USER_GID $USERNAME                                  && \
+    useradd --uid $USER_UID --gid $USER_GID -m $USERNAME                && \
+    usermod -a $USERNAME -G sudo                                        && \
+    echo $USERNAME ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/$USERNAME && \
+    chmod 0440 /etc/sudoers.d/$USERNAME                                 && \
+    chsh $USERNAME -s /usr/bin/zsh
+
+USER $USERNAME
+WORKDIR /home/$USERNAME
+
+# gpg fix
+RUN mkdir -p ~/.gnupg/tmp                                               && \
+    chown -R $(whoami) ~/.gnupg/                                        && \
+    chmod 600 ~/.gnupg/*                                                && \
+    chmod 700 ~/.gnupg
+
+# setup vim
+RUN git clone https://github.com/tonyfischetti/vix.git ~/.vim           && \
+    cd ~/.vim                                                           && \
+    ./install.sh
+
+# setup R
+RUN git clone https://github.com/tonyfischetti/rix.git ~/.rix/          && \
+    cd ~/.rix                                                           && \
+    R_LIBS=~/local/R_libs/ ./install.sh
+
+# setup zsh
+RUN git clone https://github.com/tonyfischetti/zix.git ~/.zsh           && \
+    cd ~/.zsh                                                           && \
+    ./install.sh                                                        && \
+    sudo ln -s /usr/bin/zsh /usr/local/bin/zsh
+
+# setup lisp
+RUN git clone https://github.com/tonyfischetti/clix.git ~/.lisp         && \
+    echo "K"                                                            && \
+    cd ~/.lisp                                                          && \
+    ./install.sh                                                        && \
+    sudo ln -s /usr/bin/sbcl /usr/local/bin/sbcl
+
+# setup tmux
+RUN git clone https://github.com/tonyfischetti/tmux                     && \
+    cd tmux                                                             && \
+    git checkout tony-changes                                           && \
+    ./autogen.sh                                                        && \
+    ./configure                                                         && \
+    make                                                                && \
+    sudo make install                                                   && \
+    cd ../                                                              && \
+    rm -rf tmux                                                         && \
+    git clone https://github.com/tonyfischetti/tmix.git ~/.tmux         && \
+    ln -s ~/.tmux/.tmux.conf ~/.tmux.conf
+
+# setup zpaq
+RUN git clone https://github.com/tonyfischetti/zpaq                     && \
+    cd zpaq                                                             && \
+    make                                                                && \
+    sudo make install                                                   && \
+    cd ..                                                               && \
+    rm -rf zpaq
+
+
