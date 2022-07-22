@@ -15,17 +15,17 @@ ARG USER_GID=$USER_UID
 RUN apt-get update -qq                                                  && \
     apt-get install -qq -y --no-install-recommends apt-utils            && \
     apt-get install -qq -y --no-install-recommends                      \
-      r-base r-base-dev git nodejs npm vim zsh wget curl gnupg ssh      \
-      vim ack autotools-dev sbcl libsystemd0 libsystemd-dev             \
+      r-base r-base-dev git nodejs npm vim zsh wget curl gnupg          \
+      vim ack autotools-dev sbcl libsystemd0 libsystemd-dev ssh         \
       libcurses-perl build-essential tmux sudo htop cpanminus           \
       xz-utils automake autoconf ca-certificates libevent-dev           \
-      debianutils diffutils moreutils ffmpeg figlet ncdu libxml2 ecl    \
+      debianutils diffutils moreutils ffmpeg figlet ncdu libxml2        \
       libncurses-dev libtool ncdu openssl python3-pip racket zip        \
       suckless-tools sqlite3 par pandoc pwgen ccze parallel pigz        \
       neofetch iotop imv renameutils apt-transport-https fd-find        \
       libnotify-dev colordiff dos2unix gawk jpegoptim keyutils          \
-      patchutils bison libcurl4-openssl-dev libxml2-dev                 \
-      apt-xapian-index                                                  && \
+      patchutils bison libcurl4-openssl-dev libxml2-dev ecl             \
+      apt-xapian-index libssl-dev                                       && \
     apt-get clean                                                       && \
     cpanm install Term::Animation
 
