@@ -25,8 +25,7 @@ RUN apt-get update -qq                                                  && \
       neofetch iotop imv renameutils apt-transport-https fd-find        \
       libnotify-dev colordiff dos2unix gawk jpegoptim keyutils          \
       patchutils bison libcurl4-openssl-dev libxml2-dev ecl             \
-      apt-xapian-index libssl-dev rsync acpi                            && \
-      apt-xapian-index libssl-dev acpi                                  && \
+      apt-xapian-index libssl-dev rsync acpi visidata                   && \
     apt-get clean                                                       && \
     cpanm install Term::Animation
 
