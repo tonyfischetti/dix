@@ -3,15 +3,16 @@ FROM debian:bullseye
 
 LABEL maintainer="tony.fischetti@gmail.com"
 
-ENV TERM=xterm-256color
+ENV TERM=screen-256color
 ENV LANG=C.UTF-8
+ENV SHELL=/usr/bin/zsh
 
 ARG USERNAME=marvin
 ARG USER_UID=1000
 ARG USER_GID=$USER_UID
 
 
-# "essential" packages
+# essential packages
 RUN apt-get update -qq                                                  && \
     apt-get install -qq -y --no-install-recommends apt-utils            && \
     apt-get install -qq -y --no-install-recommends                      \
@@ -46,10 +47,17 @@ RUN mkdir -p ~/.gnupg/tmp                                               && \
     chmod 600 ~/.gnupg/*                                                && \
     chmod 700 ~/.gnupg
 
-# setup vim
-RUN git clone https://github.com/tonyfischetti/vix.git ~/.vim           && \
-    cd ~/.vim                                                           && \
-    ./install.sh
+# setup nodejs
+RUN curl -fsSL https://deb.nodesource.com/setup_16.x | sudo -E bash -  && \
+    sudo apt update                                                    && \
+    sudo apt install -y nodejs                                         && \
+    sudo apt remove cmdtest                                            && \
+    curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg |                \
+          sudo apt-key add -                                           && \
+    echo "deb https://dl.yarnpkg.com/debian/ stable main" | \
+          sudo tee /etc/apt/sources.list.d/yarn.list                   && \
+    sudo apt-get update                                                && \
+    sudo apt-get install yarn -y
 
 # setup R
 RUN git clone https://github.com/tonyfischetti/rix.git ~/.rix/          && \
@@ -60,11 +68,11 @@ RUN git clone https://github.com/tonyfischetti/rix.git ~/.rix/          && \
 RUN git clone https://github.com/tonyfischetti/zix.git ~/.zsh           && \
     cd ~/.zsh                                                           && \
     ./install.sh                                                        && \
-    sudo ln -s /usr/bin/zsh /usr/local/bin/zsh
+    sudo ln -s /usr/bin/zsh /usr/local/bin/zsh                          && \
+    sudo chsh -s /usr/bin/zsh $USERNAME
 
 # setup lisp
 RUN git clone https://github.com/tonyfischetti/clix.git ~/.lisp         && \
-    echo "K"                                                            && \
     cd ~/.lisp                                                          && \
     ./install.sh                                                        && \
     sudo ln -s /usr/bin/sbcl /usr/local/bin/sbcl
@@ -90,4 +98,17 @@ RUN git clone https://github.com/tonyfischetti/zpaq                     && \
     cd ..                                                               && \
     rm -rf zpaq
 
+# setup vim
+RUN wget "https://github.com/neovim/neovim/releases/download/v0.8.1/nvim-linux64.deb" -O nvim.deb && \
+    sudo apt install ./nvim.deb                                         && \
+    sudo apt install -qq -y --no-install-recommends                     \
+      python3-pynvim python3-greenlet python3-msgpack lua-luv           \
+      libtermkey1 libvterm0 python3-neovim libluajit-5.1-2              \
+      libmsgpackc2                                                      && \
+    mkdir -p ~/.config                                                  && \
+    git clone https://github.com/tonyfischetti/vix.git ~/.config/nvim   && \
+    cd ~/.config/nvim                                                   && \
+    ./install.sh                                                        && \
+    cd ~                                                                && \
+    rm nvim.deb
 
