@@ -111,7 +111,8 @@ RUN wget "https://github.com/neovim/neovim/releases/download/v0.8.1/nvim-linux64
     cd ~/.config/nvim                                                   && \
     ./install.sh 2>&1                                                   && \
     cd ~                                                                && \
-    rm nvim.deb
+    rm nvim.deb                                                         && \
+    cpanm -n Neovim::Ext
 
 # setup powershell
 RUN wget "https://github.com/PowerShell/PowerShell/releases/download/v7.3.0/powershell_7.3.0-1.deb_amd64.deb" -O powershell.deb && \
