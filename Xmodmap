@@ -4,7 +4,7 @@
 clear lock
 clear control
 add control = Caps_Lock Control_L Control_R
-keycode 66 = Control_L Caps_Lock NoSymbol NoSymbol
+keycode 66 = Control_L Control_L NoSymbol NoSymbol
 
 ! page up and down to lower and raise volume
 keycode 112 = XF86AudioRaiseVolume
