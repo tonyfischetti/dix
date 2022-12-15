@@ -26,7 +26,8 @@ RUN apt-get update -qq                                                  && \
       neofetch iotop imv renameutils apt-transport-https fd-find        \
       libnotify-dev colordiff dos2unix gawk jpegoptim keyutils          \
       patchutils bison libcurl4-openssl-dev libxml2-dev ecl             \
-      apt-xapian-index libssl-dev rsync acpi visidata                   && \
+      apt-xapian-index libssl-dev rsync acpi visidata                   \
+      libsqlite3-dev                                                    && \
     apt-get clean                                                       && \
     cpanm install Term::Animation
 
@@ -98,7 +99,6 @@ RUN git clone https://github.com/tonyfischetti/zpaq                     && \
     cd ..                                                               && \
     rm -rf zpaq
 
-
 # setup vim
 RUN wget "https://github.com/neovim/neovim/releases/download/v0.8.1/nvim-linux64.deb" -O nvim.deb && \
     sudo apt install ./nvim.deb                                         && \
@@ -118,6 +118,10 @@ RUN wget "https://github.com/neovim/neovim/releases/download/v0.8.1/nvim-linux64
 RUN wget "https://github.com/PowerShell/PowerShell/releases/download/v7.3.0/powershell_7.3.0-1.deb_amd64.deb" -O powershell.deb && \
     sudo apt install ./powershell.deb                                   && \
     rm powershell.deb
+
+RUN wget "https://deb.volian.org/volian/pool/main/n/nala-legacy/nala-legacy_0.11.0_amd64.deb" -O nala-legacy.deb && \
+    sudo apt install ./nala-legacy.deb -y                               && \
+    rm nala-legacy.deb
 
 # clean up
 RUN sudo apt autoremove -y
