@@ -1,0 +1,8 @@
+version: "3"
+services:
+  apache:
+    image: httpd:2.4.54-bullseye
+    ports:
+      - "80:80"
+    restart: unless-stopped
+
