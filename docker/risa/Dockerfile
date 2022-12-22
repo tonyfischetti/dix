@@ -192,6 +192,7 @@ RUN <<EOF
     echo "deb [signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/debian bullseye stable" | sudo tee -a /etc/apt/sources.list &&
     sudo apt-get update &&
     sudo apt-get install docker-ce docker-ce-cli containerd.io docker-compose-plugin -y 
+    # TODO: sudo usermod -a $USER -G docker
 EOF
 
 # supplemental packages, update packages, and clean up
