@@ -24,7 +24,7 @@ RUN <<EOF
     apt-get upgrade -qq &&
     apt-get install -qq -y --no-install-recommends apt-utils &&
     apt-get install -qq -y --no-install-recommends                      \
-      r-base sbcl git vim zsh wget curl gnupg                           \
+      git vim zsh wget curl gnupg python-is-python3         \
       vim ack autotools-dev sbcl libsystemd0 libsystemd-dev ssh         \
       libcurses-perl build-essential tmux sudo htop cpanminus           \
       xz-utils automake autoconf ca-certificates libevent-dev           \
@@ -37,8 +37,8 @@ RUN <<EOF
       apt-xapian-index libssl-dev rsync acpi visidata jags              \
       libfontconfig1-dev libharfbuzz-dev libfribidi-dev                 \
       libfreetype6-dev libpng-dev libtiff5-dev libjpeg-dev              \
-      libudunits2-dev libgdal-dev libsqlite3-dev &&
-    apt build-dep -y --no-install-recommends tmux zsh && # sbcl r-base
+      libudunits2-dev libgdal-dev libsqlite3-dev gfortran &&
+    apt build-dep -y --no-install-recommends tmux zsh r-base sbcl &&
     apt-get clean &&
     cpanm install Term::Animation
 EOF
@@ -82,36 +82,36 @@ RUN <<EOF
     sudo usermod -s /usr/local/bin/zsh $USERNAME
 EOF
 
+# setup R
+RUN <<EOF
+    git clone https://github.com/tonyfischetti/rix.git ~/.rix/ &&
+    wget "https://cran.r-project.org/src/base/R-4/R-4.2.2.tar.gz" &&
+    tar xvfz R-4.2.2.tar.gz &&
+    cd R-4.2.2 &&
+    patch -p1 < ~/.rix/goodies/r-4.2.2-extended-history.patch &&
+    export CFLAGS="-fopenmp -O2 -march=native -mtune=native -pipe -pthread -DMZUNAME=\\\"Linux\\\" -DMZHOSTNAME=\\\"risa\\\" -DEXTENDED_HISTORY_FILE=\\\"/home/marvin/.r_extended_history-risa\\\"" &&
+    ./configure --prefix=/usr/local --enable-R-profiling --enable-memory-profiling --enable-java --enable-byte-compiled-packages --with-readline --without-recommended-packages --with-x --with-pcre2 --with-blas --with-lapack --with-gnu-ld --enable-R-shlib &&
+    sed -i 's/^LIBS .*/LIBS =  -lpcre2-8 -llzma -lbz2 -lz -lrt -ldl -lm -licuuc -licui18n -pthread -fopenmp/' Makeconf &&
+    make &&
+    sudo make install &&
+    cd .. &&
+    rm -rf R-4.2.2 &&
+    rm R-4.2.2.tar.gz &&
+    cd ~/.rix &&
+    R_LIBS=~/local/R_libs/ ./install.sh
+EOF
+
 # # setup R
-# NOTE: deciding not to compile the my bespoke R,
+# NOTE: If I decide not to compile my bespoke R, it' because
 #       `apt build-dep` brings in too many packages
 #       and makes the image size explode
 # RUN <<EOF
 #     git clone https://github.com/tonyfischetti/rix.git ~/.rix/ &&
-#     wget "https://cran.r-project.org/src/base/R-4/R-4.2.2.tar.gz" &&
-#     tar xvfz R-4.2.2.tar.gz &&
-#     cd R-4.2.2 &&
-#     patch -p1 < ~/.rix/goodies/r-4.2.2-extended-history.patch &&
-#     export CFLAGS="-fopenmp -O2 -march=native -mtune=native -pipe -pthread -DMZUNAME=\\\"Linux\\\" -DMZHOSTNAME=\\\"risa\\\" -DEXTENDED_HISTORY_FILE=\\\"/home/marvin/.r_extended_history-risa\\\"" &&
-#     ./configure --prefix=/usr/local --enable-R-profiling --enable-memory-profiling --enable-java --enable-byte-compiled-packages --with-readline --without-recommended-packages --with-x --with-pcre2 --with-blas --with-lapack --with-gnu-ld --enable-R-shlib &&
-#     sed -i 's/^LIBS .*/LIBS =  -lpcre2-8 -llzma -lbz2 -lz -lrt -ldl -lm -licuuc -licui18n -pthread -fopenmp/' Makeconf &&
-#     make &&
-#     sudo make install &&
-#     cd .. &&
-#     rm -rf R-4.2.2 &&
-#     rm R-4.2.2.tar.gz &&
 #     cd ~/.rix &&
 #     R_LIBS=~/local/R_libs/ ./install.sh
+#     sudo ln -s /usr/bin/R /usr/local/bin/R
+#     sudo ln -s /usr/bin/Rscript /usr/local/bin/Rscript
 # EOF
-
-# setup R
-RUN <<EOF
-    git clone https://github.com/tonyfischetti/rix.git ~/.rix/ &&
-    cd ~/.rix &&
-    R_LIBS=~/local/R_libs/ ./install.sh
-    sudo ln -s /usr/bin/R /usr/local/bin/R
-    sudo ln -s /usr/bin/Rscript /usr/local/bin/Rscript
-EOF
 
 # setup vim
 RUN <<EOF
@@ -129,7 +129,7 @@ RUN <<EOF
     cpanm -n Neovim::Ext
 EOF
 
-# setup tmux
+# # setup tmux
 RUN <<EOF
     git clone https://github.com/tonyfischetti/tmux &&
     cd tmux &&
@@ -151,39 +151,42 @@ RUN <<EOF
     rm nala-legacy.deb
 EOF
 
-# # setup lisp
-# # NOTE: deciding not to compile the my bespoke sbcl...
-# #       `apt build-dep` brings in too many packages
-# #       and makes the image size explode
-# RUN <<EOF
-#     wget "https://github.com/sbcl/sbcl/archive/refs/tags/sbcl-2.3.0.tar.gz" -O sbcl.tar.gz &&
-#     tar xvfz sbcl.tar.gz &&
-#     cd sbcl-sbcl-2.3.0 &&
-#     export CFLAGS="-O2 -march=native -mtune=native -pipe" &&
-#     echo '"2.3.0"' > version.lisp-expr &&
-#     sh make.sh --prefix=/usr/local --dynamic-space-size=13Gb --fancy --with-sb-core-compression &&
-#     cd doc/manual &&
-#     make &&
-#     cd ../../ &&
-#     sudo sh install.sh &&
-#     cd ~ &&
-#     rm sbcl.tar.gz &&
-#     rm -rf sbcl-sbcl-2.3.0 &&
-#     git clone https://github.com/tonyfischetti/clix.git ~/.lisp &&
-#     cd ~/.lisp &&
-#     ./install.sh &&
-#     sbcl --eval '(quit)' &&
-#     ~/.zsh/bin/update-lisp-cores.sh
-# EOF
-
 # setup lisp
+# NOTE: deciding not to compile the my bespoke sbcl...
+#       `apt build-dep` brings in too many packages
+#       and makes the image size explode
 RUN <<EOF
+    wget "https://github.com/sbcl/sbcl/archive/refs/tags/sbcl-2.3.0.tar.gz" -O sbcl.tar.gz &&
+    tar xvfz sbcl.tar.gz &&
+    cd sbcl-sbcl-2.3.0 &&
+    export CFLAGS="-O2 -march=native -mtune=native -pipe" &&
+    echo '"2.3.0"' > version.lisp-expr &&
+    sh make.sh --prefix=/usr/local --dynamic-space-size=13Gb --fancy --with-sb-core-compression &&
+    cd doc/manual &&
+    make &&
+    cd ../../ &&
+    sudo sh install.sh &&
+    cd ~ &&
+    rm sbcl.tar.gz &&
+    rm -rf sbcl-sbcl-2.3.0 &&
     git clone https://github.com/tonyfischetti/clix.git ~/.lisp &&
     cd ~/.lisp &&
     ./install.sh &&
-    sudo ln -s /usr/bin/sbcl /usr/local/bin/sbcl &&
-    sbcl --eval '(quit)'
+    sbcl --eval '(quit)' &&
+    ~/.zsh/bin/update-lisp-cores.sh
 EOF
+
+# # setup lisp
+# NOTE: If I decide not to compile my bespoke sbcl, it' because
+#       `apt build-dep` brings in too many packages
+#       and makes the image size explode
+# RUN <<EOF
+#     git clone https://github.com/tonyfischetti/clix.git ~/.lisp &&
+#     cd ~/.lisp &&
+#     ./install.sh &&
+#     sudo ln -s /usr/bin/sbcl /usr/local/bin/sbcl &&
+#     sbcl --eval '(quit)'
+# EOF
 
 # setup cmus
 RUN <<EOF
@@ -234,85 +237,99 @@ RUN <<EOF
     sudo usermod -a $USERNAME -G docker
 EOF
 
-# setup nodejs
+# python packages
 RUN <<EOF
-    sudo apt install -y -qq --no-install-recommends -t bookworm libnode-dev nodejs npm
+    sudo apt install -qq -y --no-install-recommends python3-flask           \
+      python3-networkx python3-numpy python3-scipy python3-pandas           \
+      python3-matplotlib python3-instagram python3-twython python3-lxml     \
+      python3-pudb python3-sqlalchemy python3-pil &&
+    pip install --user ipython &&
+    pip install --user mssql-cli &&
+    pip install --user jupyterlab &&
+    pip install --user notebook &&
+    pip install --user master-sake
 EOF
 
-    # npm install -g yarn
-    # curl -fsSL https://deb.nodesource.com/setup_16.x | sudo -E bash -  &&
-    # sudo apt update &&
-    # sudo apt install -y nodejs &&
-    # sudo apt remove cmdtest &&
-    # curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add - &&
-    # echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee -a /etc/apt/sources.list &&
-    # sudo apt-get update &&
-    # sudo apt-get install yarn -y
+# R packages
+RUN <<EOF
+    R_LIBS=~/local/R_libs/ R -e 'install.packages(c("anytime", "assertr",
+      "assertthat", "backports", "base64enc", "BBmisc", "BH", "bit64", "boot",
+      "broom", "callr", "caret", "caTools", "checkmate", "cli", "clipr",
+      "coda", "colorspace", "commonmark", "compareDF", "corrgram", "curl",
+      "daggity", "DBI", "dbplyr", "desc", "DescTools", "devtools", "diffobj",
+      "digest", "doParallel", "DT", "dtplyr", "e1071", "ellipsis", "epitools",
+      "evaluate", "fabletools", "ff", "forecast", "forcats", "foreach", "fs",
+      "getopt", "ggrepel", "gitcreds", "glmnet", "glue", "googledrive",
+      "googlesheets4", "gridExtra", "gtable", "gtools", "haven", "here",
+      "hms", "htmlTable", "htmltools", "httpcode", "httpuv", "janitor",
+      "jsonlite", "KernSmooth", "knitr", "lattice", "lazyeval", "libbib",
+      "lme4", "lobstr", "loo", "lubridate", "maptools", "markdown", "MASS",
+      "memoise", "mgcv", "mice", "modelr", "munsell", "mvtnrorm", "nlme",
+      "openssl", "openxlsx", "pbapply", "permute", "pillar", "pkgbuild",
+      "plyr", "png", "pROC", "progress", "progressr", "promises", "ps",
+      "psych", "purrr", "quantmod", "R6", "randomForest", "ranger", "raster",
+      "RCurl", "readr", "readxl", "recipes", "reclin2", "RecordLinkage",
+      "rematch", "rematch2", "rex", "rfUtilities", "rgdal", "rhub", "rio",
+      "rjags", "rjson", "rland", "rmarkdown", "robustbase", "ROCR",
+      "roxygen2", "RPostgreSQL", "rprojroot", "rsample", "rsconnect",
+      "RSQLite", "rstudioapi", "rsyslog", "R.utils", "rvest", "scales",
+      "selectr", "sessioninfo", "sf", "shape", "shiny", "shinydashboard",
+      "sourcetools", "sp", "SparseM", "sqldf", "SSLASSO", "stringdist",
+      "stringr", "testthat", "tibble", "tidyquant", "tidyr", "tidyselect",
+      "tidyverse", "timechange", "timeDate", "tseries", "tsfeatures",
+      "tstibble", "TTR", "tzdb", "units", "urltools", "utf8", "uuid", "V8",
+      "vcd", "vegan", "VIM", "viridis", "viridisLite", "vroom", "warp",
+      "whoami", "withr", "xgboost", "XML", "xml2", "xmlparsedata", "xtable",
+      "xts", "yaml", "yardstick", "zip", "zoo"))' &&
+    R_LIBS=~/local/R_libs/ R -e 'install.packages("cmdstanr", repos = c("https://mc-stan.org/r-packages/", getOption("repos")))' &&
+    R_LIBS=~/local/R_libs/ R -e 'install.packages("rstan")' &&
+    R_LIBS=~/local/R_libs/ R -e 'devtools::install_github("rmcelreath/rethinking")'
+EOF
 
+# setup nodejs
+RUN <<EOF
+    sudo apt install -y -qq --no-install-recommends -t bookworm libnode-dev nodejs npm &&
+    npm install -g serve neovim gulp gulp-cli dotenv
+EOF
 
-
-
-#
-# # supplemental packages, update packages, and clean up
+# another way to install nodejs
 # RUN <<EOF
-#     sudo apt install -t bookworm libnode-dev
-#     # &&
-#     # devtools, sf, ___
-#
-#     # options(mc.cores = parallel::detectCores())
-#     # rstan_options(auto_write = TRUE)
-#
-#     # install.packages("cmdstanr", repos = c("https://mc-stan.org/r-packages/", getOption("repos")))
-#     # install.packages(c("coda","mvtnorm","devtools","loo","dagitty","shape"))
-#     # devtools::install_github("rmcelreath/rethinking")
-#
+#     echo "k" &&
+#     curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -  &&
 #     sudo apt update &&
-#     sudo apt upgrade -y &&
-#     sudo apt autoremove -y &&
-#     sudo update-apt-xapian-index
+#     sudo apt install -y nodejs &&
+#     sudo apt remove cmdtest &&
+#     curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add - &&
+#     echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee -a /etc/apt/sources.list &&
+#     sudo apt update &&
+#     sudo apt -y install yarn &&
+#     sudo apt install -y libnode-dev
+#     # npm install -g serve neovim gulp gulp-cli dotenv
 # EOF
+
+
+
+
+# supplemental packages, update packages, and clean up
+RUN <<EOF
+    sudo apt install ecl &&
+    sudo apt update &&
+    sudo apt upgrade -y &&
+    sudo apt autoremove -y &&
+    sudo update-apt-xapian-index
+EOF
 
 CMD ["/usr/local/bin/zsh"]
 
-# python3-lxml
-# python3-pil
-# python3-flask
-# python3-sqlalchemy
 
-# ECL??!
 
 # THE POST INSTALL
 
-
-# npm:
-# hexo-cli?
-# snazzy?
-# serve
-# yarn
-# neovim
-# shelljs
-# gulp-cli
-
 # USE MULTISTAGE BUILDS TO CUT DOWN ON THE SIZE!
 
-# pip
-
-# /home/tony/.rix/pkg-list-vulcan
-# still need stan
-
-# rstan
-# cmdstanr
-# rethinking
-#
 # PSQL CLIENT?!!?
 # VPN CLIENT??!?
-#
-# python: lxml, etc....
-# javascript: gulp, dotenv, etc....
-#
-# Do I have what I need to compile styx????
 
-# install.packages("cmdstanr", repos = c("https://mc-stan.org/r-packages/", getOption("repos")))
-# install.packages("rstan")
-# install.packages(c("coda","mvtnorm","devtools","loo","dagitty","shape"))
-# devtools::install_github("rmcelreath/rethinking")
+# ssh config?
+
+# set hostname

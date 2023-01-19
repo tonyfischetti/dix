@@ -163,6 +163,7 @@ dirmngr/stable,stable-security,stable,stable,stable,now 2.2.27-2+deb11u2 amd64 [
 discover-data/stable,stable,stable,stable,now 2.2013.01.11+nmu1 all [installed,automatic]
 discover/stable,stable,stable,stable,now 2.1.2-8 amd64 [installed]
 distro-info-data/stable,stable,stable,stable,now 0.51+deb11u3 all [installed,automatic]
+dive/now 0.9.2 amd64 [installed,local]
 dmeventd/stable,stable,stable,stable,now 2:1.02.175-2.1 amd64 [installed,automatic]
 dmidecode/stable,stable,stable,stable,now 3.3-2 amd64 [installed]
 dmsetup/stable,stable,stable,stable,now 2:1.02.175-2.1 amd64 [installed]
