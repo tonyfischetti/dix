@@ -1,0 +1,8 @@
+# Sources file built for nala
+
+deb http://debian.mirror.iweb.ca/debian/ bullseye main contrib non-free
+
+deb http://ftp.ca.debian.org/debian/ bullseye main contrib non-free
+
+deb http://ftp.us.debian.org/debian/ bullseye main contrib non-free
+

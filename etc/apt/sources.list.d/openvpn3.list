@@ -1,0 +1,2 @@
+# OpenVPN 3 Linux client - Debian 11
+deb https://swupdate.openvpn.net/community/openvpn3/repos bullseye main
