@@ -333,6 +333,9 @@ CMD ["/usr/local/bin/zsh"]
 #
 # # ARDUINO STUFF
 #
+# postgresql-client libfmt-dev libssl-dev libre2-dev libboost-dev
+# libspdlog-dev
+#
 # # THE POST INSTALL
 #
 # # USE MULTISTAGE BUILDS TO CUT DOWN ON THE SIZE!
