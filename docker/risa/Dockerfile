@@ -284,7 +284,8 @@ RUN <<EOF
       "tstibble", "TTR", "tzdb", "units", "urltools", "utf8", "uuid", "V8",
       "vcd", "vegan", "VIM", "viridis", "viridisLite", "vroom", "warp",
       "whoami", "withr", "xgboost", "XML", "xml2", "xmlparsedata", "xtable",
-      "xts", "yaml", "yardstick", "zip", "zoo", "packrat", "plotly"))' &&
+      "xts", "yaml", "yardstick", "zip", "zoo", "packrat", "plotly",
+      "testthat", "devtools"))' &&
     R_LIBS=~/local/R_libs/ R -e 'install.packages("cmdstanr", repos = c("https://mc-stan.org/r-packages/", getOption("repos")))' &&
     R_LIBS=~/local/R_libs/ R -e 'install.packages("rstan")' &&
     R_LIBS=~/local/R_libs/ R -e 'devtools::install_github("rmcelreath/rethinking")'
@@ -321,6 +322,8 @@ EOF
 # supplemental packages, update packages, and clean up
 RUN <<EOF
     sudo rm /etc/apt/sources.list.d/debian.sources
+    sudo apt-get install -qq -y --no-install-recommends ecl postgresql-client \
+            libfmt-dev libssl-dev libre2-dev libboost-dev libspdlog-dev pmisc &&
     sudo apt install ecl &&
     sudo apt update &&
     sudo apt upgrade -y &&
@@ -329,12 +332,10 @@ RUN <<EOF
 EOF
 
 CMD ["/usr/local/bin/zsh"]
-#
-#
+
+
 # # ARDUINO STUFF
 #
-# postgresql-client libfmt-dev libssl-dev libre2-dev libboost-dev
-# libspdlog-dev
 #
 # # THE POST INSTALL
 #
