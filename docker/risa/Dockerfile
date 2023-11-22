@@ -285,7 +285,7 @@ RUN <<EOF
       "vcd", "vegan", "VIM", "viridis", "viridisLite", "vroom", "warp",
       "whoami", "withr", "xgboost", "XML", "xml2", "xmlparsedata", "xtable",
       "xts", "yaml", "yardstick", "zip", "zoo", "packrat", "plotly",
-      "testthat", "devtools", "covr"))' &&
+      "testthat", "devtools", "covr", "rhub"))' &&
     R_LIBS=~/local/R_libs/ R -e 'install.packages("cmdstanr", repos = c("https://mc-stan.org/r-packages/", getOption("repos")))' &&
     R_LIBS=~/local/R_libs/ R -e 'install.packages("rstan")' &&
     R_LIBS=~/local/R_libs/ R -e 'devtools::install_github("rmcelreath/rethinking")'
