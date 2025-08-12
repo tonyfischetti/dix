@@ -1,7 +1,8 @@
 #!/bin/bash
 
+set -euxo pipefail
 
-git clone https://github.com/tonyfischetti/dix.git ~/.dix
+# git clone https://github.com/tonyfischetti/dix.git ~/.dix
 ln -s ~/.dix/XCompose ~/.XCompose
 ln -s ~/.dix/Xmodmap ~/.Xmodmap
 ln -s ~/.dix/xinitrc ~/.xinitrc
