@@ -91,7 +91,7 @@ EOF
 RUN <<EOF
     sudo apt-get update  -qq &&
     sudo apt-get upgrade -qq &&
-    sudo apt-get install -qq -y fzf build-essential curl libcurl4-openssl-dev libssl-dev libxml2-dev r-base par &&
+    sudo apt-get install -qq -y fzf build-essential curl libcurl4-openssl-dev libssl-dev libxml2-dev r-base par pandoc &&
     wget "https://github.com/neovim/neovim/releases/download/v0.11.3/nvim-linux-arm64.tar.gz" -O $HOME/neovim.tar.gz &&
     # wget "https://github.com/neovim/neovim/releases/download/v0.11.3/nvim-linux-x86_64.tar.gz" -O $HOME/neovim.tar.gz &&
     sudo tar xvfz neovim.tar.gz --strip-components=1 -C /usr/local &&
@@ -138,7 +138,7 @@ EOF
 RUN <<EOF
     sudo apt-get update  -qq &&
     sudo apt-get upgrade -qq &&
-    sudo apt-get install -qq -y sbcl &&
+    sudo apt-get install -qq -y sbcl smenu &&
     git clone https://github.com/tonyfischetti/clix.git ~/.lisp &&
     cd ~/.lisp &&
     ./install.sh &&
