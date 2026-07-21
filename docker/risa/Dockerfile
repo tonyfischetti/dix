@@ -136,9 +136,14 @@ EOF
 
 # setup lisp
 RUN <<EOF
+    sudo apt-get update  -qq &&
+    sudo apt-get upgrade -qq &&
+    sudo apt-get install -qq -y sbcl smenu &&
     git clone https://github.com/tonyfischetti/clix.git ~/.lisp &&
-    make -C ~/.lisp deps &&
-    make -C ~/.lisp setup
+    cd ~/.lisp &&
+    ./install.sh &&
+    sudo ln -s /usr/bin/sbcl /usr/local/bin/sbcl &&
+    sbcl --eval '(quit)'
 EOF
 
 
