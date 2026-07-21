@@ -109,7 +109,7 @@ RUN <<EOF
     sudo apt-get upgrade -qq &&
     sudo apt-get install -qq -y                                            \
       luarocks ruby gem clang python3-neovim ruby-neovim golang            \
-      default-jdk maven racket ecl python3-pip rustup ghc cabal-install &&
+      default-jdk maven racket python3-pip rustup ghc cabal-install &&
     rustup default stable
 EOF
 
@@ -135,15 +135,17 @@ EOF
 
 
 # setup lisp
+# clix's Makefile is the single source of truth: `deps` installs the OS
+# packages (sbcl, smenu, gcc, libssl-dev, ...), `setup` is the idempotent
+# bootstrap (quicklisp, rc links, pluto clone, libstyx, saved core), and
+# `doctor` exits nonzero if anything is broken — failing the build here
+# rather than at runtime.  (The scripts' #!/usr/bin/env lispscript
+# shebangs resolve via PATH — ~/.zsh/bin — so no /usr/local/bin link.)
 RUN <<EOF
-    sudo apt-get update  -qq &&
-    sudo apt-get upgrade -qq &&
-    sudo apt-get install -qq -y sbcl smenu &&
     git clone https://github.com/tonyfischetti/clix.git ~/.lisp &&
-    cd ~/.lisp &&
-    ./install.sh &&
-    sudo ln -s /usr/bin/sbcl /usr/local/bin/sbcl &&
-    sbcl --eval '(quit)'
+    make -C ~/.lisp deps &&
+    make -C ~/.lisp setup &&
+    make -C ~/.lisp doctor
 EOF
 
 
