@@ -122,6 +122,25 @@ RUN <<EOF
 EOF
 
 
+# avr / arduino / esp toolchains
+# AVR is debian-native (same raw gcc-avr/avrdude workflow as the mac).
+# arduino-cli is the headless CLI, pinned release binary, arch
+# auto-detected.  ESP = the esp32 arduino core (espressif ships
+# linux-arm64 toolchains) + debian's esptool for flashing.
+# NB: containers can BUILD firmware anywhere, but FLASHING needs a
+# linux host — Docker Desktop on macOS can't pass USB through.
+RUN <<EOF
+    sudo apt-get update  -qq &&
+    sudo apt-get install -qq -y gcc-avr binutils-avr avr-libc avrdude esptool &&
+    arch=$( [ "$(uname -m)" = "aarch64" ] && echo ARM64 || echo 64bit ) &&
+    wget -q "https://github.com/arduino/arduino-cli/releases/download/v1.5.1/arduino-cli_1.5.1_Linux_${arch}.tar.gz" -O /tmp/arduino-cli.tar.gz &&
+    sudo tar xzf /tmp/arduino-cli.tar.gz -C /usr/local/bin arduino-cli &&
+    rm /tmp/arduino-cli.tar.gz &&
+    arduino-cli core update-index --additional-urls https://espressif.github.io/arduino-esp32/package_esp32_index.json &&
+    arduino-cli core install arduino:avr &&
+    arduino-cli core install esp32:esp32 --additional-urls https://espressif.github.io/arduino-esp32/package_esp32_index.json &&
+    sudo usermod -a -G dialout $USERNAME
+EOF
 
 
 # set timezone

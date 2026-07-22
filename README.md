@@ -3,6 +3,8 @@ dix
 
 A place to update and store my debian configuration (kernel config y lo que sea)
 
+(For setting up a fresh mac instead, see [fresh-mac.md](fresh-mac.md).)
+
 ```
 git clone https://github.com/tonyfischetti/dix.git ~/.dix
 make -C ~/.dix setup     # X dotfiles, app configs, systemd units (linked)
