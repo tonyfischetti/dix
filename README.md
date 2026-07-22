@@ -5,17 +5,20 @@ A place to update and store my debian configuration (kernel config y lo que sea)
 
 ```
 git clone https://github.com/tonyfischetti/dix.git ~/.dix
-cd ~/.dix
-./basic-install.sh
+make -C ~/.dix setup     # X dotfiles, app configs, systemd units (linked)
+make -C ~/.dix doctor    # verify everything
 ```
 
-
-The units...
+The Makefile is the single source of truth (it replaced
+`basic-install.sh`).  Everything is idempotent, and linux-only (it
+refuses politely on macOS).  `setup` links the units into
+`~/.config/systemd/user/` but enabling stays a deliberate act:
 
 ```
-ln -s /home/tony/.dix/units/starlight.service /home/tony/.config/systemd/user/starlight.service
-systemctl --user enable starlight.service
+systemctl --user enable --now starlight.service
 ```
+
+`make doctor` reports each unit's enabled-state, so drift is visible.
 
 ---
 
