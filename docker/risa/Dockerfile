@@ -165,11 +165,13 @@ EOF
 # `apt build-dep cmus`, `setup` makes ~/music and builds the patched
 # cmus (the fork's default branch) if missing, `doctor` fails the
 # build if anything is broken.  The repo must live at ~/cmus
-# (CMUS_HOME, exported by zix's .zshrc).
+# (CMUS_HOME, exported by zix's .zshrc).  CONFIG_MPRIS=n because a
+# container has no D-Bus session — with it compiled in, cmus nags
+# "error while initializing MPRIS" at every launch.
 RUN <<EOF
     git clone https://github.com/tonyfischetti/cmix.git ~/cmus &&
     make -C ~/cmus deps &&
-    make -C ~/cmus setup &&
+    make -C ~/cmus setup CMUS_CONFIGURE_FLAGS="CONFIG_MPRIS=n" &&
     make -C ~/cmus doctor
 EOF
 
