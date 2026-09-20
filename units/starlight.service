@@ -7,7 +7,8 @@ StartLimitIntervalSec=60
 StartLimitBurst=30
 
 [Service]
-ExecStart=/usr/bin/racket -L "warning" -e '(require (file "~/starlight/starlight.rkt"))'
+Environment="PATH=/home/tony/.zsh/bin:/home/tony/bin:/home/tony/.local/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
+ExecStart=/usr/bin/racket -L "warning" -e '(require (file "%h/starlight/starlight.rkt"))'
 Restart=always
 
 [Install]
